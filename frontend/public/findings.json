@@ -1,0 +1,1061 @@
+[
+  {
+    "resource_id": "r1",
+    "resource_type": "compute",
+    "risk_score": 16.0,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "cost": 5,
+    "usage": 2,
+    "categories": [
+      "cost"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred",
+    "recommendation": "Stop or downsize instance.",
+    "issues": [
+      "Idle resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance"
+    ],
+    "rule_ids": [
+      "R2"
+    ]
+  },
+  {
+    "resource_id": "r3",
+    "resource_type": "storage",
+    "risk_score": 224.1,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 2,
+    "usage": 0,
+    "categories": [
+      "cost",
+      "compliance",
+      "security"
+    ],
+    "summary": "Storage resource with security issues and cost waste",
+    "impact": "May expose sensitive data to unauthorized access | Unnecessary cost incurred | Data not protected at rest",
+    "recommendation": "Disable public access and restrict to VPC only. Stop or downsize instance. Enable encryption at rest.",
+    "issues": [
+      "Public resource detected",
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled",
+      "Public storage bucket detected",
+      "Unused resource"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging",
+      "Make storage bucket private immediately",
+      "Delete unused resource"
+    ],
+    "rule_ids": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R7"
+    ]
+  },
+  {
+    "resource_id": "r5",
+    "resource_type": "compute",
+    "risk_score": 16.2,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "cost": 6,
+    "usage": 1,
+    "categories": [
+      "cost"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred",
+    "recommendation": "Stop or downsize instance.",
+    "issues": [
+      "Idle resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance"
+    ],
+    "rule_ids": [
+      "R2"
+    ]
+  },
+  {
+    "resource_id": "r7",
+    "resource_type": "compute",
+    "risk_score": 44.4,
+    "priority": "MEDIUM",
+    "priority_tag": "\u00f0\u0178\u0178\u00a1",
+    "cost": 7,
+    "usage": 3,
+    "categories": [
+      "cost",
+      "security"
+    ],
+    "summary": "Compute resource with security issues and cost waste",
+    "impact": "Unnecessary cost incurred | Data not protected at rest",
+    "recommendation": "Stop or downsize instance. Enable encryption at rest.",
+    "issues": [
+      "Idle resource",
+      "Encryption disabled"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable encryption at rest"
+    ],
+    "rule_ids": [
+      "R2",
+      "R3"
+    ]
+  },
+  {
+    "resource_id": "r8",
+    "resource_type": "network",
+    "risk_score": 124.2,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 4,
+    "usage": 20,
+    "categories": [
+      "compliance",
+      "security"
+    ],
+    "summary": "Network resource with compliance and security issues",
+    "impact": "May expose sensitive data to unauthorized access | Data not protected at rest | Cannot track security events or compliance violations",
+    "recommendation": "Disable public access and restrict to VPC only. Enable encryption at rest. Enable CloudTrail/audit logging.",
+    "issues": [
+      "Public resource detected",
+      "Encryption disabled",
+      "Logging not enabled"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging"
+    ],
+    "rule_ids": [
+      "R1",
+      "R3",
+      "R4"
+    ]
+  },
+  {
+    "resource_id": "r10",
+    "resource_type": "compute",
+    "risk_score": 46.0,
+    "priority": "MEDIUM",
+    "priority_tag": "\u00f0\u0178\u0178\u00a1",
+    "cost": 5,
+    "usage": 0,
+    "categories": [
+      "cost",
+      "compliance"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred | Cannot track security events or compliance violations | Wasting cloud budget",
+    "recommendation": "Stop or downsize instance. Enable CloudTrail/audit logging. Delete unused resource.",
+    "issues": [
+      "Idle resource",
+      "Logging not enabled",
+      "Unused resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable CloudTrail/audit logging",
+      "Delete unused resource"
+    ],
+    "rule_ids": [
+      "R2",
+      "R4",
+      "R7"
+    ]
+  },
+  {
+    "resource_id": "r11",
+    "resource_type": "compute",
+    "risk_score": 16.0,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "cost": 5,
+    "usage": 4,
+    "categories": [
+      "cost"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred",
+    "recommendation": "Stop or downsize instance.",
+    "issues": [
+      "Idle resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance"
+    ],
+    "rule_ids": [
+      "R2"
+    ]
+  },
+  {
+    "resource_id": "r12",
+    "resource_type": "storage",
+    "risk_score": 206.1,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 2,
+    "usage": 2,
+    "categories": [
+      "cost",
+      "compliance",
+      "security"
+    ],
+    "summary": "Storage resource with security issues and cost waste",
+    "impact": "May expose sensitive data to unauthorized access | Unnecessary cost incurred | Data not protected at rest",
+    "recommendation": "Disable public access and restrict to VPC only. Stop or downsize instance. Enable encryption at rest.",
+    "issues": [
+      "Public resource detected",
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled",
+      "Public storage bucket detected"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging",
+      "Make storage bucket private immediately"
+    ],
+    "rule_ids": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5"
+    ]
+  },
+  {
+    "resource_id": "r15",
+    "resource_type": "network",
+    "risk_score": 146.4,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 3,
+    "usage": 1,
+    "categories": [
+      "cost",
+      "compliance",
+      "security"
+    ],
+    "summary": "Network resource with security issues and cost waste",
+    "impact": "May expose sensitive data to unauthorized access | Unnecessary cost incurred | Data not protected at rest",
+    "recommendation": "Disable public access and restrict to VPC only. Stop or downsize instance. Enable encryption at rest.",
+    "issues": [
+      "Public resource detected",
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging"
+    ],
+    "rule_ids": [
+      "R1",
+      "R2",
+      "R3",
+      "R4"
+    ]
+  },
+  {
+    "resource_id": "r16",
+    "resource_type": "storage",
+    "risk_score": 73.2,
+    "priority": "HIGH",
+    "priority_tag": "\u00f0\u0178\u0178\u00a0",
+    "cost": 1,
+    "usage": 0,
+    "categories": [
+      "cost",
+      "compliance",
+      "security"
+    ],
+    "summary": "Storage resource with security issues and cost waste",
+    "impact": "Unnecessary cost incurred | Data not protected at rest | Cannot track security events or compliance violations",
+    "recommendation": "Stop or downsize instance. Enable encryption at rest. Enable CloudTrail/audit logging.",
+    "issues": [
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled",
+      "Unused resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging",
+      "Delete unused resource"
+    ],
+    "rule_ids": [
+      "R2",
+      "R3",
+      "R4",
+      "R7"
+    ]
+  },
+  {
+    "resource_id": "r17",
+    "resource_type": "compute",
+    "risk_score": 16.2,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "cost": 6,
+    "usage": 2,
+    "categories": [
+      "cost"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred",
+    "recommendation": "Stop or downsize instance.",
+    "issues": [
+      "Idle resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance"
+    ],
+    "rule_ids": [
+      "R2"
+    ]
+  },
+  {
+    "resource_id": "r18",
+    "resource_type": "database",
+    "risk_score": 17.8,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "cost": 14,
+    "usage": 3,
+    "categories": [
+      "cost"
+    ],
+    "summary": "Database resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred",
+    "recommendation": "Stop or downsize instance.",
+    "issues": [
+      "Idle resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance"
+    ],
+    "rule_ids": [
+      "R2"
+    ]
+  },
+  {
+    "resource_id": "r20",
+    "resource_type": "storage",
+    "risk_score": 183.6,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 2,
+    "usage": 5,
+    "categories": [
+      "compliance",
+      "security"
+    ],
+    "summary": "Storage resource with compliance and security issues",
+    "impact": "May expose sensitive data to unauthorized access | Data not protected at rest | Cannot track security events or compliance violations",
+    "recommendation": "Disable public access and restrict to VPC only. Enable encryption at rest. Enable CloudTrail/audit logging.",
+    "issues": [
+      "Public resource detected",
+      "Encryption disabled",
+      "Logging not enabled",
+      "Public storage bucket detected"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging",
+      "Make storage bucket private immediately"
+    ],
+    "rule_ids": [
+      "R1",
+      "R3",
+      "R4",
+      "R5"
+    ]
+  },
+  {
+    "resource_id": "r21",
+    "resource_type": "compute",
+    "risk_score": 16.0,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "cost": 5,
+    "usage": 1,
+    "categories": [
+      "cost"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred",
+    "recommendation": "Stop or downsize instance.",
+    "issues": [
+      "Idle resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance"
+    ],
+    "rule_ids": [
+      "R2"
+    ]
+  },
+  {
+    "resource_id": "r23",
+    "resource_type": "storage",
+    "risk_score": 224.1,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 2,
+    "usage": 0,
+    "categories": [
+      "cost",
+      "compliance",
+      "security"
+    ],
+    "summary": "Storage resource with security issues and cost waste",
+    "impact": "May expose sensitive data to unauthorized access | Unnecessary cost incurred | Data not protected at rest",
+    "recommendation": "Disable public access and restrict to VPC only. Stop or downsize instance. Enable encryption at rest.",
+    "issues": [
+      "Public resource detected",
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled",
+      "Public storage bucket detected",
+      "Unused resource"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging",
+      "Make storage bucket private immediately",
+      "Delete unused resource"
+    ],
+    "rule_ids": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R7"
+    ]
+  },
+  {
+    "resource_id": "r24",
+    "resource_type": "network",
+    "risk_score": 124.2,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 4,
+    "usage": 10,
+    "categories": [
+      "compliance",
+      "security"
+    ],
+    "summary": "Network resource with compliance and security issues",
+    "impact": "May expose sensitive data to unauthorized access | Data not protected at rest | Cannot track security events or compliance violations",
+    "recommendation": "Disable public access and restrict to VPC only. Enable encryption at rest. Enable CloudTrail/audit logging.",
+    "issues": [
+      "Public resource detected",
+      "Encryption disabled",
+      "Logging not enabled"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging"
+    ],
+    "rule_ids": [
+      "R1",
+      "R3",
+      "R4"
+    ]
+  },
+  {
+    "resource_id": "r25",
+    "resource_type": "compute",
+    "risk_score": 16.2,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "cost": 6,
+    "usage": 2,
+    "categories": [
+      "cost"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred",
+    "recommendation": "Stop or downsize instance.",
+    "issues": [
+      "Idle resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance"
+    ],
+    "rule_ids": [
+      "R2"
+    ]
+  },
+  {
+    "resource_id": "r26",
+    "resource_type": "compute",
+    "risk_score": 46.0,
+    "priority": "MEDIUM",
+    "priority_tag": "\u00f0\u0178\u0178\u00a1",
+    "cost": 5,
+    "usage": 0,
+    "categories": [
+      "cost",
+      "compliance"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred | Cannot track security events or compliance violations | Wasting cloud budget",
+    "recommendation": "Stop or downsize instance. Enable CloudTrail/audit logging. Delete unused resource.",
+    "issues": [
+      "Idle resource",
+      "Logging not enabled",
+      "Unused resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable CloudTrail/audit logging",
+      "Delete unused resource"
+    ],
+    "rule_ids": [
+      "R2",
+      "R4",
+      "R7"
+    ]
+  },
+  {
+    "resource_id": "r29",
+    "resource_type": "compute",
+    "risk_score": 44.4,
+    "priority": "MEDIUM",
+    "priority_tag": "\u00f0\u0178\u0178\u00a1",
+    "cost": 7,
+    "usage": 3,
+    "categories": [
+      "cost",
+      "security"
+    ],
+    "summary": "Compute resource with security issues and cost waste",
+    "impact": "Unnecessary cost incurred | Data not protected at rest",
+    "recommendation": "Stop or downsize instance. Enable encryption at rest.",
+    "issues": [
+      "Idle resource",
+      "Encryption disabled"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable encryption at rest"
+    ],
+    "rule_ids": [
+      "R2",
+      "R3"
+    ]
+  },
+  {
+    "resource_id": "r30",
+    "resource_type": "network",
+    "risk_score": 146.7,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 4,
+    "usage": 2,
+    "categories": [
+      "cost",
+      "compliance",
+      "security"
+    ],
+    "summary": "Network resource with security issues and cost waste",
+    "impact": "May expose sensitive data to unauthorized access | Unnecessary cost incurred | Data not protected at rest",
+    "recommendation": "Disable public access and restrict to VPC only. Stop or downsize instance. Enable encryption at rest.",
+    "issues": [
+      "Public resource detected",
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging"
+    ],
+    "rule_ids": [
+      "R1",
+      "R2",
+      "R3",
+      "R4"
+    ]
+  },
+  {
+    "resource_id": "r31",
+    "resource_type": "compute",
+    "risk_score": 16.0,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "cost": 5,
+    "usage": 1,
+    "categories": [
+      "cost"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred",
+    "recommendation": "Stop or downsize instance.",
+    "issues": [
+      "Idle resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance"
+    ],
+    "rule_ids": [
+      "R2"
+    ]
+  },
+  {
+    "resource_id": "r32",
+    "resource_type": "storage",
+    "risk_score": 224.1,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 2,
+    "usage": 0,
+    "categories": [
+      "cost",
+      "compliance",
+      "security"
+    ],
+    "summary": "Storage resource with security issues and cost waste",
+    "impact": "May expose sensitive data to unauthorized access | Unnecessary cost incurred | Data not protected at rest",
+    "recommendation": "Disable public access and restrict to VPC only. Stop or downsize instance. Enable encryption at rest.",
+    "issues": [
+      "Public resource detected",
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled",
+      "Public storage bucket detected",
+      "Unused resource"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging",
+      "Make storage bucket private immediately",
+      "Delete unused resource"
+    ],
+    "rule_ids": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R7"
+    ]
+  },
+  {
+    "resource_id": "r34",
+    "resource_type": "compute",
+    "risk_score": 16.2,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "cost": 6,
+    "usage": 4,
+    "categories": [
+      "cost"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred",
+    "recommendation": "Stop or downsize instance.",
+    "issues": [
+      "Idle resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance"
+    ],
+    "rule_ids": [
+      "R2"
+    ]
+  },
+  {
+    "resource_id": "r35",
+    "resource_type": "network",
+    "risk_score": 146.7,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 4,
+    "usage": 3,
+    "categories": [
+      "cost",
+      "compliance",
+      "security"
+    ],
+    "summary": "Network resource with security issues and cost waste",
+    "impact": "May expose sensitive data to unauthorized access | Unnecessary cost incurred | Data not protected at rest",
+    "recommendation": "Disable public access and restrict to VPC only. Stop or downsize instance. Enable encryption at rest.",
+    "issues": [
+      "Public resource detected",
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging"
+    ],
+    "rule_ids": [
+      "R1",
+      "R2",
+      "R3",
+      "R4"
+    ]
+  },
+  {
+    "resource_id": "r36",
+    "resource_type": "storage",
+    "risk_score": 61.2,
+    "priority": "HIGH",
+    "priority_tag": "\u00f0\u0178\u0178\u00a0",
+    "cost": 1,
+    "usage": 1,
+    "categories": [
+      "cost",
+      "compliance",
+      "security"
+    ],
+    "summary": "Storage resource with security issues and cost waste",
+    "impact": "Unnecessary cost incurred | Data not protected at rest | Cannot track security events or compliance violations",
+    "recommendation": "Stop or downsize instance. Enable encryption at rest. Enable CloudTrail/audit logging.",
+    "issues": [
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging"
+    ],
+    "rule_ids": [
+      "R2",
+      "R3",
+      "R4"
+    ]
+  },
+  {
+    "resource_id": "r37",
+    "resource_type": "compute",
+    "risk_score": 16.2,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "cost": 6,
+    "usage": 2,
+    "categories": [
+      "cost"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred",
+    "recommendation": "Stop or downsize instance.",
+    "issues": [
+      "Idle resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance"
+    ],
+    "rule_ids": [
+      "R2"
+    ]
+  },
+  {
+    "resource_id": "r38",
+    "resource_type": "database",
+    "risk_score": 18.0,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "cost": 15,
+    "usage": 4,
+    "categories": [
+      "cost"
+    ],
+    "summary": "Database resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred",
+    "recommendation": "Stop or downsize instance.",
+    "issues": [
+      "Idle resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance"
+    ],
+    "rule_ids": [
+      "R2"
+    ]
+  },
+  {
+    "resource_id": "r40",
+    "resource_type": "storage",
+    "risk_score": 183.6,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 2,
+    "usage": 6,
+    "categories": [
+      "compliance",
+      "security"
+    ],
+    "summary": "Storage resource with compliance and security issues",
+    "impact": "May expose sensitive data to unauthorized access | Data not protected at rest | Cannot track security events or compliance violations",
+    "recommendation": "Disable public access and restrict to VPC only. Enable encryption at rest. Enable CloudTrail/audit logging.",
+    "issues": [
+      "Public resource detected",
+      "Encryption disabled",
+      "Logging not enabled",
+      "Public storage bucket detected"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging",
+      "Make storage bucket private immediately"
+    ],
+    "rule_ids": [
+      "R1",
+      "R3",
+      "R4",
+      "R5"
+    ]
+  },
+  {
+    "resource_id": "r41",
+    "resource_type": "compute",
+    "risk_score": 16.0,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "cost": 5,
+    "usage": 1,
+    "categories": [
+      "cost"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred",
+    "recommendation": "Stop or downsize instance.",
+    "issues": [
+      "Idle resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance"
+    ],
+    "rule_ids": [
+      "R2"
+    ]
+  },
+  {
+    "resource_id": "r43",
+    "resource_type": "storage",
+    "risk_score": 224.1,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 2,
+    "usage": 0,
+    "categories": [
+      "cost",
+      "compliance",
+      "security"
+    ],
+    "summary": "Storage resource with security issues and cost waste",
+    "impact": "May expose sensitive data to unauthorized access | Unnecessary cost incurred | Data not protected at rest",
+    "recommendation": "Disable public access and restrict to VPC only. Stop or downsize instance. Enable encryption at rest.",
+    "issues": [
+      "Public resource detected",
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled",
+      "Public storage bucket detected",
+      "Unused resource"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging",
+      "Make storage bucket private immediately",
+      "Delete unused resource"
+    ],
+    "rule_ids": [
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R7"
+    ]
+  },
+  {
+    "resource_id": "r44",
+    "resource_type": "network",
+    "risk_score": 124.2,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 4,
+    "usage": 5,
+    "categories": [
+      "compliance",
+      "security"
+    ],
+    "summary": "Network resource with compliance and security issues",
+    "impact": "May expose sensitive data to unauthorized access | Data not protected at rest | Cannot track security events or compliance violations",
+    "recommendation": "Disable public access and restrict to VPC only. Enable encryption at rest. Enable CloudTrail/audit logging.",
+    "issues": [
+      "Public resource detected",
+      "Encryption disabled",
+      "Logging not enabled"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging"
+    ],
+    "rule_ids": [
+      "R1",
+      "R3",
+      "R4"
+    ]
+  },
+  {
+    "resource_id": "r45",
+    "resource_type": "compute",
+    "risk_score": 16.2,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "cost": 6,
+    "usage": 2,
+    "categories": [
+      "cost"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred",
+    "recommendation": "Stop or downsize instance.",
+    "issues": [
+      "Idle resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance"
+    ],
+    "rule_ids": [
+      "R2"
+    ]
+  },
+  {
+    "resource_id": "r46",
+    "resource_type": "compute",
+    "risk_score": 46.0,
+    "priority": "MEDIUM",
+    "priority_tag": "\u00f0\u0178\u0178\u00a1",
+    "cost": 5,
+    "usage": 0,
+    "categories": [
+      "cost",
+      "compliance"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Unnecessary cost incurred | Cannot track security events or compliance violations | Wasting cloud budget",
+    "recommendation": "Stop or downsize instance. Enable CloudTrail/audit logging. Delete unused resource.",
+    "issues": [
+      "Idle resource",
+      "Logging not enabled",
+      "Unused resource"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable CloudTrail/audit logging",
+      "Delete unused resource"
+    ],
+    "rule_ids": [
+      "R2",
+      "R4",
+      "R7"
+    ]
+  },
+  {
+    "resource_id": "r49",
+    "resource_type": "compute",
+    "risk_score": 44.4,
+    "priority": "MEDIUM",
+    "priority_tag": "\u00f0\u0178\u0178\u00a1",
+    "cost": 7,
+    "usage": 3,
+    "categories": [
+      "cost",
+      "security"
+    ],
+    "summary": "Compute resource with security issues and cost waste",
+    "impact": "Unnecessary cost incurred | Data not protected at rest",
+    "recommendation": "Stop or downsize instance. Enable encryption at rest.",
+    "issues": [
+      "Idle resource",
+      "Encryption disabled"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable encryption at rest"
+    ],
+    "rule_ids": [
+      "R2",
+      "R3"
+    ]
+  },
+  {
+    "resource_id": "r50",
+    "resource_type": "network",
+    "risk_score": 146.7,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "cost": 4,
+    "usage": 2,
+    "categories": [
+      "cost",
+      "compliance",
+      "security"
+    ],
+    "summary": "Network resource with security issues and cost waste",
+    "impact": "May expose sensitive data to unauthorized access | Unnecessary cost incurred | Data not protected at rest",
+    "recommendation": "Disable public access and restrict to VPC only. Stop or downsize instance. Enable encryption at rest.",
+    "issues": [
+      "Public resource detected",
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled"
+    ],
+    "suggestions": [
+      "Disable public access",
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging"
+    ],
+    "rule_ids": [
+      "R1",
+      "R2",
+      "R3",
+      "R4"
+    ]
+  }
+]

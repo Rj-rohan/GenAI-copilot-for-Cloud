@@ -1,0 +1,57 @@
+{
+  "issue_templates": {
+    "Public resource detected": {
+      "message": "Resource is publicly accessible",
+      "impact": "May expose sensitive data to unauthorized access",
+      "fix": "Disable public access and restrict to VPC only"
+    },
+    "Public storage bucket detected": {
+      "message": "Storage bucket is publicly accessible",
+      "impact": "Critical data exposure risk",
+      "fix": "Make storage bucket private immediately"
+    },
+    "Public database exposed": {
+      "message": "Database is publicly accessible",
+      "impact": "Critical data breach risk",
+      "fix": "Restrict database access to VPC only"
+    },
+    "Encryption disabled": {
+      "message": "Encryption is not enabled",
+      "impact": "Data not protected at rest",
+      "fix": "Enable encryption at rest"
+    },
+    "Logging not enabled": {
+      "message": "Audit logging is disabled",
+      "impact": "Cannot track security events or compliance violations",
+      "fix": "Enable CloudTrail/audit logging"
+    },
+    "Idle resource": {
+      "message": "Resource has low utilization",
+      "impact": "Unnecessary cost incurred",
+      "fix": "Stop or downsize instance"
+    },
+    "Unused resource": {
+      "message": "Resource is not being used",
+      "impact": "Wasting cloud budget",
+      "fix": "Delete unused resource"
+    }
+  },
+  "category_impacts": {
+    "security": "High security risk",
+    "compliance": "Compliance violation risk",
+    "cost": "Cost optimization needed"
+  },
+  "priority_tags": {
+    "CRITICAL": "🔴",
+    "HIGH": "🟠",
+    "MEDIUM": "🟡",
+    "LOW": "🟢"
+  },
+  "summary_templates": {
+    "security_cost": "{type} resource with security issues and cost waste",
+    "security_only": "{type} resource with security vulnerabilities",
+    "cost_only": "{type} resource with cost optimization opportunities",
+    "compliance_security": "{type} resource with compliance and security issues",
+    "general": "{type} resource requires attention"
+  }
+}

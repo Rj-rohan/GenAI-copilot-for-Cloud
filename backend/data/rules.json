@@ -1,0 +1,82 @@
+[
+  {
+    "id": "R1",
+    "category": "security",
+    "field": "public",
+    "operator": "equals",
+    "value": true,
+    "risk": 9,
+    "message": "Public resource detected",
+    "suggestion": "Disable public access"
+  },
+  {
+    "id": "R2",
+    "category": "cost",
+    "field": "usage",
+    "operator": "less",
+    "value": 5,
+    "risk": 5,
+    "message": "Idle resource",
+    "suggestion": "Stop or terminate instance"
+  },
+  {
+    "id": "R3",
+    "category": "security",
+    "field": "encrypted",
+    "operator": "equals",
+    "value": false,
+    "risk": 7,
+    "message": "Encryption disabled",
+    "suggestion": "Enable encryption at rest"
+  },
+  {
+    "id": "R4",
+    "category": "compliance",
+    "field": "logging",
+    "operator": "equals",
+    "value": false,
+    "risk": 6,
+    "message": "Logging not enabled",
+    "suggestion": "Enable CloudTrail/audit logging"
+  },
+  {
+    "id": "R5",
+    "category": "security",
+    "field": "public",
+    "operator": "equals",
+    "value": true,
+    "condition": {
+      "field": "type",
+      "operator": "equals",
+      "value": "storage"
+    },
+    "risk": 10,
+    "message": "Public storage bucket detected",
+    "suggestion": "Make storage bucket private immediately"
+  },
+  {
+    "id": "R6",
+    "category": "security",
+    "field": "public",
+    "operator": "equals",
+    "value": true,
+    "condition": {
+      "field": "type",
+      "operator": "equals",
+      "value": "database"
+    },
+    "risk": 10,
+    "message": "Public database exposed",
+    "suggestion": "Restrict database access to VPC only"
+  },
+  {
+    "id": "R7",
+    "category": "cost",
+    "field": "usage",
+    "operator": "equals",
+    "value": 0,
+    "risk": 6,
+    "message": "Unused resource",
+    "suggestion": "Delete unused resource"
+  }
+]
