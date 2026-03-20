@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Backend (Flask API)",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["backend/api.py"],
+      "port": 5000
+    },
+    {
+      "name": "Frontend (React + Vite)",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "npm run dev"],
+      "port": 5173
+    }
+  ]
+}

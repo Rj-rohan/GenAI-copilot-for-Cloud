@@ -1,0 +1,20 @@
+{
+  "category_weights": {
+    "security": 4,
+    "cost": 2,
+    "compliance": 3,
+    "access": 3
+  },
+  "priority_thresholds": {
+    "critical": 100,
+    "high": 60,
+    "medium": 30,
+    "low": 0
+  },
+  "factors": {
+    "cost_divisor": 5,
+    "usage_threshold": 5,
+    "usage_penalty": 5,
+    "exposure_multiplier": 1.5
+  }
+}

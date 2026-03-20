@@ -1,0 +1,502 @@
+[
+  {
+    "id": "r1",
+    "type": "network",
+    "usage": 66,
+    "public": true,
+    "encrypted": true,
+    "cost": 2,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r2",
+    "type": "compute",
+    "usage": 82,
+    "public": false,
+    "encrypted": true,
+    "cost": 13,
+    "logging": true,
+    "role": "admin"
+  },
+  {
+    "id": "r3",
+    "type": "compute",
+    "usage": 33,
+    "public": false,
+    "encrypted": true,
+    "cost": 8,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r4",
+    "type": "compute",
+    "usage": 2,
+    "public": true,
+    "encrypted": false,
+    "cost": 10,
+    "logging": false,
+    "role": "admin"
+  },
+  {
+    "id": "r5",
+    "type": "compute",
+    "usage": 60,
+    "public": false,
+    "encrypted": true,
+    "cost": 3,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r6",
+    "type": "database",
+    "usage": 54,
+    "public": false,
+    "encrypted": true,
+    "cost": 14,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r7",
+    "type": "compute",
+    "usage": 3,
+    "public": false,
+    "encrypted": true,
+    "cost": 13,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r8",
+    "type": "network",
+    "usage": 4,
+    "public": false,
+    "encrypted": true,
+    "cost": 5,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r9",
+    "type": "storage",
+    "usage": 0,
+    "public": false,
+    "encrypted": false,
+    "cost": 1,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r10",
+    "type": "database",
+    "usage": 12,
+    "public": false,
+    "encrypted": true,
+    "cost": 29,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r11",
+    "type": "database",
+    "usage": 3,
+    "public": false,
+    "encrypted": true,
+    "cost": 25,
+    "logging": true,
+    "role": "admin"
+  },
+  {
+    "id": "r12",
+    "type": "network",
+    "usage": 12,
+    "public": false,
+    "encrypted": false,
+    "cost": 3,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r13",
+    "type": "compute",
+    "usage": 0,
+    "public": false,
+    "encrypted": true,
+    "cost": 8,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r14",
+    "type": "compute",
+    "usage": 12,
+    "public": false,
+    "encrypted": false,
+    "cost": 18,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r15",
+    "type": "network",
+    "usage": 0,
+    "public": false,
+    "encrypted": false,
+    "cost": 4,
+    "logging": false,
+    "role": "admin"
+  },
+  {
+    "id": "r16",
+    "type": "compute",
+    "usage": 0,
+    "public": false,
+    "encrypted": true,
+    "cost": 14,
+    "logging": true,
+    "role": "admin"
+  },
+  {
+    "id": "r17",
+    "type": "database",
+    "usage": 65,
+    "public": false,
+    "encrypted": true,
+    "cost": 12,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r18",
+    "type": "storage",
+    "usage": 63,
+    "public": true,
+    "encrypted": false,
+    "cost": 3,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r19",
+    "type": "compute",
+    "usage": 29,
+    "public": true,
+    "encrypted": false,
+    "cost": 16,
+    "logging": false,
+    "role": "admin"
+  },
+  {
+    "id": "r20",
+    "type": "database",
+    "usage": 9,
+    "public": false,
+    "encrypted": true,
+    "cost": 13,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r21",
+    "type": "compute",
+    "usage": 20,
+    "public": false,
+    "encrypted": false,
+    "cost": 11,
+    "logging": false,
+    "role": "admin"
+  },
+  {
+    "id": "r22",
+    "type": "storage",
+    "usage": 4,
+    "public": true,
+    "encrypted": false,
+    "cost": 3,
+    "logging": false,
+    "role": "admin"
+  },
+  {
+    "id": "r23",
+    "type": "storage",
+    "usage": 1,
+    "public": true,
+    "encrypted": true,
+    "cost": 5,
+    "logging": false,
+    "role": "admin"
+  },
+  {
+    "id": "r24",
+    "type": "database",
+    "usage": 74,
+    "public": false,
+    "encrypted": true,
+    "cost": 19,
+    "logging": true,
+    "role": "admin"
+  },
+  {
+    "id": "r25",
+    "type": "storage",
+    "usage": 40,
+    "public": false,
+    "encrypted": true,
+    "cost": 4,
+    "logging": true,
+    "role": "admin"
+  },
+  {
+    "id": "r26",
+    "type": "compute",
+    "usage": 1,
+    "public": false,
+    "encrypted": false,
+    "cost": 13,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r27",
+    "type": "network",
+    "usage": 4,
+    "public": true,
+    "encrypted": false,
+    "cost": 2,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r28",
+    "type": "storage",
+    "usage": 91,
+    "public": false,
+    "encrypted": false,
+    "cost": 3,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r29",
+    "type": "network",
+    "usage": 13,
+    "public": false,
+    "encrypted": true,
+    "cost": 4,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r30",
+    "type": "storage",
+    "usage": 2,
+    "public": false,
+    "encrypted": true,
+    "cost": 4,
+    "logging": true,
+    "role": "admin"
+  },
+  {
+    "id": "r31",
+    "type": "compute",
+    "usage": 46,
+    "public": false,
+    "encrypted": false,
+    "cost": 6,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r32",
+    "type": "database",
+    "usage": 12,
+    "public": false,
+    "encrypted": true,
+    "cost": 30,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r33",
+    "type": "compute",
+    "usage": 0,
+    "public": false,
+    "encrypted": true,
+    "cost": 16,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r34",
+    "type": "storage",
+    "usage": 2,
+    "public": true,
+    "encrypted": false,
+    "cost": 2,
+    "logging": true,
+    "role": "admin"
+  },
+  {
+    "id": "r35",
+    "type": "storage",
+    "usage": 84,
+    "public": false,
+    "encrypted": true,
+    "cost": 3,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r36",
+    "type": "network",
+    "usage": 0,
+    "public": true,
+    "encrypted": false,
+    "cost": 8,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r37",
+    "type": "compute",
+    "usage": 43,
+    "public": false,
+    "encrypted": true,
+    "cost": 7,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r38",
+    "type": "compute",
+    "usage": 0,
+    "public": false,
+    "encrypted": true,
+    "cost": 7,
+    "logging": true,
+    "role": "admin"
+  },
+  {
+    "id": "r39",
+    "type": "database",
+    "usage": 50,
+    "public": false,
+    "encrypted": true,
+    "cost": 15,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r40",
+    "type": "compute",
+    "usage": 53,
+    "public": false,
+    "encrypted": true,
+    "cost": 10,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r41",
+    "type": "storage",
+    "usage": 6,
+    "public": false,
+    "encrypted": true,
+    "cost": 2,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r42",
+    "type": "compute",
+    "usage": 0,
+    "public": false,
+    "encrypted": true,
+    "cost": 10,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r43",
+    "type": "storage",
+    "usage": 9,
+    "public": false,
+    "encrypted": true,
+    "cost": 4,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r44",
+    "type": "compute",
+    "usage": 1,
+    "public": false,
+    "encrypted": true,
+    "cost": 12,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r45",
+    "type": "storage",
+    "usage": 9,
+    "public": false,
+    "encrypted": true,
+    "cost": 1,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r46",
+    "type": "database",
+    "usage": 69,
+    "public": false,
+    "encrypted": true,
+    "cost": 16,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r47",
+    "type": "compute",
+    "usage": 84,
+    "public": false,
+    "encrypted": true,
+    "cost": 15,
+    "logging": false,
+    "role": "user"
+  },
+  {
+    "id": "r48",
+    "type": "compute",
+    "usage": 87,
+    "public": false,
+    "encrypted": false,
+    "cost": 16,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r49",
+    "type": "database",
+    "usage": 74,
+    "public": false,
+    "encrypted": true,
+    "cost": 13,
+    "logging": true,
+    "role": "user"
+  },
+  {
+    "id": "r50",
+    "type": "compute",
+    "usage": 9,
+    "public": false,
+    "encrypted": true,
+    "cost": 8,
+    "logging": true,
+    "role": "admin"
+  }
+]

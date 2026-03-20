@@ -1,0 +1,97 @@
+{
+  "issue_templates": {
+    "Public resource detected": {
+      "message": "Resource is publicly accessible",
+      "impact": "May expose sensitive data to unauthorized access",
+      "fix": "Disable public access and restrict to VPC only"
+    },
+    "Public storage bucket detected": {
+      "message": "Storage bucket is publicly accessible",
+      "impact": "Critical data exposure risk - any internet user can read bucket contents",
+      "fix": "Make storage bucket private immediately and enable Block Public Access"
+    },
+    "Public database exposed": {
+      "message": "Database is publicly accessible",
+      "impact": "Critical data breach risk - database is reachable from the internet",
+      "fix": "Restrict database access to VPC only and remove public endpoint"
+    },
+    "Encryption disabled": {
+      "message": "Encryption is not enabled",
+      "impact": "Data not protected at rest - violates PCI-DSS and data protection standards",
+      "fix": "Enable encryption at rest using KMS or service-managed keys"
+    },
+    "Logging not enabled": {
+      "message": "Audit logging is disabled",
+      "impact": "Cannot track security events or meet compliance audit requirements",
+      "fix": "Enable CloudTrail/audit logging and ship logs to centralized store"
+    },
+    "Idle resource": {
+      "message": "Resource has low utilization",
+      "impact": "Unnecessary cost incurred with minimal business value delivered",
+      "fix": "Stop or downsize instance to reduce monthly spend"
+    },
+    "Unused resource": {
+      "message": "Resource is not being used",
+      "impact": "100% cost waste - resource delivers zero value",
+      "fix": "Delete unused resource to eliminate wasted spend"
+    },
+    "Suspicious login activity detected": {
+      "message": "Multiple failed login attempts detected via CloudTrail",
+      "impact": "Potential credential stuffing or brute-force attack in progress",
+      "fix": "Enable MFA, rotate credentials, review and restrict IAM policies"
+    },
+    "Known vulnerabilities detected": {
+      "message": "SecurityHub has identified unpatched vulnerabilities",
+      "impact": "Known CVEs can be exploited by attackers to gain unauthorized access",
+      "fix": "Apply security patches and review SecurityHub findings for CVE details"
+    },
+    "Stale resource - no activity for 90+ days": {
+      "message": "No CloudTrail activity recorded for over 90 days",
+      "impact": "Orphaned resource increasing attack surface and wasting budget",
+      "fix": "Validate business need and decommission if no longer required"
+    },
+    "Rightsizing opportunity identified": {
+      "message": "Cost Explorer identifies significant savings potential",
+      "impact": "Overspending on underutilized resources reduces cloud ROI",
+      "fix": "Rightsize to a smaller instance type based on actual utilization metrics"
+    },
+    "SSH port (22) exposed to internet": {
+      "message": "SSH port is publicly reachable from any IP address",
+      "impact": "High-risk attack vector for brute-force, credential theft, and lateral movement",
+      "fix": "Restrict SSH to specific VPN IP ranges or use AWS Systems Manager Session Manager"
+    },
+    "RDP port (3389) exposed to internet": {
+      "message": "RDP port is publicly reachable from any IP address",
+      "impact": "Critical risk - RDP is a primary target for ransomware and remote exploits",
+      "fix": "Restrict RDP to VPN only, enable Network Level Authentication, enforce MFA"
+    },
+    "Active compliance violations detected": {
+      "message": "AWS Config has flagged active compliance rule violations",
+      "impact": "Regulatory non-compliance risks fines, audit failures, and reputational damage",
+      "fix": "Review all violations in AWS Config and implement required controls"
+    },
+    "Resource missing required tags": {
+      "message": "Resource has no tags for cost allocation or governance",
+      "impact": "Cannot attribute costs to teams or enforce governance policies",
+      "fix": "Apply mandatory tags: env, team, project, owner"
+    }
+  },
+  "category_impacts": {
+    "security": "High security risk - potential for data breach or unauthorized access",
+    "compliance": "Compliance violation - risk of audit failure or regulatory penalty",
+    "cost": "Cost optimization needed - budget waste identified"
+  },
+  "priority_tags": {
+    "CRITICAL": "🔴",
+    "HIGH":     "🟠",
+    "MEDIUM":   "🟡",
+    "LOW":      "🟢"
+  },
+  "summary_templates": {
+    "security_cost":       "{type} resource with security vulnerabilities and cost waste",
+    "security_only":       "{type} resource with critical security vulnerabilities",
+    "cost_only":           "{type} resource with cost optimization opportunities",
+    "compliance_security": "{type} resource with compliance violations and security issues",
+    "general":             "{type} resource requires attention"
+  }
+}

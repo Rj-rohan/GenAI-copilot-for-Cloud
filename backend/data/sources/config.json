@@ -1,0 +1,541 @@
+{
+  "r1": {
+    "region": "eu-west-1",
+    "resource_name": "alb-internal-alb",
+    "tags": {
+      "env": "staging"
+    },
+    "created_days_ago": 163,
+    "compliance_violations": [
+      "CIS: Restrict public access",
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r2": {
+    "region": "us-west-2",
+    "resource_name": "ec2-ml-instance",
+    "tags": {
+      "env": "staging",
+      "team": "security",
+      "project": "auth-service"
+    },
+    "created_days_ago": 106,
+    "compliance_violations": []
+  },
+  "r3": {
+    "region": "eu-central-1",
+    "resource_name": "ec2-stream-consumer",
+    "tags": {
+      "env": "prod",
+      "team": "platform",
+      "project": "data-platform"
+    },
+    "created_days_ago": 259,
+    "compliance_violations": []
+  },
+  "r4": {
+    "region": "us-east-1",
+    "resource_name": "ec2-api-server",
+    "tags": {},
+    "created_days_ago": 510,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required",
+      "CIS: Restrict public access",
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r5": {
+    "region": "us-west-2",
+    "resource_name": "ec2-bastion",
+    "tags": {
+      "env": "prod",
+      "team": "platform",
+      "project": "core-api"
+    },
+    "created_days_ago": 537,
+    "compliance_violations": [
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r6": {
+    "region": "us-east-1",
+    "resource_name": "rds-metrics-db",
+    "tags": {
+      "env": "prod",
+      "team": "data",
+      "project": "payments"
+    },
+    "created_days_ago": 75,
+    "compliance_violations": [
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r7": {
+    "region": "ap-south-1",
+    "resource_name": "ec2-ml-instance-02",
+    "tags": {},
+    "created_days_ago": 226,
+    "compliance_violations": [
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r8": {
+    "region": "us-west-2",
+    "resource_name": "alb-legacy-lb",
+    "tags": {},
+    "created_days_ago": 36,
+    "compliance_violations": []
+  },
+  "r9": {
+    "region": "us-east-1",
+    "resource_name": "s3-media-files",
+    "tags": {},
+    "created_days_ago": 402,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required",
+      "FinOps: Unused resource consuming budget"
+    ]
+  },
+  "r10": {
+    "region": "us-west-2",
+    "resource_name": "rds-metrics-db-02",
+    "tags": {
+      "env": "dev"
+    },
+    "created_days_ago": 160,
+    "compliance_violations": []
+  },
+  "r11": {
+    "region": "us-west-2",
+    "resource_name": "rds-dev-db",
+    "tags": {},
+    "created_days_ago": 318,
+    "compliance_violations": []
+  },
+  "r12": {
+    "region": "us-east-1",
+    "resource_name": "alb-api-gateway",
+    "tags": {
+      "env": "prod"
+    },
+    "created_days_ago": 327,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required"
+    ]
+  },
+  "r13": {
+    "region": "eu-central-1",
+    "resource_name": "ec2-worker-node",
+    "tags": {
+      "env": "dev"
+    },
+    "created_days_ago": 229,
+    "compliance_violations": [
+      "FinOps: Unused resource consuming budget"
+    ]
+  },
+  "r14": {
+    "region": "eu-west-1",
+    "resource_name": "ec2-cache-node",
+    "tags": {
+      "env": "staging"
+    },
+    "created_days_ago": 91,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required"
+    ]
+  },
+  "r15": {
+    "region": "ap-south-1",
+    "resource_name": "alb-dev-gateway",
+    "tags": {},
+    "created_days_ago": 460,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required",
+      "SOC2: Audit logging required",
+      "FinOps: Unused resource consuming budget"
+    ]
+  },
+  "r16": {
+    "region": "eu-west-1",
+    "resource_name": "ec2-admin-host",
+    "tags": {},
+    "created_days_ago": 179,
+    "compliance_violations": [
+      "FinOps: Unused resource consuming budget"
+    ]
+  },
+  "r17": {
+    "region": "us-west-2",
+    "resource_name": "rds-primary-db",
+    "tags": {
+      "env": "prod",
+      "team": "infra",
+      "project": "auth-service"
+    },
+    "created_days_ago": 313,
+    "compliance_violations": [
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r18": {
+    "region": "eu-west-1",
+    "resource_name": "s3-terraform-state",
+    "tags": {
+      "env": "dev"
+    },
+    "created_days_ago": 478,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required",
+      "CIS: Restrict public access"
+    ]
+  },
+  "r19": {
+    "region": "us-east-1",
+    "resource_name": "ec2-cache-node-02",
+    "tags": {
+      "env": "dev"
+    },
+    "created_days_ago": 370,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required",
+      "CIS: Restrict public access",
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r20": {
+    "region": "us-west-2",
+    "resource_name": "rds-analytics-db",
+    "tags": {
+      "env": "staging"
+    },
+    "created_days_ago": 276,
+    "compliance_violations": [
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r21": {
+    "region": "us-west-2",
+    "resource_name": "ec2-web-server",
+    "tags": {
+      "env": "dev"
+    },
+    "created_days_ago": 440,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required",
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r22": {
+    "region": "eu-west-1",
+    "resource_name": "s3-backup-store",
+    "tags": {
+      "env": "dev"
+    },
+    "created_days_ago": 399,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required",
+      "CIS: Restrict public access",
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r23": {
+    "region": "eu-west-1",
+    "resource_name": "s3-archive-data",
+    "tags": {},
+    "created_days_ago": 323,
+    "compliance_violations": [
+      "CIS: Restrict public access",
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r24": {
+    "region": "eu-west-1",
+    "resource_name": "rds-auth-db",
+    "tags": {
+      "env": "staging",
+      "team": "security",
+      "project": "infra-base"
+    },
+    "created_days_ago": 139,
+    "compliance_violations": []
+  },
+  "r25": {
+    "region": "eu-west-1",
+    "resource_name": "s3-public-assets",
+    "tags": {
+      "env": "prod",
+      "team": "security",
+      "project": "infra-base"
+    },
+    "created_days_ago": 46,
+    "compliance_violations": []
+  },
+  "r26": {
+    "region": "eu-west-1",
+    "resource_name": "ec2-stream-consumer-02",
+    "tags": {
+      "env": "dev"
+    },
+    "created_days_ago": 403,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required"
+    ]
+  },
+  "r27": {
+    "region": "us-west-2",
+    "resource_name": "alb-internet-alb",
+    "tags": {},
+    "created_days_ago": 176,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required",
+      "CIS: Restrict public access",
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r28": {
+    "region": "ap-south-1",
+    "resource_name": "s3-archive-data-02",
+    "tags": {
+      "env": "prod",
+      "team": "data",
+      "project": "core-api"
+    },
+    "created_days_ago": 394,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required"
+    ]
+  },
+  "r29": {
+    "region": "ap-south-1",
+    "resource_name": "alb-nat-gw",
+    "tags": {
+      "env": "dev"
+    },
+    "created_days_ago": 108,
+    "compliance_violations": []
+  },
+  "r30": {
+    "region": "eu-west-1",
+    "resource_name": "s3-archive-data-03",
+    "tags": {},
+    "created_days_ago": 301,
+    "compliance_violations": []
+  },
+  "r31": {
+    "region": "us-west-2",
+    "resource_name": "ec2-ml-instance-03",
+    "tags": {
+      "env": "prod",
+      "team": "ml",
+      "project": "auth-service"
+    },
+    "created_days_ago": 539,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required"
+    ]
+  },
+  "r32": {
+    "region": "us-west-2",
+    "resource_name": "rds-replica-db",
+    "tags": {
+      "env": "prod"
+    },
+    "created_days_ago": 409,
+    "compliance_violations": [
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r33": {
+    "region": "us-east-1",
+    "resource_name": "ec2-admin-host-02",
+    "tags": {},
+    "created_days_ago": 106,
+    "compliance_violations": [
+      "SOC2: Audit logging required",
+      "FinOps: Unused resource consuming budget"
+    ]
+  },
+  "r34": {
+    "region": "us-west-2",
+    "resource_name": "s3-temp-storage",
+    "tags": {},
+    "created_days_ago": 43,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required",
+      "CIS: Restrict public access"
+    ]
+  },
+  "r35": {
+    "region": "us-east-1",
+    "resource_name": "s3-build-artifacts",
+    "tags": {
+      "env": "staging",
+      "team": "ml",
+      "project": "data-platform"
+    },
+    "created_days_ago": 485,
+    "compliance_violations": [
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r36": {
+    "region": "us-west-2",
+    "resource_name": "alb-admin-sg",
+    "tags": {},
+    "created_days_ago": 87,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required",
+      "CIS: Restrict public access",
+      "SOC2: Audit logging required",
+      "FinOps: Unused resource consuming budget"
+    ]
+  },
+  "r37": {
+    "region": "us-west-2",
+    "resource_name": "ec2-data-processor",
+    "tags": {
+      "env": "staging",
+      "team": "platform",
+      "project": "core-api"
+    },
+    "created_days_ago": 312,
+    "compliance_violations": [
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r38": {
+    "region": "us-east-1",
+    "resource_name": "ec2-cache-node-03",
+    "tags": {},
+    "created_days_ago": 50,
+    "compliance_violations": [
+      "FinOps: Unused resource consuming budget"
+    ]
+  },
+  "r39": {
+    "region": "us-east-1",
+    "resource_name": "rds-events-db",
+    "tags": {
+      "env": "staging",
+      "team": "security",
+      "project": "ml-pipeline"
+    },
+    "created_days_ago": 361,
+    "compliance_violations": []
+  },
+  "r40": {
+    "region": "us-west-2",
+    "resource_name": "ec2-batch-worker",
+    "tags": {
+      "env": "prod",
+      "team": "backend",
+      "project": "infra-base"
+    },
+    "created_days_ago": 210,
+    "compliance_violations": []
+  },
+  "r41": {
+    "region": "us-east-1",
+    "resource_name": "s3-temp-storage-02",
+    "tags": {
+      "env": "dev"
+    },
+    "created_days_ago": 535,
+    "compliance_violations": []
+  },
+  "r42": {
+    "region": "us-east-1",
+    "resource_name": "ec2-app-server",
+    "tags": {},
+    "created_days_ago": 117,
+    "compliance_violations": [
+      "SOC2: Audit logging required",
+      "FinOps: Unused resource consuming budget"
+    ]
+  },
+  "r43": {
+    "region": "us-east-1",
+    "resource_name": "s3-user-uploads",
+    "tags": {
+      "env": "dev"
+    },
+    "created_days_ago": 544,
+    "compliance_violations": []
+  },
+  "r44": {
+    "region": "eu-west-1",
+    "resource_name": "ec2-app-server-02",
+    "tags": {},
+    "created_days_ago": 148,
+    "compliance_violations": []
+  },
+  "r45": {
+    "region": "eu-west-1",
+    "resource_name": "s3-archive-data-04",
+    "tags": {
+      "env": "dev"
+    },
+    "created_days_ago": 148,
+    "compliance_violations": []
+  },
+  "r46": {
+    "region": "eu-west-1",
+    "resource_name": "rds-primary-db-02",
+    "tags": {
+      "env": "staging",
+      "team": "devops",
+      "project": "data-platform"
+    },
+    "created_days_ago": 75,
+    "compliance_violations": [
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r47": {
+    "region": "ap-south-1",
+    "resource_name": "ec2-data-processor-02",
+    "tags": {
+      "env": "staging",
+      "team": "ml",
+      "project": "auth-service"
+    },
+    "created_days_ago": 512,
+    "compliance_violations": [
+      "SOC2: Audit logging required"
+    ]
+  },
+  "r48": {
+    "region": "us-west-2",
+    "resource_name": "ec2-app-server-03",
+    "tags": {
+      "env": "prod",
+      "team": "security",
+      "project": "core-api"
+    },
+    "created_days_ago": 444,
+    "compliance_violations": [
+      "PCI-DSS: Data encryption required"
+    ]
+  },
+  "r49": {
+    "region": "eu-west-1",
+    "resource_name": "rds-events-db-02",
+    "tags": {
+      "env": "staging",
+      "team": "devops",
+      "project": "infra-base"
+    },
+    "created_days_ago": 183,
+    "compliance_violations": []
+  },
+  "r50": {
+    "region": "us-west-2",
+    "resource_name": "ec2-bastion-02",
+    "tags": {
+      "env": "prod"
+    },
+    "created_days_ago": 62,
+    "compliance_violations": []
+  }
+}
