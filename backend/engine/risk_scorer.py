@@ -20,13 +20,33 @@ class RiskScorer:
         base_score = self._calculate_weighted_score(matched_rules)
         cost_factor = self._calculate_cost_factor(resource.cost)
         usage_factor = self._calculate_usage_factor(resource.usage)
-        
+
         total_score = base_score + cost_factor + usage_factor
-        
+
         exposure_multiplier = self._calculate_exposure_multiplier(resource)
         final_score = total_score * exposure_multiplier
-        
-        return round(final_score, 2)
+
+        breakdown = {
+            'base_score':          round(base_score, 2),
+            'cost_factor':         round(cost_factor, 2),
+            'usage_penalty':       round(usage_factor, 2),
+            'subtotal':            round(total_score, 2),
+            'exposure_multiplier': exposure_multiplier,
+            'final_score':         round(final_score, 2),
+            'rules_triggered': [
+                {
+                    'id':       r.id,
+                    'category': r.category,
+                    'risk':     r.risk,
+                    'weight':   self.category_weights.get(r.category, 1),
+                    'weighted': round(r.risk * self.category_weights.get(r.category, 1), 2),
+                    'message':  r.message,
+                }
+                for r in matched_rules
+            ],
+        }
+
+        return round(final_score, 2), breakdown
 
     def _calculate_weighted_score(self, matched_rules):
         score = 0

@@ -1,14 +1,60 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+/* ── Design Tokens ─────────────────────────────────────────────────────────── */
+:root {
+  /* Layout */
+  --sidebar-w:    240px;
+  --sidebar-w-sm:  58px;
+  --header-h:      56px;
+
+  /* Surfaces */
+  --bg:           #f1f5f9;
+  --card:         #ffffff;
+  --border:       #e2e8f0;
+  --border-md:    #cbd5e1;
+
+  /* Sidebar */
+  --sb-bg:        #0f172a;
+  --sb-hover:     #1e293b;
+  --sb-active-bg: rgba(59,130,246,.14);
+  --sb-active-bd: #3b82f6;
+
+  /* Text */
+  --tx:           #0f172a;
+  --tx-2:         #475569;
+  --tx-3:         #94a3b8;
+
+  /* Brand */
+  --blue:         #2563eb;
+  --blue-lt:      #eff6ff;
+
+  /* Risk */
+  --critical:     #dc2626;  --critical-lt:  #fef2f2;
+  --high:         #ea580c;  --high-lt:      #fff7ed;
+  --medium:       #d97706;  --medium-lt:    #fffbeb;
+  --low:          #16a34a;  --low-lt:       #f0fdf4;
+
+  /* Font */
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--tx);
+  background: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+button { font-family: var(--font); cursor: pointer; }
+input  { font-family: var(--font); }
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 5px; height: 5px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }

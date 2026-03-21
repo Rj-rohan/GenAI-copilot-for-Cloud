@@ -28,7 +28,7 @@ class InsightGenerator:
         self.priority_tags     = config['priority_tags']
         self.summary_templates = config['summary_templates']
 
-    def generate(self, resource, matched_rules, risk_score, priority):
+    def generate(self, resource, matched_rules, risk_score, priority, score_breakdown=None):
         if not matched_rules:
             return None
 
@@ -74,6 +74,9 @@ class InsightGenerator:
 
             # AWS CLI / boto3 fix commands keyed by issue
             "cli_fixes": cli_fixes,
+
+            # Risk score breakdown (for transparency / demo)
+            "score_breakdown": score_breakdown or {},
 
             # Base metrics (Cost Explorer + inventory)
             "cost":             resource.cost,

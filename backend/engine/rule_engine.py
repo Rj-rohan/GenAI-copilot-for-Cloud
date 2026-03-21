@@ -24,11 +24,11 @@ class RuleEngine:
             matched_rules = self.rule_evaluator.evaluate(resource, self.rules)
             
             if matched_rules:
-                risk_score = self.risk_scorer.calculate_score(resource, matched_rules)
+                risk_score, score_breakdown = self.risk_scorer.calculate_score(resource, matched_rules)
                 priority = self.risk_scorer.calculate_priority(risk_score)
-                
+
                 insight = self.insight_generator.generate(
-                    resource, matched_rules, risk_score, priority
+                    resource, matched_rules, risk_score, priority, score_breakdown
                 )
                 
                 if insight:
