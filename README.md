@@ -3,6 +3,11 @@
 ## ⚡ 3 Commands to Get Started
 
 ```bash
+# 0. Setup Gemini API keys (first time only)
+cd backend
+cp .env.example .env
+# Edit .env and add your GEMINI_API_KEY (see API_KEY_SETUP.md)
+
 # 1. Generate data for all clouds (30 resources each)
 cd backend
 python generate_data_multicloud.py --provider all --count 30
@@ -83,10 +88,31 @@ Then: **Ctrl + Shift + R** in browser
 - **Charts**: Risk, Cost, Compliance
 - **Table**: All findings (sortable, filterable)
 - **Drawer**: Click row for details
+- **GenAI Copilot**: Multi-cloud AI assistant (AWS/Azure/GCP)
+  - Cloud-specific CLI commands
+  - Automatic service name translation
+  - Context-aware explanations
 
 ---
 
 ## 🔧 Troubleshooting
+
+### GenAI Copilot not working?
+**Setup API keys:**
+```bash
+cd backend
+cp .env.example .env
+# Edit .env and add GEMINI_API_KEY
+# See API_KEY_SETUP.md for detailed instructions
+```
+
+**Multiple keys for high availability:**
+```bash
+GEMINI_API_KEY=your_primary_key
+GEMINI_API_KEY_1=your_fallback_key_1
+GEMINI_API_KEY_2=your_fallback_key_2
+```
+System will automatically rotate keys on quota exhaustion!
 
 ### Not seeing new data?
 **Hard refresh:** Ctrl + Shift + R (Windows/Linux) or Cmd + Shift + R (Mac)
@@ -176,6 +202,10 @@ Should match backend!
 ✅ **Consistent Rules**: 15 rules apply to all
 ✅ **Easy Switching**: Click button to change cloud
 ✅ **Independent Data**: Each cloud has separate findings
+✅ **GenAI Copilot**: Multi-cloud AI with cloud-specific CLI commands
+  - AWS CLI for AWS resources
+  - Azure CLI for Azure resources
+  - gcloud CLI for GCP resources
 
 ---
 

@@ -10,11 +10,12 @@ from engine.risk_scorer import RiskScorer
 from engine.insight_generator import InsightGenerator
 
 class RuleEngine:
-    def __init__(self, rules_path):
+    def __init__(self, rules_path, provider='aws'):
+        self.provider = provider
         self.rule_loader = RuleLoader(rules_path)
         self.rule_evaluator = RuleEvaluator()
         self.risk_scorer = RiskScorer()
-        self.insight_generator = InsightGenerator()
+        self.insight_generator = InsightGenerator(provider=provider)
         self.rules = self.rule_loader.load()
 
     def analyze(self, resources):

@@ -68,36 +68,53 @@ Do NOT make up resource IDs or ARNs — use placeholders like <INSTANCE_ID> when
 class LLMConnector:
     """
     Priority order:
-      1. Google Gemini  (GEMINI_API_KEY set + google-generativeai installed)
+      1. Google Gemini  (GEMINI_API_KEY or GEMINI_API_KEY_1/2/3 set + google-generativeai installed)
       2. Claude         (ANTHROPIC_API_KEY set + anthropic installed)
       3. Mock           (structured rule-based fallback)
+    
+    Supports multiple Gemini API keys for fallback/rotation.
     """
 
     def __init__(self):
-        gemini_key    = os.environ.get('GEMINI_API_KEY', '').strip()
+        # Collect all Gemini keys (GEMINI_API_KEY, GEMINI_API_KEY_1, GEMINI_API_KEY_2, GEMINI_API_KEY_3)
+        gemini_keys = []
+        
+        # Primary key
+        primary_key = os.environ.get('GEMINI_API_KEY', '').strip()
+        if primary_key:
+            gemini_keys.append(primary_key)
+        
+        # Fallback keys (1, 2, 3)
+        for i in range(1, 4):
+            key = os.environ.get(f'GEMINI_API_KEY_{i}', '').strip()
+            if key:
+                gemini_keys.append(key)
+        
         anthropic_key = os.environ.get('ANTHROPIC_API_KEY', '').strip()
 
-        if gemini_key and _GEMINI_AVAILABLE:
+        if gemini_keys and _GEMINI_AVAILABLE:
             self._mode = 'gemini'
-            genai.configure(api_key=gemini_key)
+            self._gemini_keys = gemini_keys
+            self._current_key_index = 0
+            genai.configure(api_key=self._gemini_keys[0])
             self._gemini_model = genai.GenerativeModel(
-                model_name='gemini-1.5-flash',
+                model_name='gemini-2.5-flash',
                 system_instruction=SYSTEM_PROMPT,
             )
-            print("[LLM] ✅ Gemini AI connected (model: gemini-1.5-flash)")
+            print(f"[LLM] OK Gemini AI connected ({len(gemini_keys)} API key(s) available, model: gemini-2.5-flash)")
 
         elif anthropic_key and _ANTHROPIC_AVAILABLE:
             self._mode = 'claude'
             self._claude_client = anthropic.Anthropic(api_key=anthropic_key)
             self._claude_model  = 'claude-haiku-4-5-20251001'
-            print("[LLM] ✅ Claude AI connected (model: claude-haiku-4-5)")
+            print("[LLM] OK Claude AI connected (model: claude-haiku-4-5)")
 
         else:
             self._mode = 'mock'
             reason = []
-            if not gemini_key:    reason.append("no GEMINI_API_KEY")
+            if not gemini_keys:   reason.append("no GEMINI_API_KEY")
             if not anthropic_key: reason.append("no ANTHROPIC_API_KEY")
-            print(f"[LLM] ⚠️  Mock mode ({', '.join(reason)})")
+            print(f"[LLM] WARNING Mock mode ({', '.join(reason)})")
 
     # ── Public interface ───────────────────────────────────────────────────────
 
@@ -122,11 +139,44 @@ class LLMConnector:
     def use_mock(self):
         return self._mode == 'mock'
 
-    # ── Gemini API call ────────────────────────────────────────────────────────
+    # ── Gemini API call with automatic key rotation ───────────────────────────
 
     def _gemini_response(self, prompt):
-        response = self._gemini_model.generate_content(prompt)
-        return response.text
+        """Try current key, rotate to next key on failure."""
+        max_attempts = len(self._gemini_keys)
+        
+        for attempt in range(max_attempts):
+            try:
+                response = self._gemini_model.generate_content(prompt)
+                return response.text
+            except Exception as e:
+                error_msg = str(e).lower()
+                
+                # Check if it's a quota/rate limit error
+                if 'quota' in error_msg or 'rate' in error_msg or '429' in error_msg:
+                    print(f"[LLM] Gemini key {self._current_key_index + 1} quota exceeded, rotating...")
+                    
+                    # Rotate to next key
+                    self._current_key_index = (self._current_key_index + 1) % len(self._gemini_keys)
+                    next_key = self._gemini_keys[self._current_key_index]
+                    
+                    # Reconfigure with new key
+                    genai.configure(api_key=next_key)
+                    self._gemini_model = genai.GenerativeModel(
+                        model_name='gemini-2.5-flash',
+                        system_instruction=SYSTEM_PROMPT,
+                    )
+                    print(f"[LLM] Switched to Gemini key {self._current_key_index + 1}")
+                    
+                    # Try again with new key
+                    if attempt < max_attempts - 1:
+                        continue
+                
+                # If not quota error or last attempt, raise
+                if attempt == max_attempts - 1:
+                    raise Exception(f"All {max_attempts} Gemini API keys exhausted: {e}")
+        
+        raise Exception("Failed to get Gemini response after all attempts")
 
     # ── Claude API call ────────────────────────────────────────────────────────
 

@@ -19,7 +19,8 @@ CORS(app)
 BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 
 # Initialize copilot (auto-detects Claude API key)
-copilot = CopilotEngine()
+# Will be re-initialized per request with provider
+copilot = None
 
 
 # ── Findings & Stats ──────────────────────────────────────────────────────────
@@ -57,11 +58,14 @@ def get_stats():
 def copilot_query():
     data  = request.json or {}
     query = data.get('query', '').strip()
+    provider = data.get('provider', 'aws')
 
     if not query:
         return jsonify({'error': 'Query is required'}), 400
 
-    result = copilot.process_query(query)
+    # Initialize copilot with provider
+    copilot_engine = CopilotEngine(provider=provider)
+    result = copilot_engine.process_query(query)
     return jsonify(result)
 
 

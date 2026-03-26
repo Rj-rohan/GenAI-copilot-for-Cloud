@@ -54,7 +54,7 @@ def main():
     # ── Step 2: Rule Engine ────────────────────────────────────────
     print("\n[2] Analyzer Engine - Rule Engine")
     print("-" * 40)
-    engine = RuleEngine(rules_path)
+    engine = RuleEngine(rules_path, provider)
     print(f"    Loaded {len(engine.rules)} rules")
 
     # ── Step 3: Risk Analysis ──────────────────────────────────────

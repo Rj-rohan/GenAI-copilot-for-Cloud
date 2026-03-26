@@ -9,10 +9,11 @@ from copilot.prompt_generator import PromptGenerator
 from copilot.llm_connector import LLMConnector
 
 class CopilotEngine:
-    def __init__(self, findings_path=None):
+    def __init__(self, findings_path=None, provider='aws'):
+        self.provider = provider
         self.query_handler = QueryHandler()
-        self.context_builder = ContextBuilder(findings_path)
-        self.prompt_generator = PromptGenerator()
+        self.context_builder = ContextBuilder(findings_path, provider)
+        self.prompt_generator = PromptGenerator(provider)
         self.llm_connector = LLMConnector()
 
     def process_query(self, user_query):

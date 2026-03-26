@@ -82,17 +82,17 @@ const CMDS = [
 ];
 
 // ── Copilot ───────────────────────────────────────────────────────────────────
-export default function Copilot() {
+export default function Copilot({ cloud = 'aws' }) {
   const [query,    setQuery]    = useState('');
   const [messages, setMessages] = useState([{
     type: 'bot',
     content: `**WELCOME TO GENAI CLOUD SECURITY COPILOT**
 
-Powered by **Gemini AI** — I can help you analyze your cloud security posture, identify risks, and generate fix commands.
+Powered by **Gemini AI** — I can help you analyze your ${cloud.toUpperCase()} cloud security posture, identify risks, and generate fix commands.
 
 **What I can do:**
 - Explain why specific resources are flagged as CRITICAL or HIGH risk
-- Generate AWS CLI commands to remediate security misconfigurations
+- Generate ${cloud === 'aws' ? 'AWS CLI' : cloud === 'azure' ? 'Azure CLI' : 'gcloud CLI'} commands to remediate security misconfigurations
 - Summarize your entire cloud cost and security exposure
 - Identify savings opportunities and rightsizing recommendations
 
@@ -105,6 +105,24 @@ Use the quick commands on the left, or type freely below.`,
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
+  // Reset messages when cloud changes
+  useEffect(() => {
+    setMessages([{
+      type: 'bot',
+      content: `**WELCOME TO GENAI CLOUD SECURITY COPILOT**
+
+Powered by **Gemini AI** — I can help you analyze your ${cloud.toUpperCase()} cloud security posture, identify risks, and generate fix commands.
+
+**What I can do:**
+- Explain why specific resources are flagged as CRITICAL or HIGH risk
+- Generate ${cloud === 'aws' ? 'AWS CLI' : cloud === 'azure' ? 'Azure CLI' : 'gcloud CLI'} commands to remediate security misconfigurations
+- Summarize your entire cloud cost and security exposure
+- Identify savings opportunities and rightsizing recommendations
+
+Use the quick commands on the left, or type freely below.`,
+    }]);
+  }, [cloud]);
+
   const send = async (q) => {
     const text = (q ?? query).trim();
     if (!text) return;
@@ -115,7 +133,7 @@ Use the quick commands on the left, or type freely below.`,
       const res  = await fetch('http://localhost:5000/api/copilot', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ query: text }),
+        body:    JSON.stringify({ query: text, provider: cloud }),
       });
       const data = await res.json();
       setMessages(m => [...m, { type: 'bot', content: data.response }]);

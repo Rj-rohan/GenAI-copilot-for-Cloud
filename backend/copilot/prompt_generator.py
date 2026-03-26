@@ -1,14 +1,50 @@
 """
 prompt_generator.py
 ===================
-Builds rich, context-aware prompts for Claude that include all data from
-all 5 collection sources plus explicit instructions to return AWS CLI commands.
+Builds rich, context-aware prompts for Claude/Gemini that include all data from
+all 5 collection sources plus explicit instructions to return cloud-specific CLI commands.
+Supports AWS, Azure, and GCP.
 """
 
 import json
 
+# Cloud provider service name mappings
+CLOUD_SERVICES = {
+    'aws': {
+        'activity': 'CloudTrail',
+        'security': 'SecurityHub',
+        'cost': 'Cost Explorer',
+        'config': 'AWS Config',
+        'metrics': 'CloudWatch'
+    },
+    'azure': {
+        'activity': 'Activity Log',
+        'security': 'Security Center',
+        'cost': 'Cost Management',
+        'config': 'Resource Graph',
+        'metrics': 'Azure Monitor'
+    },
+    'gcp': {
+        'activity': 'Cloud Audit Logs',
+        'security': 'Security Command Center',
+        'cost': 'Cloud Billing',
+        'config': 'Asset Inventory',
+        'metrics': 'Cloud Monitoring'
+    }
+}
+
+CLI_NAMES = {
+    'aws': 'AWS CLI',
+    'azure': 'Azure CLI',
+    'gcp': 'gcloud CLI'
+}
+
 
 class PromptGenerator:
+    def __init__(self, provider='aws'):
+        self.provider = provider
+        self.services = CLOUD_SERVICES.get(provider, CLOUD_SERVICES['aws'])
+        self.cli_name = CLI_NAMES.get(provider, 'CLI')
 
     # ── Prompt builders ───────────────────────────────────────────────────────
 
@@ -37,11 +73,13 @@ class PromptGenerator:
     # ── Individual prompt templates ───────────────────────────────────────────
 
     def _explain_prompt(self, f):
-        from copilot.cli_commands import get_all_cli_fixes
-        cli_fixes = get_all_cli_fixes(f)
+        from copilot.cli_commands_multicloud import get_all_cli_fixes
+        cli_fixes = get_all_cli_fixes(f, self.provider)
         cli_block = self._format_cli_block(cli_fixes)
 
         return f"""A cloud engineer is asking about a specific resource. Explain the risks clearly.
+
+CLOUD PROVIDER: {self.provider.upper()}
 
 RESOURCE DETAILS (from 5 data sources):
   Resource ID   : {f['resource_id']}
@@ -51,7 +89,7 @@ RESOURCE DETAILS (from 5 data sources):
   Priority      : {f['priority']}
   Risk Score    : {f['risk_score']}
 
-SECURITY SIGNALS (from AWS SecurityHub + CloudTrail):
+SECURITY SIGNALS (from {self.services['security']} + {self.services['activity']}):
   Vulnerabilities   : {f.get('vuln_count', 0)} ({f.get('cve_count', 0)} CVEs)
   Failed Logins     : {f.get('failed_logins', 0)} (last 30 days)
   Suspicious APIs   : {f.get('suspicious_api_calls', 0)}
@@ -60,33 +98,35 @@ SECURITY SIGNALS (from AWS SecurityHub + CloudTrail):
   RDP Exposed       : {f.get('rdp_exposed', False)}
   Compliance Score  : {f.get('compliance_score', 100)}/100
 
-COST SIGNALS (from AWS Cost Explorer):
+COST SIGNALS (from {self.services['cost']}):
   Monthly Cost      : ${f.get('cost', 0)}/month
   Cost Trend        : {f.get('cost_trend_pct', 0):+.1f}%
   Savings Potential : ${f.get('savings_potential', 0):.2f}/month
   Rightsizing       : {f.get('rightsizing', 'none')}
   Last Activity     : {f.get('last_activity_days', 0)} days ago
 
-COMPLIANCE (from AWS Config):
+COMPLIANCE (from {self.services['config']}):
   Violations        : {json.dumps(f.get('compliance_violations', []))}
   Has Tags          : {f.get('has_tags', True)}
 
 ISSUES DETECTED ({len(f.get('issues', []))} total):
 {chr(10).join(f'  - {i}' for i in f.get('issues', []))}
 
-AVAILABLE CLI FIXES (pre-computed):
+AVAILABLE {self.cli_name} FIXES (pre-computed):
 {cli_block}
 
 Provide a detailed explanation of why this resource is risky and how to fix it.
-Include the AWS CLI commands above in your response, formatted as a bash code block.
+Include the {self.cli_name} commands above in your response, formatted as a bash code block.
 """
 
     def _fix_prompt(self, f):
-        from copilot.cli_commands import get_all_cli_fixes
-        cli_fixes = get_all_cli_fixes(f)
+        from copilot.cli_commands_multicloud import get_all_cli_fixes
+        cli_fixes = get_all_cli_fixes(f, self.provider)
         cli_block = self._format_cli_block(cli_fixes)
 
         return f"""A cloud engineer wants to fix this resource. Provide a complete remediation plan.
+
+CLOUD PROVIDER: {self.provider.upper()}
 
 RESOURCE TO FIX:
   ID            : {f['resource_id']}
@@ -113,11 +153,11 @@ COST STATE:
   Savings Potential : ${f.get('savings_potential', 0):.2f}/month
   Rightsizing       : {f.get('rightsizing', 'none')}
 
-PRE-COMPUTED AWS CLI COMMANDS:
+PRE-COMPUTED {self.cli_name} COMMANDS:
 {cli_block}
 
 Generate a step-by-step remediation plan.
-IMPORTANT: Include all relevant AWS CLI commands from above in a bash code block.
+IMPORTANT: Include all relevant {self.cli_name} commands from above in a bash code block.
 Group commands by issue. Estimate time for each step.
 """
 
@@ -141,6 +181,7 @@ Group commands by issue. Estimate time for each step.
 
         return f"""A cloud engineer filtered findings. Summarize and highlight key risks.
 
+CLOUD PROVIDER: {self.provider.upper()}
 FILTER APPLIED: {json.dumps(filters)}
 TOTAL MATCHING: {count} resources
 
@@ -153,7 +194,7 @@ AGGREGATE STATS:
   Critical Count     : {sum(1 for f in findings if f['priority'] == 'CRITICAL')}
 
 Summarize what is found. Highlight the top 3 most critical items.
-Include at least one relevant AWS CLI command for the most common issue in this filtered set.
+Include at least one relevant {self.cli_name} command for the most common issue in this filtered set.
 """
 
     def _summary_prompt(self, context):
@@ -171,6 +212,8 @@ Include at least one relevant AWS CLI command for the most common issue in this 
         )
 
         return f"""Generate a C-suite executive summary of the cloud security and cost posture.
+
+CLOUD PROVIDER: {self.provider.upper()}
 
 FLEET OVERVIEW:
   Total Issues  : {context.get('total', 0)}
@@ -197,7 +240,7 @@ Write a professional executive summary covering:
 2. Top 3 risks that need immediate action
 3. Financial exposure and savings opportunity
 4. Recommended 30-day remediation roadmap
-5. Key AWS CLI commands for the most urgent fixes
+5. Key {self.cli_name} commands for the most urgent fixes
 """
 
     def _cost_prompt(self, context):
@@ -214,6 +257,8 @@ Write a professional executive summary covering:
 
         return f"""Generate a FinOps cost optimization report for this cloud environment.
 
+CLOUD PROVIDER: {self.provider.upper()}
+
 COST SUMMARY:
   Total Resources with Issues : {context.get('total', 0)}
   Total Cost at Risk          : ${context.get('total_cost', 0)}/month
@@ -229,7 +274,7 @@ IDLE/UNDERUTILIZED RESOURCES:
 Provide a detailed cost optimization plan with:
 1. Prioritized list of resources to terminate vs downsize
 2. Expected monthly savings
-3. AWS CLI commands to stop/terminate/resize the top 5 resources
+3. {self.cli_name} commands to stop/terminate/resize the top 5 resources
 4. Recommendations for Reserved Instances or Savings Plans
 """
 

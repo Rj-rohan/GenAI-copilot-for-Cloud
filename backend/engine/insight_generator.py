@@ -6,14 +6,15 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
-    from copilot.cli_commands import get_all_cli_fixes
+    from copilot.cli_commands_multicloud import get_all_cli_fixes
     _HAS_CLI = True
 except ImportError:
     _HAS_CLI = False
 
 
 class InsightGenerator:
-    def __init__(self, templates_path=None):
+    def __init__(self, templates_path=None, provider='aws'):
+        self.provider = provider
         if templates_path is None:
             templates_path = os.path.join(
                 os.path.dirname(os.path.dirname(__file__)),
@@ -49,7 +50,7 @@ class InsightGenerator:
             'resource_name': resource.resource_name,
             'region':        resource.region,
         }
-        cli_fixes = get_all_cli_fixes(partial) if _HAS_CLI else {}
+        cli_fixes = get_all_cli_fixes(partial, self.provider) if _HAS_CLI else {}
 
         return {
             # Core identifiers

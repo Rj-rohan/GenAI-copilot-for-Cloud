@@ -2,12 +2,19 @@ import json
 import os
 
 class ContextBuilder:
-    def __init__(self, findings_path=None):
+    def __init__(self, findings_path=None, provider='aws'):
+        self.provider = provider
         if findings_path is None:
             findings_path = os.path.join(
                 os.path.dirname(os.path.dirname(__file__)),
-                'data', 'findings.json'
+                'data', f'findings_{provider}.json'
             )
+            # Fallback to default if provider-specific not found
+            if not os.path.exists(findings_path):
+                findings_path = os.path.join(
+                    os.path.dirname(os.path.dirname(__file__)),
+                    'data', 'findings.json'
+                )
         
         with open(findings_path, 'r', encoding='utf-8') as f:
             self.findings = json.load(f)
