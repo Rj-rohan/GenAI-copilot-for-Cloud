@@ -3,13 +3,21 @@ import os
 
 class SecurityHubCollector:
     """
-    Simulates fetching vulnerability and compliance findings from AWS SecurityHub.
-    In production, this would call: boto3.client('securityhub').get_findings(...)
+    Simulates fetching vulnerability and compliance findings from cloud providers.
+    AWS: SecurityHub, Azure: Security Center, GCP: Security Command Center
     """
-    SOURCE_NAME = "AWS SecurityHub"
+    SOURCE_NAMES = {
+        'aws': 'AWS Security Hub',
+        'azure': 'Azure Security Center',
+        'gcp': 'GCP Security Command Center'
+    }
 
-    def __init__(self, sources_path):
-        path = os.path.join(sources_path, "securityhub.json")
+    def __init__(self, sources_path, provider='aws'):
+        self.provider = provider
+        self.name = self.SOURCE_NAMES.get(provider, 'Security Hub')
+        path = os.path.join(sources_path, f"securityhub_{provider}.json")
+        if not os.path.exists(path):
+            path = os.path.join(sources_path, "securityhub.json")
         with open(path, 'r') as f:
             self._data = json.load(f)
 

@@ -8,8 +8,15 @@ const NAV = [
   { id: 'copilot',   icon: '◈', label: 'GenAI Copilot',    badge: 'AI' },
 ];
 
+const CLOUDS = [
+  { id: 'aws',   label: 'AWS',   icon: '☁' },
+  { id: 'azure', label: 'Azure', icon: '◇' },
+  { id: 'gcp',   label: 'GCP',   icon: '◆' },
+];
+
 export default function App() {
   const [page,      setPage]      = useState('dashboard');
+  const [cloud,     setCloud]     = useState('aws');
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -87,8 +94,25 @@ export default function App() {
 
         {/* Page Content */}
         <main className="page-content">
-          {page === 'dashboard' ? <Dashboard /> : <Copilot />}
+          {page === 'dashboard' ? <Dashboard cloud={cloud} /> : <Copilot cloud={cloud} />}
         </main>
+
+        {/* Cloud Selector */}
+        {page === 'dashboard' && (
+          <div className="cloud-selector">
+            {CLOUDS.map(c => (
+              <button
+                key={c.id}
+                className={`cloud-btn ${cloud === c.id ? 'active' : ''}`}
+                onClick={() => setCloud(c.id)}
+                title={c.label}
+              >
+                <span className="cloud-icon">{c.icon}</span>
+                <span className="cloud-label">{c.label}</span>
+              </button>
+            ))}
+          </div>
+        )}
 
       </div>
     </div>

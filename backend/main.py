@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import argparse
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
@@ -9,22 +10,45 @@ from engine.rule_engine import RuleEngine
 
 
 def main():
+    parser = argparse.ArgumentParser(description='Cloud Security Analysis Pipeline')
+    parser.add_argument('--provider', '-p', choices=['aws', 'azure', 'gcp'], 
+                        default='aws', help='Cloud provider (default: aws)')
+    args = parser.parse_args()
+    
+    provider = args.provider
     base_path      = os.path.dirname(os.path.abspath(__file__))
     sources_path   = os.path.join(base_path, 'data', 'sources')
-    inventory_path = os.path.join(base_path, 'data', 'resources.json')
+    inventory_path = os.path.join(base_path, 'data', f'resources_{provider}.json')
+    
+    # Fallback to default if provider-specific file doesn't exist
+    if not os.path.exists(inventory_path):
+        inventory_path = os.path.join(base_path, 'data', 'resources.json')
+    
     rules_path     = os.path.join(base_path, 'data', 'rules.json')
-    output_path    = os.path.join(base_path, 'data', 'findings.json')
+    output_path    = os.path.join(base_path, 'data', f'findings_{provider}.json')
     frontend_path  = os.path.join(base_path, '..', 'frontend', 'public', 'findings.json')
 
-    print("=" * 56)
-    print("  GenAI Cloud Security Copilot")
-    print("  Data Collection & Analysis Pipeline")
-    print("=" * 56)
+    # Load cloud provider config
+    config_path = os.path.join(base_path, 'data', 'cloud_providers.json')
+    with open(config_path, 'r') as f:
+        cloud_config = json.load(f)
+    
+    provider_info = cloud_config['providers'][provider]
+
+    print("=" * 60)
+    print(f"  GenAI Cloud Security Copilot")
+    print(f"  Provider: {provider_info['name']} ({provider.upper()})")
+    print("=" * 60)
 
     # ── Step 1: Data Collection Layer ─────────────────────────────
     print("\n[1] Data Collection Layer")
     print("-" * 40)
-    orchestrator = CollectorOrchestrator(sources_path, inventory_path)
+    print(f"  Cloud Provider: {provider_info['name']}")
+    print(f"  Services:")
+    for service_type, service_name in provider_info['services'].items():
+        print(f"    - {service_name}")
+    
+    orchestrator = CollectorOrchestrator(sources_path, inventory_path, provider)
     resources    = orchestrator.collect()
 
     # ── Step 2: Rule Engine ────────────────────────────────────────
@@ -49,7 +73,7 @@ def main():
         engine.save_findings(findings, frontend_path)
         print(f"    [OK] Frontend: {frontend_path}")
     except Exception:
-        print(f"    [WARN] Could not write to frontend path (run from backend dir)")
+        print(f"    [WARN] Could not write to frontend path")
 
     # ── Step 5: Summary ───────────────────────────────────────────
     print("\n[5] Summary")
@@ -82,6 +106,7 @@ def main():
     for f in sorted_findings[:3]:
         print(f"\n    Resource : {f['resource_id']} ({f['resource_name']})")
         print(f"    Region   : {f['region']}")
+        print(f"    Provider : {provider.upper()}")
         print(f"    Score    : {f['risk_score']} | Priority: {f['priority']}")
         print(f"    Issues   : {len(f['issues'])} detected")
         print(f"    Impact   : {f['impact'][:80]}...")

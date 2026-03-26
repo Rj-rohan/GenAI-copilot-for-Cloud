@@ -3,13 +3,21 @@ import os
 
 class ConfigCollector:
     """
-    Simulates fetching resource inventory and compliance data from AWS Config.
-    In production, this would call: boto3.client('config').list_discovered_resources(...)
+    Simulates fetching resource inventory and compliance data from cloud providers.
+    AWS: Config, Azure: Resource Graph, GCP: Asset Inventory
     """
-    SOURCE_NAME = "AWS Config"
+    SOURCE_NAMES = {
+        'aws': 'AWS Config',
+        'azure': 'Azure Resource Graph',
+        'gcp': 'GCP Asset Inventory'
+    }
 
-    def __init__(self, sources_path):
-        path = os.path.join(sources_path, "config.json")
+    def __init__(self, sources_path, provider='aws'):
+        self.provider = provider
+        self.name = self.SOURCE_NAMES.get(provider, 'Config')
+        path = os.path.join(sources_path, f"config_{provider}.json")
+        if not os.path.exists(path):
+            path = os.path.join(sources_path, "config.json")
         with open(path, 'r') as f:
             self._data = json.load(f)
 

@@ -1,7 +1,7 @@
 """
-generate_data.py - Multi-Cloud Data Generator
-==============================================
-Generates realistic simulated data for AWS, Azure, and GCP.
+generate_data.py - Cloud-Agnostic Version
+==========================================
+Generates simulated cloud data for AWS, Azure, and GCP.
 
 Usage:
     python generate_data.py                    # AWS (default), 50 resources
@@ -9,6 +9,7 @@ Usage:
     python generate_data.py --provider gcp     # GCP, 50 resources
     python generate_data.py --provider all     # All 3 clouds, 50 each
     python generate_data.py --count 100        # AWS, 100 resources
+    python generate_data.py --provider azure --count 75
 """
 
 import random
@@ -17,9 +18,11 @@ import os
 import sys
 import subprocess
 import argparse
+import time
 from datetime import datetime
 
-random.seed(None)
+# Don't set seed at module level - we'll do it per generation
+# random.seed(None)
 
 BASE_PATH    = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH    = os.path.join(BASE_PATH, 'data')
@@ -30,8 +33,6 @@ SOURCES_PATH = os.path.join(DATA_PATH, 'sources')
 CLOUD_CONFIGS = {
     'aws': {
         'name': 'Amazon Web Services',
-        'icon': '☁️',
-        'color': '#FF9900',
         'prefix': {'compute': 'ec2', 'storage': 's3', 'database': 'rds', 'network': 'alb'},
         'regions': ['us-east-1', 'us-west-2', 'eu-west-1', 'ap-south-1', 'eu-central-1'],
         'region_weights': [0.40, 0.20, 0.20, 0.15, 0.05],
@@ -41,18 +42,10 @@ CLOUD_CONFIGS = {
             'cost': 'Cost Explorer',
             'security': 'Security Hub',
             'metrics': 'CloudWatch'
-        },
-        'resource_names': {
-            'compute': 'EC2 Instance',
-            'storage': 'S3 Bucket',
-            'database': 'RDS Database',
-            'network': 'Application Load Balancer'
         }
     },
     'azure': {
         'name': 'Microsoft Azure',
-        'icon': '⚡',
-        'color': '#0078D4',
         'prefix': {'compute': 'vm', 'storage': 'blob', 'database': 'sqldb', 'network': 'lb'},
         'regions': ['eastus', 'westus2', 'westeurope', 'southeastasia', 'centralindia'],
         'region_weights': [0.35, 0.25, 0.20, 0.15, 0.05],
@@ -62,18 +55,10 @@ CLOUD_CONFIGS = {
             'cost': 'Cost Management',
             'security': 'Security Center',
             'metrics': 'Azure Monitor'
-        },
-        'resource_names': {
-            'compute': 'Virtual Machine',
-            'storage': 'Blob Storage',
-            'database': 'SQL Database',
-            'network': 'Load Balancer'
         }
     },
     'gcp': {
         'name': 'Google Cloud Platform',
-        'icon': '🔷',
-        'color': '#4285F4',
         'prefix': {'compute': 'gce', 'storage': 'gcs', 'database': 'cloudsql', 'network': 'gclb'},
         'regions': ['us-east1', 'us-west1', 'europe-west1', 'asia-south1', 'asia-southeast1'],
         'region_weights': [0.35, 0.25, 0.20, 0.15, 0.05],
@@ -83,12 +68,6 @@ CLOUD_CONFIGS = {
             'cost': 'Cloud Billing',
             'security': 'Security Command Center',
             'metrics': 'Cloud Monitoring'
-        },
-        'resource_names': {
-            'compute': 'Compute Engine',
-            'storage': 'Cloud Storage',
-            'database': 'Cloud SQL',
-            'network': 'Cloud Load Balancing'
         }
     }
 }
@@ -98,15 +77,12 @@ TYPE_DIST = [('compute', 0.40), ('storage', 0.25), ('database', 0.20), ('network
 
 NAME_POOL = {
     'compute':  ['web-server', 'api-server', 'app-server', 'batch-worker', 'ml-instance',
-                 'bastion', 'admin-host', 'cache-node', 'proxy-server', 'microservice',
-                 'data-processor', 'event-handler', 'worker-node', 'cron-job'],
+                 'bastion', 'admin-host', 'cache-node', 'proxy-server', 'microservice'],
     'storage':  ['user-uploads', 'static-assets', 'backup-store', 'log-archive',
-                 'build-artifacts', 'raw-data-lake', 'processed-data', 'public-assets',
-                 'temp-storage', 'archive-data', 'audit-logs', 'media-files'],
+                 'build-artifacts', 'raw-data-lake', 'processed-data', 'public-assets'],
     'database': ['primary-db', 'replica-db', 'analytics-db', 'staging-db', 'dev-db',
-                 'reporting-db', 'auth-db', 'warehouse-db', 'metrics-db', 'events-db'],
-    'network':  ['internet-lb', 'public-lb', 'internal-lb', 'api-gateway', 'legacy-lb',
-                 'dev-gateway', 'admin-sg', 'bastion-sg', 'nat-gw'],
+                 'reporting-db', 'auth-db', 'warehouse-db', 'metrics-db'],
+    'network':  ['internet-lb', 'public-lb', 'internal-lb', 'api-gateway', 'legacy-lb'],
 }
 
 PUBLIC_PROB    = {'storage': 0.35, 'network': 0.45, 'compute': 0.10, 'database': 0.05}
@@ -121,7 +97,7 @@ PROJECTS = ['core-api', 'data-platform', 'ml-pipeline', 'infra-base', 'payments'
 PORTS = {
     'compute':  {'public': [22, 80, 443], 'private': [80, 443, 8080]},
     'storage':  {'public': [80, 443],     'private': [443]},
-    'database': {'public': [3306, 1433, 5432],  'private': [3306, 5432]},
+    'database': {'public': [3306, 1433],  'private': [3306]},
     'network':  {'public': [22, 80, 443, 3389], 'private': [80, 443]},
 }
 
@@ -175,7 +151,7 @@ def gen_inventory(n, provider='aws'):
         role       = random.choice(ROLES)
 
         resources.append({
-            'id':        f"{provider[0]}{i + 1}",
+            'id':        f"r{i + 1}",
             'type':      rtype,
             'usage':     usage,
             'public':    is_public,
@@ -190,7 +166,7 @@ def gen_inventory(n, provider='aws'):
 
     return resources
 
-def gen_activity_logs(resources, provider='aws'):
+def gen_cloudtrail(resources, provider='aws'):
     data = {}
     for r in resources:
         is_pub = r['public']
@@ -224,7 +200,7 @@ def gen_activity_logs(resources, provider='aws'):
         }
     return data
 
-def gen_config_data(resources, provider='aws'):
+def gen_config(resources, provider='aws'):
     config = CLOUD_CONFIGS[provider]
     data = {}
     
@@ -254,21 +230,21 @@ def gen_config_data(resources, provider='aws'):
             tags = {'cloud': provider}
 
         violations = []
-        if not is_enc:   violations.append(f'{provider.upper()}: Data encryption required')
-        if is_pub:       violations.append(f'{provider.upper()}: Restrict public access')
-        if not is_log:   violations.append(f'{provider.upper()}: Audit logging required')
-        if usage == 0:   violations.append('FinOps: Unused resource consuming budget')
+        if not is_enc:   violations.append('Data encryption required')
+        if is_pub:       violations.append('Restrict public access')
+        if not is_log:   violations.append('Audit logging required')
+        if usage == 0:   violations.append('Unused resource consuming budget')
 
         data[r['id']] = {
-            'region':                region,
-            'resource_name':         name,
-            'tags':                  tags,
-            'created_days_ago':      random.randint(30, 550),
+            'region':               region,
+            'resource_name':        name,
+            'tags':                 tags,
+            'created_days_ago':     random.randint(30, 550),
             'compliance_violations': violations,
         }
     return data
 
-def gen_cost_data(resources):
+def gen_cost(resources):
     data = {}
     for r in resources:
         cost  = r['cost']
@@ -299,7 +275,7 @@ def gen_cost_data(resources):
         }
     return data
 
-def gen_security_data(resources):
+def gen_securityhub(resources):
     data = {}
     for r in resources:
         rtype  = r['type']
@@ -332,7 +308,7 @@ def gen_security_data(resources):
         }
     return data
 
-def gen_metrics_data(resources):
+def gen_metrics(resources):
     data = {}
     for r in resources:
         usage = r['usage']
@@ -362,26 +338,38 @@ def clean(resources):
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def generate_for_provider(provider, n):
+    # Reseed with current time + process ID for true randomness
+    random.seed(int(time.time() * 1000) + os.getpid())
+    
     config = CLOUD_CONFIGS[provider]
     print(f"\n{'='*60}")
-    print(f"  {config['icon']} {config['name']} ({provider.upper()})")
+    print(f"  {config['name']} ({provider.upper()})")
     print(f"  Generating {n} resources...")
     print(f"{'='*60}")
 
     resources = gen_inventory(n, provider)
-    activity_data = gen_activity_logs(resources, provider)
-    cfg_data      = gen_config_data(resources, provider)
-    cost_data     = gen_cost_data(resources)
-    security_data = gen_security_data(resources)
-    metrics_data  = gen_metrics_data(resources)
+    ct_data   = gen_cloudtrail(resources, provider)
+    cfg_data  = gen_config(resources, provider)
+    cost_data = gen_cost(resources)
+    sh_data   = gen_securityhub(resources)
+    met_data  = gen_metrics(resources)
 
-    # Save with provider-specific names
+    # Save with provider prefix
     save(os.path.join(DATA_PATH, f'resources_{provider}.json'), clean(resources))
-    save(os.path.join(SOURCES_PATH, f'cloudtrail_{provider}.json'), activity_data)
+    save(os.path.join(SOURCES_PATH, f'cloudtrail_{provider}.json'), ct_data)
     save(os.path.join(SOURCES_PATH, f'config_{provider}.json'), cfg_data)
     save(os.path.join(SOURCES_PATH, f'cost_{provider}.json'), cost_data)
-    save(os.path.join(SOURCES_PATH, f'securityhub_{provider}.json'), security_data)
-    save(os.path.join(SOURCES_PATH, f'metrics_{provider}.json'), metrics_data)
+    save(os.path.join(SOURCES_PATH, f'securityhub_{provider}.json'), sh_data)
+    save(os.path.join(SOURCES_PATH, f'metrics_{provider}.json'), met_data)
+
+    # Also save as default (for backward compatibility)
+    if provider == 'aws':
+        save(os.path.join(DATA_PATH, 'resources.json'), clean(resources))
+        save(os.path.join(SOURCES_PATH, 'cloudtrail.json'), ct_data)
+        save(os.path.join(SOURCES_PATH, 'config.json'), cfg_data)
+        save(os.path.join(SOURCES_PATH, 'cost.json'), cost_data)
+        save(os.path.join(SOURCES_PATH, 'securityhub.json'), sh_data)
+        save(os.path.join(SOURCES_PATH, 'metrics.json'), met_data)
 
     # Print stats
     type_counts = {}
@@ -391,8 +379,7 @@ def generate_for_provider(provider, n):
     print(f"\n[1] Inventory ({n} resources)")
     for rtype, cnt in sorted(type_counts.items()):
         pub = sum(1 for r in resources if r['type'] == rtype and r['public'])
-        resource_name = config['resource_names'][rtype]
-        print(f"    {resource_name:<25}: {cnt:>3} ({pub} public)")
+        print(f"    {rtype:<10}: {cnt:>3} resources  ({pub} public)")
 
     pub_total = sum(1 for r in resources if r['public'])
     no_enc    = sum(1 for r in resources if not r['encrypted'])
@@ -407,25 +394,22 @@ def generate_for_provider(provider, n):
     print(f"    Idle (usage < 5%) : {idle}")
     print(f"    Unused (usage = 0): {unused}")
 
-    print(f"\n[3] Data Sources ({config['name']})")
-    for service_type, service_name in config['services'].items():
-        print(f"    {service_name:<30} ✓")
-
-    return resources
+    print(f"\n[3] Source Files Written")
+    print(f"    data/resources_{provider}.json")
+    print(f"    data/sources/cloudtrail_{provider}.json")
+    print(f"    data/sources/config_{provider}.json")
+    print(f"    data/sources/cost_{provider}.json")
+    print(f"    data/sources/securityhub_{provider}.json")
+    print(f"    data/sources/metrics_{provider}.json")
 
 def main():
-    parser = argparse.ArgumentParser(description='Multi-Cloud Data Generator')
+    parser = argparse.ArgumentParser(description='Generate cloud-agnostic simulated data')
     parser.add_argument('--provider', '-p', choices=['aws', 'azure', 'gcp', 'all'], 
                         default='aws', help='Cloud provider (default: aws)')
     parser.add_argument('--count', '-c', type=int, default=50, 
-                        help='Number of resources per provider (default: 50)')
-    parser.add_argument('count_positional', nargs='?', type=int,
-                        help='Number of resources (positional argument for backward compatibility)')
+                        help='Number of resources to generate (default: 50)')
     
     args = parser.parse_args()
-    
-    # Support both --count and positional argument
-    count = args.count_positional if args.count_positional else args.count
 
     ts = datetime.now().strftime('%H:%M:%S')
     print("=" * 60)
@@ -433,24 +417,31 @@ def main():
     print(f"  Run at: {ts}")
     print("=" * 60)
 
-    providers_generated = []
-    
     if args.provider == 'all':
         for provider in ['aws', 'azure', 'gcp']:
-            generate_for_provider(provider, count)
-            providers_generated.append(provider)
+            generate_for_provider(provider, args.count)
     else:
-        generate_for_provider(args.provider, count)
-        providers_generated.append(args.provider)
+        generate_for_provider(args.provider, args.count)
 
-    print(f"\n{'='*60}")
-    print(f"  ✓ Data Generation Complete")
-    print(f"{'='*60}")
-    print(f"\nGenerated data for: {', '.join([p.upper() for p in providers_generated])}")
-    print(f"\nNext steps:")
-    print(f"  1. Run analysis: python main.py --provider {providers_generated[0]}")
-    print(f"  2. Start API: python api.py")
-    print(f"  3. Start UI: cd ../frontend && npm run dev")
+    # Run analysis for the primary provider
+    primary_provider = 'aws' if args.provider == 'all' else args.provider
+    print(f"\n[4] Running Analysis Pipeline for {primary_provider.upper()}...")
+    result = subprocess.run(
+        [sys.executable, os.path.join(BASE_PATH, 'main.py'), '--provider', primary_provider],
+        capture_output=True, text=True
+    )
+    
+    if result.returncode == 0:
+        for line in result.stdout.splitlines():
+            if any(x in line for x in ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW', 'TOTAL',
+                                         'Cost at Risk', 'Savings', 'Vuln', 'Login']):
+                print(f"    {line.strip()}")
+        print(f"\n    Findings saved to data/findings_{primary_provider}.json")
+    else:
+        print("    Pipeline error:")
+        print(result.stderr[-500:])
+
+    print(f"\n[DONE] Dataset ready for {args.provider.upper()}. Start server: python api.py")
 
 if __name__ == '__main__':
     main()

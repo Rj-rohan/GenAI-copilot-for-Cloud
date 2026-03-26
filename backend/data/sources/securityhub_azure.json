@@ -1,0 +1,277 @@
+{
+  "r1": {
+    "vuln_count": 2,
+    "open_ports": [
+      3306
+    ],
+    "compliance_score": 75,
+    "cve_count": 0
+  },
+  "r2": {
+    "vuln_count": 2,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "compliance_score": 67,
+    "cve_count": 0
+  },
+  "r3": {
+    "vuln_count": 0,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "compliance_score": 98,
+    "cve_count": 0
+  },
+  "r4": {
+    "vuln_count": 3,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "compliance_score": 60,
+    "cve_count": 0
+  },
+  "r5": {
+    "vuln_count": 3,
+    "open_ports": [
+      443
+    ],
+    "compliance_score": 81,
+    "cve_count": 0
+  },
+  "r6": {
+    "vuln_count": 0,
+    "open_ports": [
+      80,
+      443
+    ],
+    "compliance_score": 85,
+    "cve_count": 0
+  },
+  "r7": {
+    "vuln_count": 0,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "compliance_score": 105,
+    "cve_count": 0
+  },
+  "r8": {
+    "vuln_count": 1,
+    "open_ports": [
+      22,
+      80,
+      443,
+      3389
+    ],
+    "compliance_score": 81,
+    "cve_count": 1
+  },
+  "r9": {
+    "vuln_count": 6,
+    "open_ports": [
+      22,
+      80,
+      443,
+      3389
+    ],
+    "compliance_score": 44,
+    "cve_count": 5
+  },
+  "r10": {
+    "vuln_count": 4,
+    "open_ports": [
+      22,
+      80,
+      443
+    ],
+    "compliance_score": 60,
+    "cve_count": 2
+  },
+  "r11": {
+    "vuln_count": 0,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "compliance_score": 82,
+    "cve_count": 0
+  },
+  "r12": {
+    "vuln_count": 0,
+    "open_ports": [
+      3306
+    ],
+    "compliance_score": 95,
+    "cve_count": 0
+  },
+  "r13": {
+    "vuln_count": 1,
+    "open_ports": [
+      443
+    ],
+    "compliance_score": 84,
+    "cve_count": 0
+  },
+  "r14": {
+    "vuln_count": 1,
+    "open_ports": [
+      443
+    ],
+    "compliance_score": 97,
+    "cve_count": 0
+  },
+  "r15": {
+    "vuln_count": 4,
+    "open_ports": [
+      80,
+      443
+    ],
+    "compliance_score": 63,
+    "cve_count": 1
+  },
+  "r16": {
+    "vuln_count": 1,
+    "open_ports": [
+      3306
+    ],
+    "compliance_score": 101,
+    "cve_count": 0
+  },
+  "r17": {
+    "vuln_count": 1,
+    "open_ports": [
+      80,
+      443
+    ],
+    "compliance_score": 101,
+    "cve_count": 0
+  },
+  "r18": {
+    "vuln_count": 1,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "compliance_score": 101,
+    "cve_count": 0
+  },
+  "r19": {
+    "vuln_count": 5,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "compliance_score": 71,
+    "cve_count": 2
+  },
+  "r20": {
+    "vuln_count": 1,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "compliance_score": 105,
+    "cve_count": 0
+  },
+  "r21": {
+    "vuln_count": 3,
+    "open_ports": [
+      3306
+    ],
+    "compliance_score": 78,
+    "cve_count": 0
+  },
+  "r22": {
+    "vuln_count": 1,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "compliance_score": 103,
+    "cve_count": 0
+  },
+  "r23": {
+    "vuln_count": 1,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "compliance_score": 81,
+    "cve_count": 0
+  },
+  "r24": {
+    "vuln_count": 0,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "compliance_score": 103,
+    "cve_count": 0
+  },
+  "r25": {
+    "vuln_count": 0,
+    "open_ports": [
+      3306
+    ],
+    "compliance_score": 103,
+    "cve_count": 0
+  },
+  "r26": {
+    "vuln_count": 3,
+    "open_ports": [
+      443
+    ],
+    "compliance_score": 68,
+    "cve_count": 2
+  },
+  "r27": {
+    "vuln_count": 0,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "compliance_score": 97,
+    "cve_count": 0
+  },
+  "r28": {
+    "vuln_count": 1,
+    "open_ports": [
+      3306
+    ],
+    "compliance_score": 88,
+    "cve_count": 0
+  },
+  "r29": {
+    "vuln_count": 0,
+    "open_ports": [
+      443
+    ],
+    "compliance_score": 102,
+    "cve_count": 0
+  },
+  "r30": {
+    "vuln_count": 1,
+    "open_ports": [
+      443
+    ],
+    "compliance_score": 98,
+    "cve_count": 0
+  }
+}

@@ -223,7 +223,7 @@ const ScoreBreakdown = ({ finding }) => {
 };
 
 // ── Dashboard ─────────────────────────────────────────────────────────────────
-export default function Dashboard() {
+export default function Dashboard({ cloud = 'aws' }) {
   const [findings,   setFindings]   = useState([]);
   const [stats,      setStats]      = useState({ total: 0, critical: 0, high: 0, medium: 0, low: 0, totalCost: 0, totalSavings: 0 });
   const [filter,     setFilter]     = useState('ALL');
@@ -235,11 +235,11 @@ export default function Dashboard() {
   const [sortBy,     setSortBy]     = useState('risk_score');
   const [sortDir,    setSortDir]    = useState('desc');
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => { load(); }, [cloud]);
 
   const load = async () => {
     try {
-      const res  = await fetch(`/findings.json?t=${Date.now()}`);
+      const res  = await fetch(`/findings_${cloud}.json?t=${Date.now()}`);
       const data = await res.json();
       // Sort by risk_score descending by default (highest risk first)
       const sorted = [...data].sort((a, b) => b.risk_score - a.risk_score);
@@ -253,15 +253,26 @@ export default function Dashboard() {
         totalCost:    data.reduce((s, f) => s + (f.cost || 0), 0),
         totalSavings: Math.round(data.reduce((s, f) => s + (f.savings_potential || 0), 0)),
       });
-    } catch (e) { console.error(e); }
+    } catch (e) { 
+      console.error(e);
+      setFindings([]);
+      setStats({ total: 0, critical: 0, high: 0, medium: 0, low: 0, totalCost: 0, totalSavings: 0 });
+    }
   };
 
   const generate = async () => {
     setGenerating(true); setGenMsg('Generating…');
     try {
-      const res = await fetch('http://localhost:5000/api/generate', { method: 'POST' });
+      const res = await fetch('http://localhost:5000/api/generate', { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ provider: cloud })
+      });
       const d   = await res.json();
-      if (d.success) { setGenMsg(`✓ ${d.n_resources} resources generated`); setTimeout(async () => { await load(); setGenMsg(''); }, 900); }
+      if (d.success) { 
+        setGenMsg(`✓ ${d.n_resources} resources generated for ${cloud.toUpperCase()}`); 
+        setTimeout(async () => { await load(); setGenMsg(''); }, 900); 
+      }
       else setGenMsg('Error: ' + d.error);
     } catch { setGenMsg('Backend offline'); }
     finally { setGenerating(false); }
@@ -316,13 +327,14 @@ export default function Dashboard() {
       {/* ── Page Header ── */}
       <div className="page-hdr">
         <div className="page-hdr-left">
-          <h1 className="page-title">Security Overview</h1>
+          <h1 className="page-title">{cloud.toUpperCase()} Security Overview</h1>
           <p className="page-sub">
             {stats.total} resources monitored · sorted by risk score
             {genMsg && <span className={`gen-msg ${genMsg.startsWith('✓') ? 'ok' : ''}`}> · {genMsg}</span>}
           </p>
         </div>
         <div className="page-hdr-right">
+          <button className="btn-sec" onClick={load}>🔄 Refresh</button>
           <button className="btn-sec" onClick={exportCSV}>↓ Export CSV</button>
           <button className="btn-pri" onClick={generate} disabled={generating}>
             {generating ? '⟳ Generating…' : '⟳ Generate Data'}

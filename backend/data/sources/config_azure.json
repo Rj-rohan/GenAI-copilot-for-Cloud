@@ -1,0 +1,355 @@
+{
+  "r1": {
+    "region": "westus2",
+    "resource_name": "sqldb-dev-db",
+    "tags": {
+      "env": "prod",
+      "team": "backend",
+      "project": "payments",
+      "cloud": "azure"
+    },
+    "created_days_ago": 491,
+    "compliance_violations": [
+      "Data encryption required"
+    ]
+  },
+  "r2": {
+    "region": "westus2",
+    "resource_name": "vm-api-server",
+    "tags": {
+      "env": "dev",
+      "cloud": "azure"
+    },
+    "created_days_ago": 68,
+    "compliance_violations": [
+      "Data encryption required",
+      "Audit logging required"
+    ]
+  },
+  "r3": {
+    "region": "eastus",
+    "resource_name": "vm-batch-worker",
+    "tags": {
+      "env": "dev",
+      "cloud": "azure"
+    },
+    "created_days_ago": 60,
+    "compliance_violations": []
+  },
+  "r4": {
+    "region": "southeastasia",
+    "resource_name": "vm-ml-instance",
+    "tags": {
+      "cloud": "azure"
+    },
+    "created_days_ago": 46,
+    "compliance_violations": [
+      "Data encryption required",
+      "Audit logging required"
+    ]
+  },
+  "r5": {
+    "region": "centralindia",
+    "resource_name": "blob-user-uploads",
+    "tags": {
+      "env": "prod",
+      "team": "backend",
+      "project": "auth-service",
+      "cloud": "azure"
+    },
+    "created_days_ago": 472,
+    "compliance_violations": [
+      "Data encryption required"
+    ]
+  },
+  "r6": {
+    "region": "westus2",
+    "resource_name": "lb-internet-lb",
+    "tags": {
+      "env": "prod",
+      "team": "platform",
+      "project": "ml-pipeline",
+      "cloud": "azure"
+    },
+    "created_days_ago": 149,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r7": {
+    "region": "eastus",
+    "resource_name": "vm-batch-worker-02",
+    "tags": {
+      "env": "staging",
+      "team": "ml",
+      "project": "ml-pipeline",
+      "cloud": "azure"
+    },
+    "created_days_ago": 307,
+    "compliance_violations": []
+  },
+  "r8": {
+    "region": "eastus",
+    "resource_name": "lb-internal-lb",
+    "tags": {
+      "env": "prod",
+      "cloud": "azure"
+    },
+    "created_days_ago": 352,
+    "compliance_violations": [
+      "Restrict public access"
+    ]
+  },
+  "r9": {
+    "region": "southeastasia",
+    "resource_name": "lb-internal-lb-02",
+    "tags": {
+      "env": "prod",
+      "cloud": "azure"
+    },
+    "created_days_ago": 428,
+    "compliance_violations": [
+      "Data encryption required",
+      "Restrict public access",
+      "Audit logging required"
+    ]
+  },
+  "r10": {
+    "region": "westus2",
+    "resource_name": "vm-microservice",
+    "tags": {
+      "env": "staging",
+      "cloud": "azure"
+    },
+    "created_days_ago": 370,
+    "compliance_violations": [
+      "Data encryption required",
+      "Restrict public access"
+    ]
+  },
+  "r11": {
+    "region": "centralindia",
+    "resource_name": "vm-microservice-02",
+    "tags": {
+      "env": "staging",
+      "team": "data",
+      "project": "data-platform",
+      "cloud": "azure"
+    },
+    "created_days_ago": 142,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r12": {
+    "region": "eastus",
+    "resource_name": "sqldb-metrics-db",
+    "tags": {
+      "env": "staging",
+      "cloud": "azure"
+    },
+    "created_days_ago": 498,
+    "compliance_violations": []
+  },
+  "r13": {
+    "region": "eastus",
+    "resource_name": "blob-user-uploads-02",
+    "tags": {
+      "cloud": "azure"
+    },
+    "created_days_ago": 535,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r14": {
+    "region": "westus2",
+    "resource_name": "blob-static-assets",
+    "tags": {
+      "env": "dev",
+      "cloud": "azure"
+    },
+    "created_days_ago": 258,
+    "compliance_violations": []
+  },
+  "r15": {
+    "region": "centralindia",
+    "resource_name": "blob-user-uploads-03",
+    "tags": {
+      "cloud": "azure"
+    },
+    "created_days_ago": 355,
+    "compliance_violations": [
+      "Restrict public access",
+      "Audit logging required"
+    ]
+  },
+  "r16": {
+    "region": "eastus",
+    "resource_name": "sqldb-primary-db",
+    "tags": {
+      "env": "dev",
+      "cloud": "azure"
+    },
+    "created_days_ago": 534,
+    "compliance_violations": []
+  },
+  "r17": {
+    "region": "westeurope",
+    "resource_name": "lb-public-lb",
+    "tags": {
+      "env": "staging",
+      "team": "platform",
+      "project": "infra-base",
+      "cloud": "azure"
+    },
+    "created_days_ago": 141,
+    "compliance_violations": []
+  },
+  "r18": {
+    "region": "westus2",
+    "resource_name": "vm-api-server-02",
+    "tags": {
+      "env": "prod",
+      "cloud": "azure"
+    },
+    "created_days_ago": 189,
+    "compliance_violations": []
+  },
+  "r19": {
+    "region": "eastus",
+    "resource_name": "vm-microservice-03",
+    "tags": {
+      "cloud": "azure"
+    },
+    "created_days_ago": 55,
+    "compliance_violations": [
+      "Data encryption required",
+      "Unused resource consuming budget"
+    ]
+  },
+  "r20": {
+    "region": "eastus",
+    "resource_name": "vm-microservice-04",
+    "tags": {
+      "env": "dev",
+      "cloud": "azure"
+    },
+    "created_days_ago": 512,
+    "compliance_violations": []
+  },
+  "r21": {
+    "region": "westus2",
+    "resource_name": "sqldb-dev-db-02",
+    "tags": {
+      "cloud": "azure"
+    },
+    "created_days_ago": 36,
+    "compliance_violations": [
+      "Data encryption required"
+    ]
+  },
+  "r22": {
+    "region": "eastus",
+    "resource_name": "vm-web-server",
+    "tags": {
+      "cloud": "azure"
+    },
+    "created_days_ago": 226,
+    "compliance_violations": []
+  },
+  "r23": {
+    "region": "westus2",
+    "resource_name": "vm-web-server-02",
+    "tags": {
+      "env": "prod",
+      "team": "platform",
+      "project": "payments",
+      "cloud": "azure"
+    },
+    "created_days_ago": 121,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r24": {
+    "region": "westeurope",
+    "resource_name": "vm-microservice-05",
+    "tags": {
+      "env": "staging",
+      "team": "data",
+      "project": "ml-pipeline",
+      "cloud": "azure"
+    },
+    "created_days_ago": 436,
+    "compliance_violations": []
+  },
+  "r25": {
+    "region": "westus2",
+    "resource_name": "sqldb-auth-db",
+    "tags": {
+      "env": "dev",
+      "cloud": "azure"
+    },
+    "created_days_ago": 82,
+    "compliance_violations": []
+  },
+  "r26": {
+    "region": "westus2",
+    "resource_name": "blob-processed-data",
+    "tags": {
+      "cloud": "azure"
+    },
+    "created_days_ago": 315,
+    "compliance_violations": [
+      "Data encryption required",
+      "Audit logging required"
+    ]
+  },
+  "r27": {
+    "region": "westeurope",
+    "resource_name": "vm-bastion",
+    "tags": {
+      "env": "staging",
+      "cloud": "azure"
+    },
+    "created_days_ago": 64,
+    "compliance_violations": []
+  },
+  "r28": {
+    "region": "southeastasia",
+    "resource_name": "sqldb-auth-db-02",
+    "tags": {
+      "env": "prod",
+      "team": "data",
+      "project": "ml-pipeline",
+      "cloud": "azure"
+    },
+    "created_days_ago": 431,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r29": {
+    "region": "southeastasia",
+    "resource_name": "blob-public-assets",
+    "tags": {
+      "env": "prod",
+      "team": "devops",
+      "project": "auth-service",
+      "cloud": "azure"
+    },
+    "created_days_ago": 176,
+    "compliance_violations": []
+  },
+  "r30": {
+    "region": "westus2",
+    "resource_name": "blob-raw-data-lake",
+    "tags": {
+      "env": "staging",
+      "cloud": "azure"
+    },
+    "created_days_ago": 98,
+    "compliance_violations": []
+  }
+}

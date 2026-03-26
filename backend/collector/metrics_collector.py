@@ -3,13 +3,21 @@ import os
 
 class MetricsCollector:
     """
-    Simulates fetching utilization metrics from AWS CloudWatch.
-    In production, this would call: boto3.client('cloudwatch').get_metric_statistics(...)
+    Simulates fetching utilization metrics from cloud providers.
+    AWS: CloudWatch, Azure: Azure Monitor, GCP: Cloud Monitoring
     """
-    SOURCE_NAME = "AWS CloudWatch Metrics"
+    SOURCE_NAMES = {
+        'aws': 'AWS CloudWatch',
+        'azure': 'Azure Monitor',
+        'gcp': 'GCP Cloud Monitoring'
+    }
 
-    def __init__(self, sources_path):
-        path = os.path.join(sources_path, "metrics.json")
+    def __init__(self, sources_path, provider='aws'):
+        self.provider = provider
+        self.name = self.SOURCE_NAMES.get(provider, 'CloudWatch')
+        path = os.path.join(sources_path, f"metrics_{provider}.json")
+        if not os.path.exists(path):
+            path = os.path.join(sources_path, "metrics.json")
         with open(path, 'r') as f:
             self._data = json.load(f)
 

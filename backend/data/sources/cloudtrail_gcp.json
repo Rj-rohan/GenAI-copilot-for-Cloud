@@ -1,0 +1,259 @@
+{
+  "r1": {
+    "last_activity_days": 3,
+    "failed_logins": 20,
+    "suspicious_api_calls": 2,
+    "regions_accessed": [
+      "us-east1",
+      "europe-west1"
+    ]
+  },
+  "r2": {
+    "last_activity_days": 5,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "europe-west1"
+    ]
+  },
+  "r3": {
+    "last_activity_days": 1,
+    "failed_logins": 3,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "asia-south1",
+      "europe-west1",
+      "us-east1"
+    ]
+  },
+  "r4": {
+    "last_activity_days": 2,
+    "failed_logins": 17,
+    "suspicious_api_calls": 4,
+    "regions_accessed": [
+      "asia-south1",
+      "us-west1",
+      "us-east1"
+    ]
+  },
+  "r5": {
+    "last_activity_days": 75,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "asia-southeast1"
+    ]
+  },
+  "r6": {
+    "last_activity_days": 5,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "asia-southeast1"
+    ]
+  },
+  "r7": {
+    "last_activity_days": 18,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "europe-west1"
+    ]
+  },
+  "r8": {
+    "last_activity_days": 50,
+    "failed_logins": 4,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "us-east1",
+      "us-west1"
+    ]
+  },
+  "r9": {
+    "last_activity_days": 45,
+    "failed_logins": 5,
+    "suspicious_api_calls": 3,
+    "regions_accessed": [
+      "asia-south1",
+      "asia-southeast1",
+      "us-east1"
+    ]
+  },
+  "r10": {
+    "last_activity_days": 20,
+    "failed_logins": 13,
+    "suspicious_api_calls": 6,
+    "regions_accessed": [
+      "us-west1",
+      "asia-south1"
+    ]
+  },
+  "r11": {
+    "last_activity_days": 5,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "europe-west1"
+    ]
+  },
+  "r12": {
+    "last_activity_days": 91,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "asia-south1"
+    ]
+  },
+  "r13": {
+    "last_activity_days": 2,
+    "failed_logins": 5,
+    "suspicious_api_calls": 2,
+    "regions_accessed": [
+      "us-east1",
+      "asia-southeast1",
+      "us-west1"
+    ]
+  },
+  "r14": {
+    "last_activity_days": 20,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "asia-southeast1"
+    ]
+  },
+  "r15": {
+    "last_activity_days": 90,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "us-east1"
+    ]
+  },
+  "r16": {
+    "last_activity_days": 3,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "us-west1"
+    ]
+  },
+  "r17": {
+    "last_activity_days": 29,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "us-west1"
+    ]
+  },
+  "r18": {
+    "last_activity_days": 16,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "asia-south1"
+    ]
+  },
+  "r19": {
+    "last_activity_days": 160,
+    "failed_logins": 4,
+    "suspicious_api_calls": 2,
+    "regions_accessed": [
+      "asia-south1"
+    ]
+  },
+  "r20": {
+    "last_activity_days": 4,
+    "failed_logins": 3,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "asia-south1",
+      "asia-southeast1"
+    ]
+  },
+  "r21": {
+    "last_activity_days": 38,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "europe-west1"
+    ]
+  },
+  "r22": {
+    "last_activity_days": 15,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "us-east1"
+    ]
+  },
+  "r23": {
+    "last_activity_days": 71,
+    "failed_logins": 2,
+    "suspicious_api_calls": 3,
+    "regions_accessed": [
+      "us-east1",
+      "asia-south1",
+      "europe-west1"
+    ]
+  },
+  "r24": {
+    "last_activity_days": 4,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "us-west1"
+    ]
+  },
+  "r25": {
+    "last_activity_days": 26,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "asia-south1"
+    ]
+  },
+  "r26": {
+    "last_activity_days": 89,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "asia-south1"
+    ]
+  },
+  "r27": {
+    "last_activity_days": 5,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "us-east1"
+    ]
+  },
+  "r28": {
+    "last_activity_days": 1,
+    "failed_logins": 15,
+    "suspicious_api_calls": 3,
+    "regions_accessed": [
+      "europe-west1",
+      "us-east1",
+      "asia-south1"
+    ]
+  },
+  "r29": {
+    "last_activity_days": 19,
+    "failed_logins": 5,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "asia-south1",
+      "us-west1"
+    ]
+  },
+  "r30": {
+    "last_activity_days": 4,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "asia-southeast1"
+    ]
+  }
+}

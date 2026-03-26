@@ -25,20 +25,37 @@ class CollectorOrchestrator:
                     Analyzer Engine
     """
 
-    SOURCES = [
-        "AWS CloudTrail     - Activity logs, failed logins, API calls",
-        "AWS Config         - Resource inventory, tags, compliance",
-        "AWS Cost Explorer  - Billing, cost trends, savings opportunities",
-        "AWS SecurityHub    - Vulnerabilities, open ports, CVEs",
-        "AWS CloudWatch     - CPU, memory, network, disk metrics"
-    ]
+    CLOUD_SERVICES = {
+        'aws': [
+            "AWS CloudTrail     - Activity logs, failed logins, API calls",
+            "AWS Config         - Resource inventory, tags, compliance",
+            "AWS Cost Explorer  - Billing, cost trends, savings opportunities",
+            "AWS SecurityHub    - Vulnerabilities, open ports, CVEs",
+            "AWS CloudWatch     - CPU, memory, network, disk metrics"
+        ],
+        'azure': [
+            "Activity Log       - Activity logs, failed logins, API calls",
+            "Resource Graph     - Resource inventory, tags, compliance",
+            "Cost Management    - Billing, cost trends, savings opportunities",
+            "Security Center    - Vulnerabilities, open ports, CVEs",
+            "Azure Monitor      - CPU, memory, network, disk metrics"
+        ],
+        'gcp': [
+            "Cloud Audit Logs   - Activity logs, failed logins, API calls",
+            "Asset Inventory    - Resource inventory, tags, compliance",
+            "Cloud Billing      - Billing, cost trends, savings opportunities",
+            "Security Command   - Vulnerabilities, open ports, CVEs",
+            "Cloud Monitoring   - CPU, memory, network, disk metrics"
+        ]
+    }
 
-    def __init__(self, sources_path, inventory_path):
-        self.cloudtrail   = CloudTrailCollector(sources_path)
-        self.config       = ConfigCollector(sources_path)
-        self.cost         = CostCollector(sources_path)
-        self.securityhub  = SecurityHubCollector(sources_path)
-        self.metrics      = MetricsCollector(sources_path)
+    def __init__(self, sources_path, inventory_path, provider='aws'):
+        self.provider = provider
+        self.cloudtrail   = CloudTrailCollector(sources_path, provider)
+        self.config       = ConfigCollector(sources_path, provider)
+        self.cost         = CostCollector(sources_path, provider)
+        self.securityhub  = SecurityHubCollector(sources_path, provider)
+        self.metrics      = MetricsCollector(sources_path, provider)
 
         with open(inventory_path, 'r') as f:
             self._inventory = json.load(f)
@@ -50,8 +67,11 @@ class CollectorOrchestrator:
         Returns a list of Resource instances ready for the rule engine.
         """
         print("  Collecting from 5 data sources:")
-        for src in self.SOURCES:
-            print(f"    [OK] {src}")
+        print(f"    [OK] {self.cloudtrail.name}")
+        print(f"    [OK] {self.config.name}")
+        print(f"    [OK] {self.cost.name}")
+        print(f"    [OK] {self.securityhub.name}")
+        print(f"    [OK] {self.metrics.name}")
 
         resources = []
         for item in self._inventory:

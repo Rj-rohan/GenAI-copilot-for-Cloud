@@ -1,0 +1,40 @@
+{
+  "providers": {
+    "aws": {
+      "name": "Amazon Web Services",
+      "short_name": "AWS",
+      "services": {
+        "activity": "CloudTrail",
+        "config": "AWS Config",
+        "cost": "Cost Explorer",
+        "security": "Security Hub",
+        "metrics": "CloudWatch"
+      },
+      "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-south-1", "eu-central-1"]
+    },
+    "azure": {
+      "name": "Microsoft Azure",
+      "short_name": "Azure",
+      "services": {
+        "activity": "Activity Log",
+        "config": "Resource Graph",
+        "cost": "Cost Management",
+        "security": "Security Center",
+        "metrics": "Azure Monitor"
+      },
+      "regions": ["eastus", "westus2", "westeurope", "southeastasia", "centralindia"]
+    },
+    "gcp": {
+      "name": "Google Cloud Platform",
+      "short_name": "GCP",
+      "services": {
+        "activity": "Cloud Audit Logs",
+        "config": "Asset Inventory",
+        "cost": "Cloud Billing",
+        "security": "Security Command Center",
+        "metrics": "Cloud Monitoring"
+      },
+      "regions": ["us-east1", "us-west1", "europe-west1", "asia-south1", "asia-southeast1"]
+    }
+  }
+}

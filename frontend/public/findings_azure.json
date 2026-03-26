@@ -1,0 +1,3939 @@
+[
+  {
+    "resource_id": "r1",
+    "resource_name": "sqldb-dev-db",
+    "resource_type": "database",
+    "region": "westus2",
+    "risk_score": 77.2,
+    "priority": "HIGH",
+    "priority_tag": "\u00f0\u0178\u0178\u00a0",
+    "categories": [
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R3",
+      "R9",
+      "R14"
+    ],
+    "summary": "Database resource with compliance violations and security issues",
+    "impact": "Data not protected at rest - violates PCI-DSS and data protection standards | Known CVEs can be exploited by attackers to gain unauthorized access | Regulatory non-compliance risks fines, audit failures, and reputational damage",
+    "recommendation": "Enable encryption at rest using KMS or service-managed keys. Apply security patches and review SecurityHub findings for CVE details. Review all violations in AWS Config and implement required controls.",
+    "issues": [
+      "Encryption disabled",
+      "Known vulnerabilities detected",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Enable encryption at rest",
+      "Apply security patches and updates from SecurityHub findings",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Encryption disabled": [
+        "# Create encrypted snapshot, restore to new encrypted instance",
+        "aws rds create-db-snapshot \\",
+        "  --db-instance-identifier sqldb-dev-db \\",
+        "  --db-snapshot-identifier sqldb-dev-db-encrypted-snap",
+        "",
+        "aws rds restore-db-instance-from-db-snapshot \\",
+        "  --db-instance-identifier sqldb-dev-db-encrypted \\",
+        "  --db-snapshot-identifier sqldb-dev-db-encrypted-snap \\",
+        "  --storage-encrypted"
+      ],
+      "Known vulnerabilities detected": [
+        "# Get SecurityHub findings for this resource",
+        "aws securityhub get-findings \\",
+        "  --filters '{\"ResourceId\":[{\"Value\":\"r1\",\"Comparison\":\"EQUALS\"}]}'",
+        "",
+        "# Apply patches via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r1 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r1",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r1"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 74,
+      "cost_factor": 3.2,
+      "usage_penalty": 0,
+      "subtotal": 77.2,
+      "exposure_multiplier": 1.0,
+      "final_score": 77.2,
+      "rules_triggered": [
+        {
+          "id": "R3",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Encryption disabled"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 16,
+    "usage": 56,
+    "savings_potential": 1.63,
+    "cost_trend_pct": -3.8,
+    "rightsizing": "none",
+    "vuln_count": 2,
+    "cve_count": 0,
+    "compliance_score": 75,
+    "open_ports": [
+      3306
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 4,
+    "cpu_avg": 56.8,
+    "memory_avg": 91.5,
+    "disk_utilization": 8.7,
+    "compliance_violations": [
+      "Data encryption required"
+    ],
+    "compliance_violation_count": 1,
+    "has_tags": true,
+    "tags": {
+      "env": "prod",
+      "team": "backend",
+      "project": "payments",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r2",
+    "resource_name": "vm-api-server",
+    "resource_type": "compute",
+    "region": "westus2",
+    "risk_score": 117.8,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "categories": [
+      "cost",
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R2",
+      "R3",
+      "R4",
+      "R9",
+      "R11",
+      "R14"
+    ],
+    "summary": "Compute resource with security vulnerabilities and cost waste",
+    "impact": "Unnecessary cost incurred with minimal business value delivered | Data not protected at rest - violates PCI-DSS and data protection standards | Cannot track security events or meet compliance audit requirements",
+    "recommendation": "Stop or downsize instance to reduce monthly spend. Enable encryption at rest using KMS or service-managed keys. Enable CloudTrail/audit logging and ship logs to centralized store.",
+    "issues": [
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled",
+      "Known vulnerabilities detected",
+      "Rightsizing opportunity identified",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging",
+      "Apply security patches and updates from SecurityHub findings",
+      "Downsize or terminate based on actual usage patterns from Cost Explorer",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Idle resource": [
+        "# Stop the idle EC2 instance to save cost",
+        "aws ec2 stop-instances --instance-ids r2",
+        "",
+        "# Or schedule auto-stop during off-hours using SSM",
+        "aws ssm put-parameter \\",
+        "  --name /automation/stop-instances \\",
+        "  --value 'r2' --type StringList"
+      ],
+      "Encryption disabled": [
+        "# Enable EBS encryption by default in this region",
+        "aws ec2 enable-ebs-encryption-by-default --region westus2",
+        "",
+        "# Create encrypted AMI from existing instance",
+        "aws ec2 create-image \\",
+        "  --instance-id r2 \\",
+        "  --name vm-api-server-encrypted-ami \\",
+        "  --block-device-mappings '[{\"DeviceName\":\"/dev/sda1\",\"Ebs\":{\"Encrypted\":true}}]'"
+      ],
+      "Logging not enabled": [
+        "# Enable CloudWatch agent for instance logging",
+        "aws ssm send-command \\",
+        "  --instance-ids r2 \\",
+        "  --document-name AWS-ConfigureAWSPackage \\",
+        "  --parameters action=Install,name=AmazonCloudWatchAgent"
+      ],
+      "Known vulnerabilities detected": [
+        "# Run SSM patch baseline to apply security patches",
+        "aws ssm send-command \\",
+        "  --instance-ids r2 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install",
+        "",
+        "# Check patch compliance state",
+        "aws ssm describe-instance-patch-states \\",
+        "  --instance-ids r2"
+      ],
+      "Rightsizing opportunity identified": [
+        "# Get rightsizing recommendation from Cost Explorer",
+        "aws ce get-rightsizing-recommendation \\",
+        "  --service EC2 \\",
+        "  --configuration RecommendationTarget=SAME_INSTANCE_FAMILY",
+        "",
+        "# Stop instance, change type, restart",
+        "aws ec2 stop-instances --instance-ids r2",
+        "aws ec2 modify-instance-attribute \\",
+        "  --instance-id r2 \\",
+        "  --instance-type '{\"Value\":\"t3.micro\"}'",
+        "aws ec2 start-instances --instance-ids r2"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r2",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r2"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 110,
+      "cost_factor": 2.8,
+      "usage_penalty": 5,
+      "subtotal": 117.8,
+      "exposure_multiplier": 1.0,
+      "final_score": 117.8,
+      "rules_triggered": [
+        {
+          "id": "R2",
+          "category": "cost",
+          "risk": 5,
+          "weight": 2,
+          "weighted": 10,
+          "message": "Idle resource"
+        },
+        {
+          "id": "R3",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Encryption disabled"
+        },
+        {
+          "id": "R4",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Logging not enabled"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R11",
+          "category": "cost",
+          "risk": 4,
+          "weight": 2,
+          "weighted": 8,
+          "message": "Rightsizing opportunity identified"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 14,
+    "usage": 3,
+    "savings_potential": 11.02,
+    "cost_trend_pct": 5.9,
+    "rightsizing": "downsize",
+    "vuln_count": 2,
+    "cve_count": 0,
+    "compliance_score": 67,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 57,
+    "cpu_avg": 2.9,
+    "memory_avg": 18.3,
+    "disk_utilization": 23.8,
+    "compliance_violations": [
+      "Data encryption required",
+      "Audit logging required"
+    ],
+    "compliance_violation_count": 2,
+    "has_tags": true,
+    "tags": {
+      "env": "dev",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r3",
+    "resource_name": "vm-batch-worker",
+    "resource_type": "compute",
+    "region": "eastus",
+    "risk_score": 10.2,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "categories": [
+      "cost"
+    ],
+    "rule_ids": [
+      "R11"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Overspending on underutilized resources reduces cloud ROI",
+    "recommendation": "Rightsize to a smaller instance type based on actual utilization metrics.",
+    "issues": [
+      "Rightsizing opportunity identified"
+    ],
+    "suggestions": [
+      "Downsize or terminate based on actual usage patterns from Cost Explorer"
+    ],
+    "cli_fixes": {
+      "Rightsizing opportunity identified": [
+        "# Get rightsizing recommendation from Cost Explorer",
+        "aws ce get-rightsizing-recommendation \\",
+        "  --service EC2 \\",
+        "  --configuration RecommendationTarget=SAME_INSTANCE_FAMILY",
+        "",
+        "# Stop instance, change type, restart",
+        "aws ec2 stop-instances --instance-ids r3",
+        "aws ec2 modify-instance-attribute \\",
+        "  --instance-id r3 \\",
+        "  --instance-type '{\"Value\":\"t3.micro\"}'",
+        "aws ec2 start-instances --instance-ids r3"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 8,
+      "cost_factor": 2.2,
+      "usage_penalty": 0,
+      "subtotal": 10.2,
+      "exposure_multiplier": 1.0,
+      "final_score": 10.2,
+      "rules_triggered": [
+        {
+          "id": "R11",
+          "category": "cost",
+          "risk": 4,
+          "weight": 2,
+          "weighted": 8,
+          "message": "Rightsizing opportunity identified"
+        }
+      ]
+    },
+    "cost": 11,
+    "usage": 18,
+    "savings_potential": 3.93,
+    "cost_trend_pct": 4.8,
+    "rightsizing": "downsize",
+    "vuln_count": 0,
+    "cve_count": 0,
+    "compliance_score": 98,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 4,
+    "cpu_avg": 17.3,
+    "memory_avg": 35.2,
+    "disk_utilization": 6.5,
+    "compliance_violations": [],
+    "compliance_violation_count": 0,
+    "has_tags": true,
+    "tags": {
+      "env": "dev",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r4",
+    "resource_name": "vm-ml-instance",
+    "resource_type": "compute",
+    "region": "southeastasia",
+    "risk_score": 116.2,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "categories": [
+      "cost",
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R2",
+      "R3",
+      "R4",
+      "R9",
+      "R11",
+      "R14"
+    ],
+    "summary": "Compute resource with security vulnerabilities and cost waste",
+    "impact": "Unnecessary cost incurred with minimal business value delivered | Data not protected at rest - violates PCI-DSS and data protection standards | Cannot track security events or meet compliance audit requirements",
+    "recommendation": "Stop or downsize instance to reduce monthly spend. Enable encryption at rest using KMS or service-managed keys. Enable CloudTrail/audit logging and ship logs to centralized store.",
+    "issues": [
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled",
+      "Known vulnerabilities detected",
+      "Rightsizing opportunity identified",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging",
+      "Apply security patches and updates from SecurityHub findings",
+      "Downsize or terminate based on actual usage patterns from Cost Explorer",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Idle resource": [
+        "# Stop the idle EC2 instance to save cost",
+        "aws ec2 stop-instances --instance-ids r4",
+        "",
+        "# Or schedule auto-stop during off-hours using SSM",
+        "aws ssm put-parameter \\",
+        "  --name /automation/stop-instances \\",
+        "  --value 'r4' --type StringList"
+      ],
+      "Encryption disabled": [
+        "# Enable EBS encryption by default in this region",
+        "aws ec2 enable-ebs-encryption-by-default --region southeastasia",
+        "",
+        "# Create encrypted AMI from existing instance",
+        "aws ec2 create-image \\",
+        "  --instance-id r4 \\",
+        "  --name vm-ml-instance-encrypted-ami \\",
+        "  --block-device-mappings '[{\"DeviceName\":\"/dev/sda1\",\"Ebs\":{\"Encrypted\":true}}]'"
+      ],
+      "Logging not enabled": [
+        "# Enable CloudWatch agent for instance logging",
+        "aws ssm send-command \\",
+        "  --instance-ids r4 \\",
+        "  --document-name AWS-ConfigureAWSPackage \\",
+        "  --parameters action=Install,name=AmazonCloudWatchAgent"
+      ],
+      "Known vulnerabilities detected": [
+        "# Run SSM patch baseline to apply security patches",
+        "aws ssm send-command \\",
+        "  --instance-ids r4 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install",
+        "",
+        "# Check patch compliance state",
+        "aws ssm describe-instance-patch-states \\",
+        "  --instance-ids r4"
+      ],
+      "Rightsizing opportunity identified": [
+        "# Get rightsizing recommendation from Cost Explorer",
+        "aws ce get-rightsizing-recommendation \\",
+        "  --service EC2 \\",
+        "  --configuration RecommendationTarget=SAME_INSTANCE_FAMILY",
+        "",
+        "# Stop instance, change type, restart",
+        "aws ec2 stop-instances --instance-ids r4",
+        "aws ec2 modify-instance-attribute \\",
+        "  --instance-id r4 \\",
+        "  --instance-type '{\"Value\":\"t3.micro\"}'",
+        "aws ec2 start-instances --instance-ids r4"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r4",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r4"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 110,
+      "cost_factor": 1.2,
+      "usage_penalty": 5,
+      "subtotal": 116.2,
+      "exposure_multiplier": 1.0,
+      "final_score": 116.2,
+      "rules_triggered": [
+        {
+          "id": "R2",
+          "category": "cost",
+          "risk": 5,
+          "weight": 2,
+          "weighted": 10,
+          "message": "Idle resource"
+        },
+        {
+          "id": "R3",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Encryption disabled"
+        },
+        {
+          "id": "R4",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Logging not enabled"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R11",
+          "category": "cost",
+          "risk": 4,
+          "weight": 2,
+          "weighted": 8,
+          "message": "Rightsizing opportunity identified"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 6,
+    "usage": 1,
+    "savings_potential": 4.46,
+    "cost_trend_pct": 8.8,
+    "rightsizing": "terminate",
+    "vuln_count": 3,
+    "cve_count": 0,
+    "compliance_score": 60,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 41,
+    "cpu_avg": 1.3,
+    "memory_avg": 9.7,
+    "disk_utilization": 17.5,
+    "compliance_violations": [
+      "Data encryption required",
+      "Audit logging required"
+    ],
+    "compliance_violation_count": 2,
+    "has_tags": true,
+    "tags": {
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r5",
+    "resource_name": "blob-user-uploads",
+    "resource_type": "storage",
+    "region": "centralindia",
+    "risk_score": 74.8,
+    "priority": "HIGH",
+    "priority_tag": "\u00f0\u0178\u0178\u00a0",
+    "categories": [
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R3",
+      "R9",
+      "R14"
+    ],
+    "summary": "Storage resource with compliance violations and security issues",
+    "impact": "Data not protected at rest - violates PCI-DSS and data protection standards | Known CVEs can be exploited by attackers to gain unauthorized access | Regulatory non-compliance risks fines, audit failures, and reputational damage",
+    "recommendation": "Enable encryption at rest using KMS or service-managed keys. Apply security patches and review SecurityHub findings for CVE details. Review all violations in AWS Config and implement required controls.",
+    "issues": [
+      "Encryption disabled",
+      "Known vulnerabilities detected",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Enable encryption at rest",
+      "Apply security patches and updates from SecurityHub findings",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Encryption disabled": [
+        "# Enable default AES-256 encryption on S3 bucket",
+        "aws s3api put-bucket-encryption \\",
+        "  --bucket blob-user-uploads \\",
+        "  --server-side-encryption-configuration",
+        "  '{\"Rules\":[{\"ApplyServerSideEncryptionByDefault\":{\"SSEAlgorithm\":\"AES256\"}}]}'"
+      ],
+      "Known vulnerabilities detected": [
+        "# Get SecurityHub findings for this resource",
+        "aws securityhub get-findings \\",
+        "  --filters '{\"ResourceId\":[{\"Value\":\"r5\",\"Comparison\":\"EQUALS\"}]}'",
+        "",
+        "# Apply patches via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r5 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r5",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r5"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 74,
+      "cost_factor": 0.8,
+      "usage_penalty": 0,
+      "subtotal": 74.8,
+      "exposure_multiplier": 1.0,
+      "final_score": 74.8,
+      "rules_triggered": [
+        {
+          "id": "R3",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Encryption disabled"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 4,
+    "usage": 90,
+    "savings_potential": 0.23,
+    "cost_trend_pct": -2.6,
+    "rightsizing": "none",
+    "vuln_count": 3,
+    "cve_count": 0,
+    "compliance_score": 81,
+    "open_ports": [
+      443
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 3,
+    "cpu_avg": 90.7,
+    "memory_avg": 100.0,
+    "disk_utilization": 19.4,
+    "compliance_violations": [
+      "Data encryption required"
+    ],
+    "compliance_violation_count": 1,
+    "has_tags": true,
+    "tags": {
+      "env": "prod",
+      "team": "backend",
+      "project": "auth-service",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r6",
+    "resource_name": "lb-internet-lb",
+    "resource_type": "network",
+    "region": "westus2",
+    "risk_score": 37.2,
+    "priority": "MEDIUM",
+    "priority_tag": "\u00f0\u0178\u0178\u00a1",
+    "categories": [
+      "compliance"
+    ],
+    "rule_ids": [
+      "R4",
+      "R14"
+    ],
+    "summary": "Network resource requires attention",
+    "impact": "Cannot track security events or meet compliance audit requirements | Regulatory non-compliance risks fines, audit failures, and reputational damage",
+    "recommendation": "Enable CloudTrail/audit logging and ship logs to centralized store. Review all violations in AWS Config and implement required controls.",
+    "issues": [
+      "Logging not enabled",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Enable CloudTrail/audit logging",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Logging not enabled": [
+        "# Enable CloudTrail for all regions (account-level)",
+        "aws cloudtrail create-trail \\",
+        "  --name org-audit-trail \\",
+        "  --s3-bucket-name <LOG_BUCKET> \\",
+        "  --is-multi-region-trail",
+        "aws cloudtrail start-logging --name org-audit-trail"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r6",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r6"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 36,
+      "cost_factor": 1.2,
+      "usage_penalty": 0,
+      "subtotal": 37.2,
+      "exposure_multiplier": 1.0,
+      "final_score": 37.2,
+      "rules_triggered": [
+        {
+          "id": "R4",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Logging not enabled"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 6,
+    "usage": 76,
+    "savings_potential": 0.46,
+    "cost_trend_pct": -3.2,
+    "rightsizing": "none",
+    "vuln_count": 0,
+    "cve_count": 0,
+    "compliance_score": 85,
+    "open_ports": [
+      80,
+      443
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 2,
+    "cpu_avg": 75.6,
+    "memory_avg": 100.0,
+    "disk_utilization": 19.7,
+    "compliance_violations": [
+      "Audit logging required"
+    ],
+    "compliance_violation_count": 1,
+    "has_tags": true,
+    "tags": {
+      "env": "prod",
+      "team": "platform",
+      "project": "ml-pipeline",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r8",
+    "resource_name": "lb-internal-lb",
+    "resource_type": "network",
+    "region": "eastus",
+    "risk_score": 280.5,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "categories": [
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R1",
+      "R8",
+      "R9",
+      "R12",
+      "R13",
+      "R14"
+    ],
+    "summary": "Network resource with compliance violations and security issues",
+    "impact": "May expose sensitive data to unauthorized access | Potential credential stuffing or brute-force attack in progress | Known CVEs can be exploited by attackers to gain unauthorized access",
+    "recommendation": "Disable public access and restrict to VPC only. Enable MFA, rotate credentials, review and restrict IAM policies. Apply security patches and review SecurityHub findings for CVE details.",
+    "issues": [
+      "Public resource detected",
+      "Suspicious login activity detected",
+      "Known vulnerabilities detected",
+      "SSH port (22) exposed to internet",
+      "RDP port (3389) exposed to internet",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Disable public access and restrict to VPC only",
+      "Enable MFA, review IAM policies, rotate credentials immediately",
+      "Apply security patches and updates from SecurityHub findings",
+      "Restrict SSH to VPN/bastion host only and use key-based authentication",
+      "Restrict RDP to VPN only and enable Network Level Authentication",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Public resource detected": [
+        "# Convert to internal load balancer (requires recreate)",
+        "aws elbv2 describe-load-balancers --names lb-internal-lb",
+        "",
+        "# Restrict security group to known IP ranges",
+        "aws ec2 revoke-security-group-ingress \\",
+        "  --group-id <sg-id> --protocol tcp --port 443 --cidr 0.0.0.0/0",
+        "aws ec2 authorize-security-group-ingress \\",
+        "  --group-id <sg-id> --protocol tcp --port 443 --cidr <YOUR_OFFICE_IP>/32"
+      ],
+      "Suspicious login activity detected": [
+        "# Force password reset for compromised credentials",
+        "aws iam update-login-profile \\",
+        "  --user-name <IAM_USER> \\",
+        "  --password-reset-required",
+        "",
+        "# Enable MFA enforcement policy",
+        "aws iam attach-user-policy \\",
+        "  --user-name <IAM_USER> \\",
+        "  --policy-arn arn:aws:iam::aws:policy/IAMUserChangePassword",
+        "",
+        "# Rotate access keys immediately",
+        "aws iam list-access-keys --user-name <IAM_USER>",
+        "aws iam delete-access-key \\",
+        "  --user-name <IAM_USER> \\",
+        "  --access-key-id <OLD_KEY_ID>",
+        "aws iam create-access-key --user-name <IAM_USER>"
+      ],
+      "Known vulnerabilities detected": [
+        "# Get SecurityHub findings for this resource",
+        "aws securityhub get-findings \\",
+        "  --filters '{\"ResourceId\":[{\"Value\":\"r8\",\"Comparison\":\"EQUALS\"}]}'",
+        "",
+        "# Apply patches via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r8 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install"
+      ],
+      "SSH port (22) exposed to internet": [
+        "# Revoke SSH inbound rule from 0.0.0.0/0",
+        "aws ec2 revoke-security-group-ingress \\",
+        "  --group-id <SG_ID> \\",
+        "  --protocol tcp --port 22 --cidr 0.0.0.0/0",
+        "",
+        "# Allow SSH only from bastion / VPN IP",
+        "aws ec2 authorize-security-group-ingress \\",
+        "  --group-id <SG_ID> \\",
+        "  --protocol tcp --port 22 --cidr <BASTION_IP>/32",
+        "",
+        "# Better: use AWS Systems Manager Session Manager (no SSH needed)",
+        "aws ssm start-session --target r8"
+      ],
+      "RDP port (3389) exposed to internet": [
+        "# Revoke RDP inbound rule from 0.0.0.0/0",
+        "aws ec2 revoke-security-group-ingress \\",
+        "  --group-id <SG_ID> \\",
+        "  --protocol tcp --port 3389 --cidr 0.0.0.0/0",
+        "",
+        "# Allow RDP only from VPN IP range",
+        "aws ec2 authorize-security-group-ingress \\",
+        "  --group-id <SG_ID> \\",
+        "  --protocol tcp --port 3389 --cidr <VPN_IP>/32",
+        "",
+        "# Enable NLA (Network Level Authentication) via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r8 \\",
+        "  --document-name AWS-RunPowerShellScript \\",
+        "  --parameters commands='Set-ItemProperty -Path HKLM:\\System\\CurrentControlSet\\Control\\Terminal\\ Server\\WinStations\\RDP-Tcp -Name UserAuthentication -Value 1'"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r8",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r8"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 186,
+      "cost_factor": 1.0,
+      "usage_penalty": 0,
+      "subtotal": 187.0,
+      "exposure_multiplier": 1.5,
+      "final_score": 280.5,
+      "rules_triggered": [
+        {
+          "id": "R1",
+          "category": "security",
+          "risk": 9,
+          "weight": 4,
+          "weighted": 36,
+          "message": "Public resource detected"
+        },
+        {
+          "id": "R8",
+          "category": "security",
+          "risk": 8,
+          "weight": 4,
+          "weighted": 32,
+          "message": "Suspicious login activity detected"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R12",
+          "category": "security",
+          "risk": 9,
+          "weight": 4,
+          "weighted": 36,
+          "message": "SSH port (22) exposed to internet"
+        },
+        {
+          "id": "R13",
+          "category": "security",
+          "risk": 9,
+          "weight": 4,
+          "weighted": 36,
+          "message": "RDP port (3389) exposed to internet"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 5,
+    "usage": 35,
+    "savings_potential": 0.41,
+    "cost_trend_pct": -2.4,
+    "rightsizing": "none",
+    "vuln_count": 1,
+    "cve_count": 1,
+    "compliance_score": 81,
+    "open_ports": [
+      22,
+      80,
+      443,
+      3389
+    ],
+    "ssh_exposed": true,
+    "rdp_exposed": true,
+    "failed_logins": 5,
+    "suspicious_api_calls": 5,
+    "last_activity_days": 4,
+    "cpu_avg": 36.4,
+    "memory_avg": 63.4,
+    "disk_utilization": 27.0,
+    "compliance_violations": [
+      "Restrict public access"
+    ],
+    "compliance_violation_count": 1,
+    "has_tags": true,
+    "tags": {
+      "env": "prod",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r9",
+    "resource_name": "lb-internal-lb-02",
+    "resource_type": "network",
+    "region": "southeastasia",
+    "risk_score": 350.1,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "categories": [
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R1",
+      "R3",
+      "R4",
+      "R8",
+      "R9",
+      "R12",
+      "R13",
+      "R14"
+    ],
+    "summary": "Network resource with compliance violations and security issues",
+    "impact": "May expose sensitive data to unauthorized access | Data not protected at rest - violates PCI-DSS and data protection standards | Cannot track security events or meet compliance audit requirements",
+    "recommendation": "Disable public access and restrict to VPC only. Enable encryption at rest using KMS or service-managed keys. Enable CloudTrail/audit logging and ship logs to centralized store.",
+    "issues": [
+      "Public resource detected",
+      "Encryption disabled",
+      "Logging not enabled",
+      "Suspicious login activity detected",
+      "Known vulnerabilities detected",
+      "SSH port (22) exposed to internet",
+      "RDP port (3389) exposed to internet",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Disable public access and restrict to VPC only",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging",
+      "Enable MFA, review IAM policies, rotate credentials immediately",
+      "Apply security patches and updates from SecurityHub findings",
+      "Restrict SSH to VPN/bastion host only and use key-based authentication",
+      "Restrict RDP to VPN only and enable Network Level Authentication",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Public resource detected": [
+        "# Convert to internal load balancer (requires recreate)",
+        "aws elbv2 describe-load-balancers --names lb-internal-lb-02",
+        "",
+        "# Restrict security group to known IP ranges",
+        "aws ec2 revoke-security-group-ingress \\",
+        "  --group-id <sg-id> --protocol tcp --port 443 --cidr 0.0.0.0/0",
+        "aws ec2 authorize-security-group-ingress \\",
+        "  --group-id <sg-id> --protocol tcp --port 443 --cidr <YOUR_OFFICE_IP>/32"
+      ],
+      "Encryption disabled": [
+        "# Enable encryption for this resource (generic)",
+        "aws ec2 enable-ebs-encryption-by-default --region southeastasia"
+      ],
+      "Logging not enabled": [
+        "# Enable CloudTrail for all regions (account-level)",
+        "aws cloudtrail create-trail \\",
+        "  --name org-audit-trail \\",
+        "  --s3-bucket-name <LOG_BUCKET> \\",
+        "  --is-multi-region-trail",
+        "aws cloudtrail start-logging --name org-audit-trail"
+      ],
+      "Suspicious login activity detected": [
+        "# Force password reset for compromised credentials",
+        "aws iam update-login-profile \\",
+        "  --user-name <IAM_USER> \\",
+        "  --password-reset-required",
+        "",
+        "# Enable MFA enforcement policy",
+        "aws iam attach-user-policy \\",
+        "  --user-name <IAM_USER> \\",
+        "  --policy-arn arn:aws:iam::aws:policy/IAMUserChangePassword",
+        "",
+        "# Rotate access keys immediately",
+        "aws iam list-access-keys --user-name <IAM_USER>",
+        "aws iam delete-access-key \\",
+        "  --user-name <IAM_USER> \\",
+        "  --access-key-id <OLD_KEY_ID>",
+        "aws iam create-access-key --user-name <IAM_USER>"
+      ],
+      "Known vulnerabilities detected": [
+        "# Get SecurityHub findings for this resource",
+        "aws securityhub get-findings \\",
+        "  --filters '{\"ResourceId\":[{\"Value\":\"r9\",\"Comparison\":\"EQUALS\"}]}'",
+        "",
+        "# Apply patches via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r9 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install"
+      ],
+      "SSH port (22) exposed to internet": [
+        "# Revoke SSH inbound rule from 0.0.0.0/0",
+        "aws ec2 revoke-security-group-ingress \\",
+        "  --group-id <SG_ID> \\",
+        "  --protocol tcp --port 22 --cidr 0.0.0.0/0",
+        "",
+        "# Allow SSH only from bastion / VPN IP",
+        "aws ec2 authorize-security-group-ingress \\",
+        "  --group-id <SG_ID> \\",
+        "  --protocol tcp --port 22 --cidr <BASTION_IP>/32",
+        "",
+        "# Better: use AWS Systems Manager Session Manager (no SSH needed)",
+        "aws ssm start-session --target r9"
+      ],
+      "RDP port (3389) exposed to internet": [
+        "# Revoke RDP inbound rule from 0.0.0.0/0",
+        "aws ec2 revoke-security-group-ingress \\",
+        "  --group-id <SG_ID> \\",
+        "  --protocol tcp --port 3389 --cidr 0.0.0.0/0",
+        "",
+        "# Allow RDP only from VPN IP range",
+        "aws ec2 authorize-security-group-ingress \\",
+        "  --group-id <SG_ID> \\",
+        "  --protocol tcp --port 3389 --cidr <VPN_IP>/32",
+        "",
+        "# Enable NLA (Network Level Authentication) via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r9 \\",
+        "  --document-name AWS-RunPowerShellScript \\",
+        "  --parameters commands='Set-ItemProperty -Path HKLM:\\System\\CurrentControlSet\\Control\\Terminal\\ Server\\WinStations\\RDP-Tcp -Name UserAuthentication -Value 1'"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r9",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r9"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 232,
+      "cost_factor": 1.4,
+      "usage_penalty": 0,
+      "subtotal": 233.4,
+      "exposure_multiplier": 1.5,
+      "final_score": 350.1,
+      "rules_triggered": [
+        {
+          "id": "R1",
+          "category": "security",
+          "risk": 9,
+          "weight": 4,
+          "weighted": 36,
+          "message": "Public resource detected"
+        },
+        {
+          "id": "R3",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Encryption disabled"
+        },
+        {
+          "id": "R4",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Logging not enabled"
+        },
+        {
+          "id": "R8",
+          "category": "security",
+          "risk": 8,
+          "weight": 4,
+          "weighted": 32,
+          "message": "Suspicious login activity detected"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R12",
+          "category": "security",
+          "risk": 9,
+          "weight": 4,
+          "weighted": 36,
+          "message": "SSH port (22) exposed to internet"
+        },
+        {
+          "id": "R13",
+          "category": "security",
+          "risk": 9,
+          "weight": 4,
+          "weighted": 36,
+          "message": "RDP port (3389) exposed to internet"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 7,
+    "usage": 88,
+    "savings_potential": 0.7,
+    "cost_trend_pct": -2.8,
+    "rightsizing": "none",
+    "vuln_count": 6,
+    "cve_count": 5,
+    "compliance_score": 44,
+    "open_ports": [
+      22,
+      80,
+      443,
+      3389
+    ],
+    "ssh_exposed": true,
+    "rdp_exposed": true,
+    "failed_logins": 19,
+    "suspicious_api_calls": 5,
+    "last_activity_days": 1,
+    "cpu_avg": 88.3,
+    "memory_avg": 100.0,
+    "disk_utilization": 15.2,
+    "compliance_violations": [
+      "Data encryption required",
+      "Restrict public access",
+      "Audit logging required"
+    ],
+    "compliance_violation_count": 3,
+    "has_tags": true,
+    "tags": {
+      "env": "prod",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r10",
+    "resource_name": "vm-microservice",
+    "resource_type": "compute",
+    "region": "westus2",
+    "risk_score": 282.9,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "categories": [
+      "cost",
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R1",
+      "R3",
+      "R8",
+      "R9",
+      "R11",
+      "R12",
+      "R14"
+    ],
+    "summary": "Compute resource with security vulnerabilities and cost waste",
+    "impact": "May expose sensitive data to unauthorized access | Data not protected at rest - violates PCI-DSS and data protection standards | Potential credential stuffing or brute-force attack in progress",
+    "recommendation": "Disable public access and restrict to VPC only. Enable encryption at rest using KMS or service-managed keys. Enable MFA, rotate credentials, review and restrict IAM policies.",
+    "issues": [
+      "Public resource detected",
+      "Encryption disabled",
+      "Suspicious login activity detected",
+      "Known vulnerabilities detected",
+      "Rightsizing opportunity identified",
+      "SSH port (22) exposed to internet",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Disable public access and restrict to VPC only",
+      "Enable encryption at rest",
+      "Enable MFA, review IAM policies, rotate credentials immediately",
+      "Apply security patches and updates from SecurityHub findings",
+      "Downsize or terminate based on actual usage patterns from Cost Explorer",
+      "Restrict SSH to VPN/bastion host only and use key-based authentication",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Public resource detected": [
+        "# Remove public IP and move behind a load balancer",
+        "aws ec2 modify-instance-attribute \\",
+        "  --instance-id r10 \\",
+        "  --no-source-dest-check",
+        "",
+        "# Restrict security group inbound rules",
+        "aws ec2 revoke-security-group-ingress \\",
+        "  --group-id <sg-id> --protocol all --cidr 0.0.0.0/0"
+      ],
+      "Encryption disabled": [
+        "# Enable EBS encryption by default in this region",
+        "aws ec2 enable-ebs-encryption-by-default --region westus2",
+        "",
+        "# Create encrypted AMI from existing instance",
+        "aws ec2 create-image \\",
+        "  --instance-id r10 \\",
+        "  --name vm-microservice-encrypted-ami \\",
+        "  --block-device-mappings '[{\"DeviceName\":\"/dev/sda1\",\"Ebs\":{\"Encrypted\":true}}]'"
+      ],
+      "Suspicious login activity detected": [
+        "# Force password reset for compromised credentials",
+        "aws iam update-login-profile \\",
+        "  --user-name <IAM_USER> \\",
+        "  --password-reset-required",
+        "",
+        "# Enable MFA enforcement policy",
+        "aws iam attach-user-policy \\",
+        "  --user-name <IAM_USER> \\",
+        "  --policy-arn arn:aws:iam::aws:policy/IAMUserChangePassword",
+        "",
+        "# Rotate access keys immediately",
+        "aws iam list-access-keys --user-name <IAM_USER>",
+        "aws iam delete-access-key \\",
+        "  --user-name <IAM_USER> \\",
+        "  --access-key-id <OLD_KEY_ID>",
+        "aws iam create-access-key --user-name <IAM_USER>"
+      ],
+      "Known vulnerabilities detected": [
+        "# Run SSM patch baseline to apply security patches",
+        "aws ssm send-command \\",
+        "  --instance-ids r10 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install",
+        "",
+        "# Check patch compliance state",
+        "aws ssm describe-instance-patch-states \\",
+        "  --instance-ids r10"
+      ],
+      "Rightsizing opportunity identified": [
+        "# Get rightsizing recommendation from Cost Explorer",
+        "aws ce get-rightsizing-recommendation \\",
+        "  --service EC2 \\",
+        "  --configuration RecommendationTarget=SAME_INSTANCE_FAMILY",
+        "",
+        "# Stop instance, change type, restart",
+        "aws ec2 stop-instances --instance-ids r10",
+        "aws ec2 modify-instance-attribute \\",
+        "  --instance-id r10 \\",
+        "  --instance-type '{\"Value\":\"t3.micro\"}'",
+        "aws ec2 start-instances --instance-ids r10"
+      ],
+      "SSH port (22) exposed to internet": [
+        "# Revoke SSH inbound rule from 0.0.0.0/0",
+        "aws ec2 revoke-security-group-ingress \\",
+        "  --group-id <SG_ID> \\",
+        "  --protocol tcp --port 22 --cidr 0.0.0.0/0",
+        "",
+        "# Allow SSH only from bastion / VPN IP",
+        "aws ec2 authorize-security-group-ingress \\",
+        "  --group-id <SG_ID> \\",
+        "  --protocol tcp --port 22 --cidr <BASTION_IP>/32",
+        "",
+        "# Better: use AWS Systems Manager Session Manager (no SSH needed)",
+        "aws ssm start-session --target r10"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r10",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r10"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 186,
+      "cost_factor": 2.6,
+      "usage_penalty": 0,
+      "subtotal": 188.6,
+      "exposure_multiplier": 1.5,
+      "final_score": 282.9,
+      "rules_triggered": [
+        {
+          "id": "R1",
+          "category": "security",
+          "risk": 9,
+          "weight": 4,
+          "weighted": 36,
+          "message": "Public resource detected"
+        },
+        {
+          "id": "R3",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Encryption disabled"
+        },
+        {
+          "id": "R8",
+          "category": "security",
+          "risk": 8,
+          "weight": 4,
+          "weighted": 32,
+          "message": "Suspicious login activity detected"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R11",
+          "category": "cost",
+          "risk": 4,
+          "weight": 2,
+          "weighted": 8,
+          "message": "Rightsizing opportunity identified"
+        },
+        {
+          "id": "R12",
+          "category": "security",
+          "risk": 9,
+          "weight": 4,
+          "weighted": 36,
+          "message": "SSH port (22) exposed to internet"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 13,
+    "usage": 19,
+    "savings_potential": 3.6,
+    "cost_trend_pct": 5.3,
+    "rightsizing": "downsize",
+    "vuln_count": 4,
+    "cve_count": 2,
+    "compliance_score": 60,
+    "open_ports": [
+      22,
+      80,
+      443
+    ],
+    "ssh_exposed": true,
+    "rdp_exposed": false,
+    "failed_logins": 21,
+    "suspicious_api_calls": 5,
+    "last_activity_days": 18,
+    "cpu_avg": 20.1,
+    "memory_avg": 43.0,
+    "disk_utilization": 29.1,
+    "compliance_violations": [
+      "Data encryption required",
+      "Restrict public access"
+    ],
+    "compliance_violation_count": 2,
+    "has_tags": true,
+    "tags": {
+      "env": "staging",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r11",
+    "resource_name": "vm-microservice-02",
+    "resource_type": "compute",
+    "region": "centralindia",
+    "risk_score": 38.8,
+    "priority": "MEDIUM",
+    "priority_tag": "\u00f0\u0178\u0178\u00a1",
+    "categories": [
+      "compliance"
+    ],
+    "rule_ids": [
+      "R4",
+      "R14"
+    ],
+    "summary": "Compute resource requires attention",
+    "impact": "Cannot track security events or meet compliance audit requirements | Regulatory non-compliance risks fines, audit failures, and reputational damage",
+    "recommendation": "Enable CloudTrail/audit logging and ship logs to centralized store. Review all violations in AWS Config and implement required controls.",
+    "issues": [
+      "Logging not enabled",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Enable CloudTrail/audit logging",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Logging not enabled": [
+        "# Enable CloudWatch agent for instance logging",
+        "aws ssm send-command \\",
+        "  --instance-ids r11 \\",
+        "  --document-name AWS-ConfigureAWSPackage \\",
+        "  --parameters action=Install,name=AmazonCloudWatchAgent"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r11",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r11"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 36,
+      "cost_factor": 2.8,
+      "usage_penalty": 0,
+      "subtotal": 38.8,
+      "exposure_multiplier": 1.0,
+      "final_score": 38.8,
+      "rules_triggered": [
+        {
+          "id": "R4",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Logging not enabled"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 14,
+    "usage": 90,
+    "savings_potential": 0.42,
+    "cost_trend_pct": -3.0,
+    "rightsizing": "none",
+    "vuln_count": 0,
+    "cve_count": 0,
+    "compliance_score": 82,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 5,
+    "cpu_avg": 90.9,
+    "memory_avg": 100.0,
+    "disk_utilization": 59.3,
+    "compliance_violations": [
+      "Audit logging required"
+    ],
+    "compliance_violation_count": 1,
+    "has_tags": true,
+    "tags": {
+      "env": "staging",
+      "team": "data",
+      "project": "data-platform",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r12",
+    "resource_name": "sqldb-metrics-db",
+    "resource_type": "database",
+    "region": "eastus",
+    "risk_score": 10.6,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "categories": [
+      "cost"
+    ],
+    "rule_ids": [
+      "R11"
+    ],
+    "summary": "Database resource with cost optimization opportunities",
+    "impact": "Overspending on underutilized resources reduces cloud ROI",
+    "recommendation": "Rightsize to a smaller instance type based on actual utilization metrics.",
+    "issues": [
+      "Rightsizing opportunity identified"
+    ],
+    "suggestions": [
+      "Downsize or terminate based on actual usage patterns from Cost Explorer"
+    ],
+    "cli_fixes": {
+      "Rightsizing opportunity identified": [
+        "# Get RDS recommendations from Cost Explorer",
+        "aws ce get-rightsizing-recommendation --service RDS",
+        "",
+        "# Modify DB instance class",
+        "aws rds modify-db-instance \\",
+        "  --db-instance-identifier sqldb-metrics-db \\",
+        "  --db-instance-class db.t3.small \\",
+        "  --apply-immediately"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 8,
+      "cost_factor": 2.6,
+      "usage_penalty": 0,
+      "subtotal": 10.6,
+      "exposure_multiplier": 1.0,
+      "final_score": 10.6,
+      "rules_triggered": [
+        {
+          "id": "R11",
+          "category": "cost",
+          "risk": 4,
+          "weight": 2,
+          "weighted": 8,
+          "message": "Rightsizing opportunity identified"
+        }
+      ]
+    },
+    "cost": 13,
+    "usage": 6,
+    "savings_potential": 3.49,
+    "cost_trend_pct": 7.5,
+    "rightsizing": "downsize",
+    "vuln_count": 0,
+    "cve_count": 0,
+    "compliance_score": 95,
+    "open_ports": [
+      3306
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 15,
+    "cpu_avg": 7.9,
+    "memory_avg": 17.1,
+    "disk_utilization": 20.8,
+    "compliance_violations": [],
+    "compliance_violation_count": 0,
+    "has_tags": true,
+    "tags": {
+      "env": "staging",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r13",
+    "resource_name": "blob-user-uploads-02",
+    "resource_type": "storage",
+    "region": "eastus",
+    "risk_score": 79.4,
+    "priority": "HIGH",
+    "priority_tag": "\u00f0\u0178\u0178\u00a0",
+    "categories": [
+      "cost",
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R2",
+      "R4",
+      "R9",
+      "R14"
+    ],
+    "summary": "Storage resource with security vulnerabilities and cost waste",
+    "impact": "Unnecessary cost incurred with minimal business value delivered | Cannot track security events or meet compliance audit requirements | Known CVEs can be exploited by attackers to gain unauthorized access",
+    "recommendation": "Stop or downsize instance to reduce monthly spend. Enable CloudTrail/audit logging and ship logs to centralized store. Apply security patches and review SecurityHub findings for CVE details.",
+    "issues": [
+      "Idle resource",
+      "Logging not enabled",
+      "Known vulnerabilities detected",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable CloudTrail/audit logging",
+      "Apply security patches and updates from SecurityHub findings",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Idle resource": [
+        "# Review and consider stopping this idle resource",
+        "aws ec2 stop-instances --instance-ids r13"
+      ],
+      "Logging not enabled": [
+        "# Enable S3 server access logging",
+        "aws s3api put-bucket-logging \\",
+        "  --bucket blob-user-uploads-02 \\",
+        "  --bucket-logging-status",
+        "  '{\"LoggingEnabled\":{\"TargetBucket\":\"<LOG_BUCKET>\",\"TargetPrefix\":\"blob-user-uploads-02/access-logs/\"}}'"
+      ],
+      "Known vulnerabilities detected": [
+        "# Get SecurityHub findings for this resource",
+        "aws securityhub get-findings \\",
+        "  --filters '{\"ResourceId\":[{\"Value\":\"r13\",\"Comparison\":\"EQUALS\"}]}'",
+        "",
+        "# Apply patches via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r13 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r13",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r13"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 74,
+      "cost_factor": 0.4,
+      "usage_penalty": 5,
+      "subtotal": 79.4,
+      "exposure_multiplier": 1.0,
+      "final_score": 79.4,
+      "rules_triggered": [
+        {
+          "id": "R2",
+          "category": "cost",
+          "risk": 5,
+          "weight": 2,
+          "weighted": 10,
+          "message": "Idle resource"
+        },
+        {
+          "id": "R4",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Logging not enabled"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 2,
+    "usage": 4,
+    "savings_potential": 1.36,
+    "cost_trend_pct": 7.6,
+    "rightsizing": "terminate",
+    "vuln_count": 1,
+    "cve_count": 0,
+    "compliance_score": 84,
+    "open_ports": [
+      443
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 78,
+    "cpu_avg": 4.0,
+    "memory_avg": 18.1,
+    "disk_utilization": 9.1,
+    "compliance_violations": [
+      "Audit logging required"
+    ],
+    "compliance_violation_count": 1,
+    "has_tags": true,
+    "tags": {
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r14",
+    "resource_name": "blob-static-assets",
+    "resource_type": "storage",
+    "region": "westus2",
+    "risk_score": 29.0,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "categories": [
+      "security"
+    ],
+    "rule_ids": [
+      "R9"
+    ],
+    "summary": "Storage resource with critical security vulnerabilities",
+    "impact": "Known CVEs can be exploited by attackers to gain unauthorized access",
+    "recommendation": "Apply security patches and review SecurityHub findings for CVE details.",
+    "issues": [
+      "Known vulnerabilities detected"
+    ],
+    "suggestions": [
+      "Apply security patches and updates from SecurityHub findings"
+    ],
+    "cli_fixes": {
+      "Known vulnerabilities detected": [
+        "# Get SecurityHub findings for this resource",
+        "aws securityhub get-findings \\",
+        "  --filters '{\"ResourceId\":[{\"Value\":\"r14\",\"Comparison\":\"EQUALS\"}]}'",
+        "",
+        "# Apply patches via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r14 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 28,
+      "cost_factor": 1.0,
+      "usage_penalty": 0,
+      "subtotal": 29.0,
+      "exposure_multiplier": 1.0,
+      "final_score": 29.0,
+      "rules_triggered": [
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        }
+      ]
+    },
+    "cost": 5,
+    "usage": 12,
+    "savings_potential": 1.56,
+    "cost_trend_pct": 3.6,
+    "rightsizing": "downsize",
+    "vuln_count": 1,
+    "cve_count": 0,
+    "compliance_score": 97,
+    "open_ports": [
+      443
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 17,
+    "cpu_avg": 11.9,
+    "memory_avg": 33.0,
+    "disk_utilization": 6.6,
+    "compliance_violations": [],
+    "compliance_violation_count": 0,
+    "has_tags": true,
+    "tags": {
+      "env": "dev",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r15",
+    "resource_name": "blob-user-uploads-03",
+    "resource_type": "storage",
+    "region": "centralindia",
+    "risk_score": 294.0,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "categories": [
+      "cost",
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R1",
+      "R2",
+      "R4",
+      "R5",
+      "R8",
+      "R9",
+      "R11",
+      "R14"
+    ],
+    "summary": "Storage resource with security vulnerabilities and cost waste",
+    "impact": "May expose sensitive data to unauthorized access | Unnecessary cost incurred with minimal business value delivered | Cannot track security events or meet compliance audit requirements",
+    "recommendation": "Disable public access and restrict to VPC only. Stop or downsize instance to reduce monthly spend. Enable CloudTrail/audit logging and ship logs to centralized store.",
+    "issues": [
+      "Public resource detected",
+      "Idle resource",
+      "Logging not enabled",
+      "Public storage bucket detected",
+      "Suspicious login activity detected",
+      "Known vulnerabilities detected",
+      "Rightsizing opportunity identified",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Disable public access and restrict to VPC only",
+      "Stop or terminate instance",
+      "Enable CloudTrail/audit logging",
+      "Make storage bucket private immediately",
+      "Enable MFA, review IAM policies, rotate credentials immediately",
+      "Apply security patches and updates from SecurityHub findings",
+      "Downsize or terminate based on actual usage patterns from Cost Explorer",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Idle resource": [
+        "# Review and consider stopping this idle resource",
+        "aws ec2 stop-instances --instance-ids r15"
+      ],
+      "Logging not enabled": [
+        "# Enable S3 server access logging",
+        "aws s3api put-bucket-logging \\",
+        "  --bucket blob-user-uploads-03 \\",
+        "  --bucket-logging-status",
+        "  '{\"LoggingEnabled\":{\"TargetBucket\":\"<LOG_BUCKET>\",\"TargetPrefix\":\"blob-user-uploads-03/access-logs/\"}}'"
+      ],
+      "Public storage bucket detected": [
+        "# Block all public access to the bucket",
+        "aws s3api put-public-access-block \\",
+        "  --bucket blob-user-uploads-03 \\",
+        "  --public-access-block-configuration BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true",
+        "",
+        "# Set bucket ACL to private",
+        "aws s3api put-bucket-acl --bucket blob-user-uploads-03 --acl private"
+      ],
+      "Suspicious login activity detected": [
+        "# Force password reset for compromised credentials",
+        "aws iam update-login-profile \\",
+        "  --user-name <IAM_USER> \\",
+        "  --password-reset-required",
+        "",
+        "# Enable MFA enforcement policy",
+        "aws iam attach-user-policy \\",
+        "  --user-name <IAM_USER> \\",
+        "  --policy-arn arn:aws:iam::aws:policy/IAMUserChangePassword",
+        "",
+        "# Rotate access keys immediately",
+        "aws iam list-access-keys --user-name <IAM_USER>",
+        "aws iam delete-access-key \\",
+        "  --user-name <IAM_USER> \\",
+        "  --access-key-id <OLD_KEY_ID>",
+        "aws iam create-access-key --user-name <IAM_USER>"
+      ],
+      "Known vulnerabilities detected": [
+        "# Get SecurityHub findings for this resource",
+        "aws securityhub get-findings \\",
+        "  --filters '{\"ResourceId\":[{\"Value\":\"r15\",\"Comparison\":\"EQUALS\"}]}'",
+        "",
+        "# Apply patches via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r15 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install"
+      ],
+      "Rightsizing opportunity identified": [
+        "aws ce get-rightsizing-recommendation --service EC2"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r15",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r15"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 190,
+      "cost_factor": 1.0,
+      "usage_penalty": 5,
+      "subtotal": 196.0,
+      "exposure_multiplier": 1.5,
+      "final_score": 294.0,
+      "rules_triggered": [
+        {
+          "id": "R1",
+          "category": "security",
+          "risk": 9,
+          "weight": 4,
+          "weighted": 36,
+          "message": "Public resource detected"
+        },
+        {
+          "id": "R2",
+          "category": "cost",
+          "risk": 5,
+          "weight": 2,
+          "weighted": 10,
+          "message": "Idle resource"
+        },
+        {
+          "id": "R4",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Logging not enabled"
+        },
+        {
+          "id": "R5",
+          "category": "security",
+          "risk": 10,
+          "weight": 4,
+          "weighted": 40,
+          "message": "Public storage bucket detected"
+        },
+        {
+          "id": "R8",
+          "category": "security",
+          "risk": 8,
+          "weight": 4,
+          "weighted": 32,
+          "message": "Suspicious login activity detected"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R11",
+          "category": "cost",
+          "risk": 4,
+          "weight": 2,
+          "weighted": 8,
+          "message": "Rightsizing opportunity identified"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 5,
+    "usage": 3,
+    "savings_potential": 3.85,
+    "cost_trend_pct": 8.5,
+    "rightsizing": "downsize",
+    "vuln_count": 4,
+    "cve_count": 1,
+    "compliance_score": 63,
+    "open_ports": [
+      80,
+      443
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 21,
+    "suspicious_api_calls": 2,
+    "last_activity_days": 68,
+    "cpu_avg": 1.9,
+    "memory_avg": 12.8,
+    "disk_utilization": 16.1,
+    "compliance_violations": [
+      "Restrict public access",
+      "Audit logging required"
+    ],
+    "compliance_violation_count": 2,
+    "has_tags": true,
+    "tags": {
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r16",
+    "resource_name": "sqldb-primary-db",
+    "resource_type": "database",
+    "region": "eastus",
+    "risk_score": 55.2,
+    "priority": "MEDIUM",
+    "priority_tag": "\u00f0\u0178\u0178\u00a1",
+    "categories": [
+      "cost",
+      "security"
+    ],
+    "rule_ids": [
+      "R2",
+      "R9",
+      "R11"
+    ],
+    "summary": "Database resource with security vulnerabilities and cost waste",
+    "impact": "Unnecessary cost incurred with minimal business value delivered | Known CVEs can be exploited by attackers to gain unauthorized access | Overspending on underutilized resources reduces cloud ROI",
+    "recommendation": "Stop or downsize instance to reduce monthly spend. Apply security patches and review SecurityHub findings for CVE details. Rightsize to a smaller instance type based on actual utilization metrics.",
+    "issues": [
+      "Idle resource",
+      "Known vulnerabilities detected",
+      "Rightsizing opportunity identified"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Apply security patches and updates from SecurityHub findings",
+      "Downsize or terminate based on actual usage patterns from Cost Explorer"
+    ],
+    "cli_fixes": {
+      "Idle resource": [
+        "# Stop idle RDS instance (saves ~60% cost when stopped)",
+        "aws rds stop-db-instance \\",
+        "  --db-instance-identifier sqldb-primary-db"
+      ],
+      "Known vulnerabilities detected": [
+        "# Get SecurityHub findings for this resource",
+        "aws securityhub get-findings \\",
+        "  --filters '{\"ResourceId\":[{\"Value\":\"r16\",\"Comparison\":\"EQUALS\"}]}'",
+        "",
+        "# Apply patches via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r16 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install"
+      ],
+      "Rightsizing opportunity identified": [
+        "# Get RDS recommendations from Cost Explorer",
+        "aws ce get-rightsizing-recommendation --service RDS",
+        "",
+        "# Modify DB instance class",
+        "aws rds modify-db-instance \\",
+        "  --db-instance-identifier sqldb-primary-db \\",
+        "  --db-instance-class db.t3.small \\",
+        "  --apply-immediately"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 46,
+      "cost_factor": 4.2,
+      "usage_penalty": 5,
+      "subtotal": 55.2,
+      "exposure_multiplier": 1.0,
+      "final_score": 55.2,
+      "rules_triggered": [
+        {
+          "id": "R2",
+          "category": "cost",
+          "risk": 5,
+          "weight": 2,
+          "weighted": 10,
+          "message": "Idle resource"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R11",
+          "category": "cost",
+          "risk": 4,
+          "weight": 2,
+          "weighted": 8,
+          "message": "Rightsizing opportunity identified"
+        }
+      ]
+    },
+    "cost": 21,
+    "usage": 3,
+    "savings_potential": 13.14,
+    "cost_trend_pct": 5.2,
+    "rightsizing": "downsize",
+    "vuln_count": 1,
+    "cve_count": 0,
+    "compliance_score": 101,
+    "open_ports": [
+      3306
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 71,
+    "cpu_avg": 3.9,
+    "memory_avg": 10.5,
+    "disk_utilization": 21.0,
+    "compliance_violations": [],
+    "compliance_violation_count": 0,
+    "has_tags": true,
+    "tags": {
+      "env": "dev",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r17",
+    "resource_name": "lb-public-lb",
+    "resource_type": "network",
+    "region": "westeurope",
+    "risk_score": 29.2,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "categories": [
+      "security"
+    ],
+    "rule_ids": [
+      "R9"
+    ],
+    "summary": "Network resource with critical security vulnerabilities",
+    "impact": "Known CVEs can be exploited by attackers to gain unauthorized access",
+    "recommendation": "Apply security patches and review SecurityHub findings for CVE details.",
+    "issues": [
+      "Known vulnerabilities detected"
+    ],
+    "suggestions": [
+      "Apply security patches and updates from SecurityHub findings"
+    ],
+    "cli_fixes": {
+      "Known vulnerabilities detected": [
+        "# Get SecurityHub findings for this resource",
+        "aws securityhub get-findings \\",
+        "  --filters '{\"ResourceId\":[{\"Value\":\"r17\",\"Comparison\":\"EQUALS\"}]}'",
+        "",
+        "# Apply patches via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r17 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 28,
+      "cost_factor": 1.2,
+      "usage_penalty": 0,
+      "subtotal": 29.2,
+      "exposure_multiplier": 1.0,
+      "final_score": 29.2,
+      "rules_triggered": [
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        }
+      ]
+    },
+    "cost": 6,
+    "usage": 72,
+    "savings_potential": 0.6,
+    "cost_trend_pct": -4.3,
+    "rightsizing": "none",
+    "vuln_count": 1,
+    "cve_count": 0,
+    "compliance_score": 101,
+    "open_ports": [
+      80,
+      443
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 4,
+    "cpu_avg": 72.0,
+    "memory_avg": 100.0,
+    "disk_utilization": 24.7,
+    "compliance_violations": [],
+    "compliance_violation_count": 0,
+    "has_tags": true,
+    "tags": {
+      "env": "staging",
+      "team": "platform",
+      "project": "infra-base",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r18",
+    "resource_name": "vm-api-server-02",
+    "resource_type": "compute",
+    "region": "westus2",
+    "risk_score": 29.8,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "categories": [
+      "security"
+    ],
+    "rule_ids": [
+      "R9"
+    ],
+    "summary": "Compute resource with critical security vulnerabilities",
+    "impact": "Known CVEs can be exploited by attackers to gain unauthorized access",
+    "recommendation": "Apply security patches and review SecurityHub findings for CVE details.",
+    "issues": [
+      "Known vulnerabilities detected"
+    ],
+    "suggestions": [
+      "Apply security patches and updates from SecurityHub findings"
+    ],
+    "cli_fixes": {
+      "Known vulnerabilities detected": [
+        "# Run SSM patch baseline to apply security patches",
+        "aws ssm send-command \\",
+        "  --instance-ids r18 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install",
+        "",
+        "# Check patch compliance state",
+        "aws ssm describe-instance-patch-states \\",
+        "  --instance-ids r18"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 28,
+      "cost_factor": 1.8,
+      "usage_penalty": 0,
+      "subtotal": 29.8,
+      "exposure_multiplier": 1.0,
+      "final_score": 29.8,
+      "rules_triggered": [
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        }
+      ]
+    },
+    "cost": 9,
+    "usage": 6,
+    "savings_potential": 1.99,
+    "cost_trend_pct": 7.9,
+    "rightsizing": "downsize",
+    "vuln_count": 1,
+    "cve_count": 0,
+    "compliance_score": 101,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 19,
+    "cpu_avg": 7.8,
+    "memory_avg": 19.4,
+    "disk_utilization": 14.7,
+    "compliance_violations": [],
+    "compliance_violation_count": 0,
+    "has_tags": true,
+    "tags": {
+      "env": "prod",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r19",
+    "resource_name": "vm-microservice-03",
+    "resource_type": "compute",
+    "region": "eastus",
+    "risk_score": 122.6,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "categories": [
+      "cost",
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R2",
+      "R3",
+      "R7",
+      "R9",
+      "R10",
+      "R11",
+      "R14"
+    ],
+    "summary": "Compute resource with security vulnerabilities and cost waste",
+    "impact": "Unnecessary cost incurred with minimal business value delivered | Data not protected at rest - violates PCI-DSS and data protection standards | 100% cost waste - resource delivers zero value",
+    "recommendation": "Stop or downsize instance to reduce monthly spend. Enable encryption at rest using KMS or service-managed keys. Delete unused resource to eliminate wasted spend.",
+    "issues": [
+      "Idle resource",
+      "Encryption disabled",
+      "Unused resource",
+      "Known vulnerabilities detected",
+      "Stale resource - no activity for 90+ days",
+      "Rightsizing opportunity identified",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Delete unused resource",
+      "Apply security patches and updates from SecurityHub findings",
+      "Review and decommission this stale resource",
+      "Downsize or terminate based on actual usage patterns from Cost Explorer",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Idle resource": [
+        "# Stop the idle EC2 instance to save cost",
+        "aws ec2 stop-instances --instance-ids r19",
+        "",
+        "# Or schedule auto-stop during off-hours using SSM",
+        "aws ssm put-parameter \\",
+        "  --name /automation/stop-instances \\",
+        "  --value 'r19' --type StringList"
+      ],
+      "Encryption disabled": [
+        "# Enable EBS encryption by default in this region",
+        "aws ec2 enable-ebs-encryption-by-default --region eastus",
+        "",
+        "# Create encrypted AMI from existing instance",
+        "aws ec2 create-image \\",
+        "  --instance-id r19 \\",
+        "  --name vm-microservice-03-encrypted-ami \\",
+        "  --block-device-mappings '[{\"DeviceName\":\"/dev/sda1\",\"Ebs\":{\"Encrypted\":true}}]'"
+      ],
+      "Unused resource": [
+        "# Terminate unused EC2 instance",
+        "aws ec2 terminate-instances --instance-ids r19"
+      ],
+      "Known vulnerabilities detected": [
+        "# Run SSM patch baseline to apply security patches",
+        "aws ssm send-command \\",
+        "  --instance-ids r19 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install",
+        "",
+        "# Check patch compliance state",
+        "aws ssm describe-instance-patch-states \\",
+        "  --instance-ids r19"
+      ],
+      "Stale resource - no activity for 90+ days": [
+        "# Check last activity before decommissioning",
+        "aws cloudtrail lookup-events \\",
+        "  --lookup-attributes AttributeKey=ResourceName,AttributeValue=r19 \\",
+        "  --max-results 5",
+        "",
+        "# Stop first, terminate after confirming no owner",
+        "aws ec2 stop-instances --instance-ids r19"
+      ],
+      "Rightsizing opportunity identified": [
+        "# Get rightsizing recommendation from Cost Explorer",
+        "aws ce get-rightsizing-recommendation \\",
+        "  --service EC2 \\",
+        "  --configuration RecommendationTarget=SAME_INSTANCE_FAMILY",
+        "",
+        "# Stop instance, change type, restart",
+        "aws ec2 stop-instances --instance-ids r19",
+        "aws ec2 modify-instance-attribute \\",
+        "  --instance-id r19 \\",
+        "  --instance-type '{\"Value\":\"t3.micro\"}'",
+        "aws ec2 start-instances --instance-ids r19"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r19",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r19"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 114,
+      "cost_factor": 3.6,
+      "usage_penalty": 5,
+      "subtotal": 122.6,
+      "exposure_multiplier": 1.0,
+      "final_score": 122.6,
+      "rules_triggered": [
+        {
+          "id": "R2",
+          "category": "cost",
+          "risk": 5,
+          "weight": 2,
+          "weighted": 10,
+          "message": "Idle resource"
+        },
+        {
+          "id": "R3",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Encryption disabled"
+        },
+        {
+          "id": "R7",
+          "category": "cost",
+          "risk": 6,
+          "weight": 2,
+          "weighted": 12,
+          "message": "Unused resource"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R10",
+          "category": "cost",
+          "risk": 5,
+          "weight": 2,
+          "weighted": 10,
+          "message": "Stale resource - no activity for 90+ days"
+        },
+        {
+          "id": "R11",
+          "category": "cost",
+          "risk": 4,
+          "weight": 2,
+          "weighted": 8,
+          "message": "Rightsizing opportunity identified"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 18,
+    "usage": 0,
+    "savings_potential": 18.0,
+    "cost_trend_pct": 10.9,
+    "rightsizing": "terminate",
+    "vuln_count": 5,
+    "cve_count": 2,
+    "compliance_score": 71,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 123,
+    "cpu_avg": 0.0,
+    "memory_avg": 9.7,
+    "disk_utilization": 28.9,
+    "compliance_violations": [
+      "Data encryption required",
+      "Unused resource consuming budget"
+    ],
+    "compliance_violation_count": 2,
+    "has_tags": true,
+    "tags": {
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r20",
+    "resource_name": "vm-microservice-04",
+    "resource_type": "compute",
+    "region": "eastus",
+    "risk_score": 43.8,
+    "priority": "MEDIUM",
+    "priority_tag": "\u00f0\u0178\u0178\u00a1",
+    "categories": [
+      "cost",
+      "security"
+    ],
+    "rule_ids": [
+      "R2",
+      "R9"
+    ],
+    "summary": "Compute resource with security vulnerabilities and cost waste",
+    "impact": "Unnecessary cost incurred with minimal business value delivered | Known CVEs can be exploited by attackers to gain unauthorized access",
+    "recommendation": "Stop or downsize instance to reduce monthly spend. Apply security patches and review SecurityHub findings for CVE details.",
+    "issues": [
+      "Idle resource",
+      "Known vulnerabilities detected"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Apply security patches and updates from SecurityHub findings"
+    ],
+    "cli_fixes": {
+      "Idle resource": [
+        "# Stop the idle EC2 instance to save cost",
+        "aws ec2 stop-instances --instance-ids r20",
+        "",
+        "# Or schedule auto-stop during off-hours using SSM",
+        "aws ssm put-parameter \\",
+        "  --name /automation/stop-instances \\",
+        "  --value 'r20' --type StringList"
+      ],
+      "Known vulnerabilities detected": [
+        "# Run SSM patch baseline to apply security patches",
+        "aws ssm send-command \\",
+        "  --instance-ids r20 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install",
+        "",
+        "# Check patch compliance state",
+        "aws ssm describe-instance-patch-states \\",
+        "  --instance-ids r20"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 38,
+      "cost_factor": 0.8,
+      "usage_penalty": 5,
+      "subtotal": 43.8,
+      "exposure_multiplier": 1.0,
+      "final_score": 43.8,
+      "rules_triggered": [
+        {
+          "id": "R2",
+          "category": "cost",
+          "risk": 5,
+          "weight": 2,
+          "weighted": 10,
+          "message": "Idle resource"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        }
+      ]
+    },
+    "cost": 4,
+    "usage": 2,
+    "savings_potential": 2.92,
+    "cost_trend_pct": 7.8,
+    "rightsizing": "downsize",
+    "vuln_count": 1,
+    "cve_count": 0,
+    "compliance_score": 105,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 39,
+    "cpu_avg": 1.8,
+    "memory_avg": 15.5,
+    "disk_utilization": 30.1,
+    "compliance_violations": [],
+    "compliance_violation_count": 0,
+    "has_tags": true,
+    "tags": {
+      "env": "dev",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r21",
+    "resource_name": "sqldb-dev-db-02",
+    "resource_type": "database",
+    "region": "westus2",
+    "risk_score": 102.6,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "categories": [
+      "cost",
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R2",
+      "R3",
+      "R9",
+      "R11",
+      "R14"
+    ],
+    "summary": "Database resource with security vulnerabilities and cost waste",
+    "impact": "Unnecessary cost incurred with minimal business value delivered | Data not protected at rest - violates PCI-DSS and data protection standards | Known CVEs can be exploited by attackers to gain unauthorized access",
+    "recommendation": "Stop or downsize instance to reduce monthly spend. Enable encryption at rest using KMS or service-managed keys. Apply security patches and review SecurityHub findings for CVE details.",
+    "issues": [
+      "Idle resource",
+      "Encryption disabled",
+      "Known vulnerabilities detected",
+      "Rightsizing opportunity identified",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Apply security patches and updates from SecurityHub findings",
+      "Downsize or terminate based on actual usage patterns from Cost Explorer",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Idle resource": [
+        "# Stop idle RDS instance (saves ~60% cost when stopped)",
+        "aws rds stop-db-instance \\",
+        "  --db-instance-identifier sqldb-dev-db-02"
+      ],
+      "Encryption disabled": [
+        "# Create encrypted snapshot, restore to new encrypted instance",
+        "aws rds create-db-snapshot \\",
+        "  --db-instance-identifier sqldb-dev-db-02 \\",
+        "  --db-snapshot-identifier sqldb-dev-db-02-encrypted-snap",
+        "",
+        "aws rds restore-db-instance-from-db-snapshot \\",
+        "  --db-instance-identifier sqldb-dev-db-02-encrypted \\",
+        "  --db-snapshot-identifier sqldb-dev-db-02-encrypted-snap \\",
+        "  --storage-encrypted"
+      ],
+      "Known vulnerabilities detected": [
+        "# Get SecurityHub findings for this resource",
+        "aws securityhub get-findings \\",
+        "  --filters '{\"ResourceId\":[{\"Value\":\"r21\",\"Comparison\":\"EQUALS\"}]}'",
+        "",
+        "# Apply patches via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r21 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install"
+      ],
+      "Rightsizing opportunity identified": [
+        "# Get RDS recommendations from Cost Explorer",
+        "aws ce get-rightsizing-recommendation --service RDS",
+        "",
+        "# Modify DB instance class",
+        "aws rds modify-db-instance \\",
+        "  --db-instance-identifier sqldb-dev-db-02 \\",
+        "  --db-instance-class db.t3.small \\",
+        "  --apply-immediately"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r21",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r21"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 92,
+      "cost_factor": 5.6,
+      "usage_penalty": 5,
+      "subtotal": 102.6,
+      "exposure_multiplier": 1.0,
+      "final_score": 102.6,
+      "rules_triggered": [
+        {
+          "id": "R2",
+          "category": "cost",
+          "risk": 5,
+          "weight": 2,
+          "weighted": 10,
+          "message": "Idle resource"
+        },
+        {
+          "id": "R3",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Encryption disabled"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R11",
+          "category": "cost",
+          "risk": 4,
+          "weight": 2,
+          "weighted": 8,
+          "message": "Rightsizing opportunity identified"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 28,
+    "usage": 3,
+    "savings_potential": 22.32,
+    "cost_trend_pct": 8.4,
+    "rightsizing": "terminate",
+    "vuln_count": 3,
+    "cve_count": 0,
+    "compliance_score": 78,
+    "open_ports": [
+      3306
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 50,
+    "cpu_avg": 4.9,
+    "memory_avg": 16.6,
+    "disk_utilization": 10.0,
+    "compliance_violations": [
+      "Data encryption required"
+    ],
+    "compliance_violation_count": 1,
+    "has_tags": true,
+    "tags": {
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r22",
+    "resource_name": "vm-web-server",
+    "resource_type": "compute",
+    "region": "eastus",
+    "risk_score": 52.2,
+    "priority": "MEDIUM",
+    "priority_tag": "\u00f0\u0178\u0178\u00a1",
+    "categories": [
+      "cost",
+      "security"
+    ],
+    "rule_ids": [
+      "R2",
+      "R9",
+      "R11"
+    ],
+    "summary": "Compute resource with security vulnerabilities and cost waste",
+    "impact": "Unnecessary cost incurred with minimal business value delivered | Known CVEs can be exploited by attackers to gain unauthorized access | Overspending on underutilized resources reduces cloud ROI",
+    "recommendation": "Stop or downsize instance to reduce monthly spend. Apply security patches and review SecurityHub findings for CVE details. Rightsize to a smaller instance type based on actual utilization metrics.",
+    "issues": [
+      "Idle resource",
+      "Known vulnerabilities detected",
+      "Rightsizing opportunity identified"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Apply security patches and updates from SecurityHub findings",
+      "Downsize or terminate based on actual usage patterns from Cost Explorer"
+    ],
+    "cli_fixes": {
+      "Idle resource": [
+        "# Stop the idle EC2 instance to save cost",
+        "aws ec2 stop-instances --instance-ids r22",
+        "",
+        "# Or schedule auto-stop during off-hours using SSM",
+        "aws ssm put-parameter \\",
+        "  --name /automation/stop-instances \\",
+        "  --value 'r22' --type StringList"
+      ],
+      "Known vulnerabilities detected": [
+        "# Run SSM patch baseline to apply security patches",
+        "aws ssm send-command \\",
+        "  --instance-ids r22 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install",
+        "",
+        "# Check patch compliance state",
+        "aws ssm describe-instance-patch-states \\",
+        "  --instance-ids r22"
+      ],
+      "Rightsizing opportunity identified": [
+        "# Get rightsizing recommendation from Cost Explorer",
+        "aws ce get-rightsizing-recommendation \\",
+        "  --service EC2 \\",
+        "  --configuration RecommendationTarget=SAME_INSTANCE_FAMILY",
+        "",
+        "# Stop instance, change type, restart",
+        "aws ec2 stop-instances --instance-ids r22",
+        "aws ec2 modify-instance-attribute \\",
+        "  --instance-id r22 \\",
+        "  --instance-type '{\"Value\":\"t3.micro\"}'",
+        "aws ec2 start-instances --instance-ids r22"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 46,
+      "cost_factor": 1.2,
+      "usage_penalty": 5,
+      "subtotal": 52.2,
+      "exposure_multiplier": 1.0,
+      "final_score": 52.2,
+      "rules_triggered": [
+        {
+          "id": "R2",
+          "category": "cost",
+          "risk": 5,
+          "weight": 2,
+          "weighted": 10,
+          "message": "Idle resource"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R11",
+          "category": "cost",
+          "risk": 4,
+          "weight": 2,
+          "weighted": 8,
+          "message": "Rightsizing opportunity identified"
+        }
+      ]
+    },
+    "cost": 6,
+    "usage": 2,
+    "savings_potential": 4.7,
+    "cost_trend_pct": 9.9,
+    "rightsizing": "terminate",
+    "vuln_count": 1,
+    "cve_count": 0,
+    "compliance_score": 103,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 65,
+    "cpu_avg": 2.3,
+    "memory_avg": 10.2,
+    "disk_utilization": 20.6,
+    "compliance_violations": [],
+    "compliance_violation_count": 0,
+    "has_tags": true,
+    "tags": {
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r23",
+    "resource_name": "vm-web-server-02",
+    "resource_type": "compute",
+    "region": "westus2",
+    "risk_score": 65.0,
+    "priority": "HIGH",
+    "priority_tag": "\u00f0\u0178\u0178\u00a0",
+    "categories": [
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R4",
+      "R9",
+      "R14"
+    ],
+    "summary": "Compute resource with compliance violations and security issues",
+    "impact": "Cannot track security events or meet compliance audit requirements | Known CVEs can be exploited by attackers to gain unauthorized access | Regulatory non-compliance risks fines, audit failures, and reputational damage",
+    "recommendation": "Enable CloudTrail/audit logging and ship logs to centralized store. Apply security patches and review SecurityHub findings for CVE details. Review all violations in AWS Config and implement required controls.",
+    "issues": [
+      "Logging not enabled",
+      "Known vulnerabilities detected",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Enable CloudTrail/audit logging",
+      "Apply security patches and updates from SecurityHub findings",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Logging not enabled": [
+        "# Enable CloudWatch agent for instance logging",
+        "aws ssm send-command \\",
+        "  --instance-ids r23 \\",
+        "  --document-name AWS-ConfigureAWSPackage \\",
+        "  --parameters action=Install,name=AmazonCloudWatchAgent"
+      ],
+      "Known vulnerabilities detected": [
+        "# Run SSM patch baseline to apply security patches",
+        "aws ssm send-command \\",
+        "  --instance-ids r23 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install",
+        "",
+        "# Check patch compliance state",
+        "aws ssm describe-instance-patch-states \\",
+        "  --instance-ids r23"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r23",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r23"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 64,
+      "cost_factor": 1.0,
+      "usage_penalty": 0,
+      "subtotal": 65.0,
+      "exposure_multiplier": 1.0,
+      "final_score": 65.0,
+      "rules_triggered": [
+        {
+          "id": "R4",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Logging not enabled"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 5,
+    "usage": 32,
+    "savings_potential": 0.57,
+    "cost_trend_pct": 2.9,
+    "rightsizing": "none",
+    "vuln_count": 1,
+    "cve_count": 0,
+    "compliance_score": 81,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 2,
+    "suspicious_api_calls": 1,
+    "last_activity_days": 3,
+    "cpu_avg": 30.7,
+    "memory_avg": 61.9,
+    "disk_utilization": 47.8,
+    "compliance_violations": [
+      "Audit logging required"
+    ],
+    "compliance_violation_count": 1,
+    "has_tags": true,
+    "tags": {
+      "env": "prod",
+      "team": "platform",
+      "project": "payments",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r24",
+    "resource_name": "vm-microservice-05",
+    "resource_type": "compute",
+    "region": "westeurope",
+    "risk_score": 35.6,
+    "priority": "MEDIUM",
+    "priority_tag": "\u00f0\u0178\u0178\u00a1",
+    "categories": [
+      "security"
+    ],
+    "rule_ids": [
+      "R8"
+    ],
+    "summary": "Compute resource with critical security vulnerabilities",
+    "impact": "Potential credential stuffing or brute-force attack in progress",
+    "recommendation": "Enable MFA, rotate credentials, review and restrict IAM policies.",
+    "issues": [
+      "Suspicious login activity detected"
+    ],
+    "suggestions": [
+      "Enable MFA, review IAM policies, rotate credentials immediately"
+    ],
+    "cli_fixes": {
+      "Suspicious login activity detected": [
+        "# Force password reset for compromised credentials",
+        "aws iam update-login-profile \\",
+        "  --user-name <IAM_USER> \\",
+        "  --password-reset-required",
+        "",
+        "# Enable MFA enforcement policy",
+        "aws iam attach-user-policy \\",
+        "  --user-name <IAM_USER> \\",
+        "  --policy-arn arn:aws:iam::aws:policy/IAMUserChangePassword",
+        "",
+        "# Rotate access keys immediately",
+        "aws iam list-access-keys --user-name <IAM_USER>",
+        "aws iam delete-access-key \\",
+        "  --user-name <IAM_USER> \\",
+        "  --access-key-id <OLD_KEY_ID>",
+        "aws iam create-access-key --user-name <IAM_USER>"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 32,
+      "cost_factor": 3.6,
+      "usage_penalty": 0,
+      "subtotal": 35.6,
+      "exposure_multiplier": 1.0,
+      "final_score": 35.6,
+      "rules_triggered": [
+        {
+          "id": "R8",
+          "category": "security",
+          "risk": 8,
+          "weight": 4,
+          "weighted": 32,
+          "message": "Suspicious login activity detected"
+        }
+      ]
+    },
+    "cost": 18,
+    "usage": 84,
+    "savings_potential": 1.8,
+    "cost_trend_pct": -4.3,
+    "rightsizing": "none",
+    "vuln_count": 0,
+    "cve_count": 0,
+    "compliance_score": 103,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 6,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 5,
+    "cpu_avg": 83.0,
+    "memory_avg": 100.0,
+    "disk_utilization": 45.1,
+    "compliance_violations": [],
+    "compliance_violation_count": 0,
+    "has_tags": true,
+    "tags": {
+      "env": "staging",
+      "team": "data",
+      "project": "ml-pipeline",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r25",
+    "resource_name": "sqldb-auth-db",
+    "resource_type": "database",
+    "region": "westus2",
+    "risk_score": 13.4,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "categories": [
+      "cost"
+    ],
+    "rule_ids": [
+      "R11"
+    ],
+    "summary": "Database resource with cost optimization opportunities",
+    "impact": "Overspending on underutilized resources reduces cloud ROI",
+    "recommendation": "Rightsize to a smaller instance type based on actual utilization metrics.",
+    "issues": [
+      "Rightsizing opportunity identified"
+    ],
+    "suggestions": [
+      "Downsize or terminate based on actual usage patterns from Cost Explorer"
+    ],
+    "cli_fixes": {
+      "Rightsizing opportunity identified": [
+        "# Get RDS recommendations from Cost Explorer",
+        "aws ce get-rightsizing-recommendation --service RDS",
+        "",
+        "# Modify DB instance class",
+        "aws rds modify-db-instance \\",
+        "  --db-instance-identifier sqldb-auth-db \\",
+        "  --db-instance-class db.t3.small \\",
+        "  --apply-immediately"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 8,
+      "cost_factor": 5.4,
+      "usage_penalty": 0,
+      "subtotal": 13.4,
+      "exposure_multiplier": 1.0,
+      "final_score": 13.4,
+      "rules_triggered": [
+        {
+          "id": "R11",
+          "category": "cost",
+          "risk": 4,
+          "weight": 2,
+          "weighted": 8,
+          "message": "Rightsizing opportunity identified"
+        }
+      ]
+    },
+    "cost": 27,
+    "usage": 14,
+    "savings_potential": 11.72,
+    "cost_trend_pct": 2.6,
+    "rightsizing": "downsize",
+    "vuln_count": 0,
+    "cve_count": 0,
+    "compliance_score": 103,
+    "open_ports": [
+      3306
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 9,
+    "cpu_avg": 13.4,
+    "memory_avg": 33.8,
+    "disk_utilization": 21.5,
+    "compliance_violations": [],
+    "compliance_violation_count": 0,
+    "has_tags": true,
+    "tags": {
+      "env": "dev",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r26",
+    "resource_name": "blob-processed-data",
+    "resource_type": "storage",
+    "region": "westus2",
+    "risk_score": 107.8,
+    "priority": "CRITICAL",
+    "priority_tag": "\u00f0\u0178\u201d\u00b4",
+    "categories": [
+      "cost",
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R2",
+      "R3",
+      "R4",
+      "R9",
+      "R14"
+    ],
+    "summary": "Storage resource with security vulnerabilities and cost waste",
+    "impact": "Unnecessary cost incurred with minimal business value delivered | Data not protected at rest - violates PCI-DSS and data protection standards | Cannot track security events or meet compliance audit requirements",
+    "recommendation": "Stop or downsize instance to reduce monthly spend. Enable encryption at rest using KMS or service-managed keys. Enable CloudTrail/audit logging and ship logs to centralized store.",
+    "issues": [
+      "Idle resource",
+      "Encryption disabled",
+      "Logging not enabled",
+      "Known vulnerabilities detected",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Stop or terminate instance",
+      "Enable encryption at rest",
+      "Enable CloudTrail/audit logging",
+      "Apply security patches and updates from SecurityHub findings",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Idle resource": [
+        "# Review and consider stopping this idle resource",
+        "aws ec2 stop-instances --instance-ids r26"
+      ],
+      "Encryption disabled": [
+        "# Enable default AES-256 encryption on S3 bucket",
+        "aws s3api put-bucket-encryption \\",
+        "  --bucket blob-processed-data \\",
+        "  --server-side-encryption-configuration",
+        "  '{\"Rules\":[{\"ApplyServerSideEncryptionByDefault\":{\"SSEAlgorithm\":\"AES256\"}}]}'"
+      ],
+      "Logging not enabled": [
+        "# Enable S3 server access logging",
+        "aws s3api put-bucket-logging \\",
+        "  --bucket blob-processed-data \\",
+        "  --bucket-logging-status",
+        "  '{\"LoggingEnabled\":{\"TargetBucket\":\"<LOG_BUCKET>\",\"TargetPrefix\":\"blob-processed-data/access-logs/\"}}'"
+      ],
+      "Known vulnerabilities detected": [
+        "# Get SecurityHub findings for this resource",
+        "aws securityhub get-findings \\",
+        "  --filters '{\"ResourceId\":[{\"Value\":\"r26\",\"Comparison\":\"EQUALS\"}]}'",
+        "",
+        "# Apply patches via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r26 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r26",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r26"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 102,
+      "cost_factor": 0.8,
+      "usage_penalty": 5,
+      "subtotal": 107.8,
+      "exposure_multiplier": 1.0,
+      "final_score": 107.8,
+      "rules_triggered": [
+        {
+          "id": "R2",
+          "category": "cost",
+          "risk": 5,
+          "weight": 2,
+          "weighted": 10,
+          "message": "Idle resource"
+        },
+        {
+          "id": "R3",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Encryption disabled"
+        },
+        {
+          "id": "R4",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Logging not enabled"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 4,
+    "usage": 3,
+    "savings_potential": 2.9,
+    "cost_trend_pct": 5.6,
+    "rightsizing": "downsize",
+    "vuln_count": 3,
+    "cve_count": 2,
+    "compliance_score": 68,
+    "open_ports": [
+      443
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 53,
+    "cpu_avg": 1.8,
+    "memory_avg": 17.7,
+    "disk_utilization": 22.0,
+    "compliance_violations": [
+      "Data encryption required",
+      "Audit logging required"
+    ],
+    "compliance_violation_count": 2,
+    "has_tags": true,
+    "tags": {
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r27",
+    "resource_name": "vm-bastion",
+    "resource_type": "compute",
+    "region": "westeurope",
+    "risk_score": 10.4,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "categories": [
+      "cost"
+    ],
+    "rule_ids": [
+      "R11"
+    ],
+    "summary": "Compute resource with cost optimization opportunities",
+    "impact": "Overspending on underutilized resources reduces cloud ROI",
+    "recommendation": "Rightsize to a smaller instance type based on actual utilization metrics.",
+    "issues": [
+      "Rightsizing opportunity identified"
+    ],
+    "suggestions": [
+      "Downsize or terminate based on actual usage patterns from Cost Explorer"
+    ],
+    "cli_fixes": {
+      "Rightsizing opportunity identified": [
+        "# Get rightsizing recommendation from Cost Explorer",
+        "aws ce get-rightsizing-recommendation \\",
+        "  --service EC2 \\",
+        "  --configuration RecommendationTarget=SAME_INSTANCE_FAMILY",
+        "",
+        "# Stop instance, change type, restart",
+        "aws ec2 stop-instances --instance-ids r27",
+        "aws ec2 modify-instance-attribute \\",
+        "  --instance-id r27 \\",
+        "  --instance-type '{\"Value\":\"t3.micro\"}'",
+        "aws ec2 start-instances --instance-ids r27"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 8,
+      "cost_factor": 2.4,
+      "usage_penalty": 0,
+      "subtotal": 10.4,
+      "exposure_multiplier": 1.0,
+      "final_score": 10.4,
+      "rules_triggered": [
+        {
+          "id": "R11",
+          "category": "cost",
+          "risk": 4,
+          "weight": 2,
+          "weighted": 8,
+          "message": "Rightsizing opportunity identified"
+        }
+      ]
+    },
+    "cost": 12,
+    "usage": 17,
+    "savings_potential": 3.96,
+    "cost_trend_pct": 7.7,
+    "rightsizing": "downsize",
+    "vuln_count": 0,
+    "cve_count": 0,
+    "compliance_score": 97,
+    "open_ports": [
+      80,
+      443,
+      8080
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 10,
+    "cpu_avg": 17.9,
+    "memory_avg": 37.7,
+    "disk_utilization": 7.0,
+    "compliance_violations": [],
+    "compliance_violation_count": 0,
+    "has_tags": true,
+    "tags": {
+      "env": "staging",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r28",
+    "resource_name": "sqldb-auth-db-02",
+    "resource_type": "database",
+    "region": "southeastasia",
+    "risk_score": 67.8,
+    "priority": "HIGH",
+    "priority_tag": "\u00f0\u0178\u0178\u00a0",
+    "categories": [
+      "security",
+      "compliance"
+    ],
+    "rule_ids": [
+      "R4",
+      "R9",
+      "R14"
+    ],
+    "summary": "Database resource with compliance violations and security issues",
+    "impact": "Cannot track security events or meet compliance audit requirements | Known CVEs can be exploited by attackers to gain unauthorized access | Regulatory non-compliance risks fines, audit failures, and reputational damage",
+    "recommendation": "Enable CloudTrail/audit logging and ship logs to centralized store. Apply security patches and review SecurityHub findings for CVE details. Review all violations in AWS Config and implement required controls.",
+    "issues": [
+      "Logging not enabled",
+      "Known vulnerabilities detected",
+      "Active compliance violations detected"
+    ],
+    "suggestions": [
+      "Enable CloudTrail/audit logging",
+      "Apply security patches and updates from SecurityHub findings",
+      "Review and remediate all active compliance violations in AWS Config"
+    ],
+    "cli_fixes": {
+      "Logging not enabled": [
+        "# Enable RDS enhanced monitoring and logs",
+        "aws rds modify-db-instance \\",
+        "  --db-instance-identifier sqldb-auth-db-02 \\",
+        "  --enable-cloudwatch-logs-exports '[\"audit\",\"error\",\"general\",\"slowquery\"]' \\",
+        "  --monitoring-interval 60 \\",
+        "  --apply-immediately"
+      ],
+      "Known vulnerabilities detected": [
+        "# Get SecurityHub findings for this resource",
+        "aws securityhub get-findings \\",
+        "  --filters '{\"ResourceId\":[{\"Value\":\"r28\",\"Comparison\":\"EQUALS\"}]}'",
+        "",
+        "# Apply patches via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r28 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install"
+      ],
+      "Active compliance violations detected": [
+        "# List all Config rule violations for this resource",
+        "aws configservice get-compliance-details-by-resource \\",
+        "  --resource-type <RESOURCE_TYPE> \\",
+        "  --resource-id r28",
+        "",
+        "# Get remediation actions from AWS Config",
+        "aws configservice describe-remediation-configurations \\",
+        "  --config-rule-names <RULE_NAME>",
+        "",
+        "# Trigger auto-remediation",
+        "aws configservice start-remediation-execution \\",
+        "  --config-rule-name <RULE_NAME> \\",
+        "  --resource-keys resourceType=<TYPE>,resourceId=r28"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 64,
+      "cost_factor": 3.8,
+      "usage_penalty": 0,
+      "subtotal": 67.8,
+      "exposure_multiplier": 1.0,
+      "final_score": 67.8,
+      "rules_triggered": [
+        {
+          "id": "R4",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Logging not enabled"
+        },
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        },
+        {
+          "id": "R14",
+          "category": "compliance",
+          "risk": 6,
+          "weight": 3,
+          "weighted": 18,
+          "message": "Active compliance violations detected"
+        }
+      ]
+    },
+    "cost": 19,
+    "usage": 81,
+    "savings_potential": 2.07,
+    "cost_trend_pct": -0.3,
+    "rightsizing": "none",
+    "vuln_count": 1,
+    "cve_count": 0,
+    "compliance_score": 88,
+    "open_ports": [
+      3306
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 1,
+    "cpu_avg": 82.0,
+    "memory_avg": 100.0,
+    "disk_utilization": 7.9,
+    "compliance_violations": [
+      "Audit logging required"
+    ],
+    "compliance_violation_count": 1,
+    "has_tags": true,
+    "tags": {
+      "env": "prod",
+      "team": "data",
+      "project": "ml-pipeline",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r29",
+    "resource_name": "blob-public-assets",
+    "resource_type": "storage",
+    "region": "southeastasia",
+    "risk_score": 32.6,
+    "priority": "MEDIUM",
+    "priority_tag": "\u00f0\u0178\u0178\u00a1",
+    "categories": [
+      "security"
+    ],
+    "rule_ids": [
+      "R8"
+    ],
+    "summary": "Storage resource with critical security vulnerabilities",
+    "impact": "Potential credential stuffing or brute-force attack in progress",
+    "recommendation": "Enable MFA, rotate credentials, review and restrict IAM policies.",
+    "issues": [
+      "Suspicious login activity detected"
+    ],
+    "suggestions": [
+      "Enable MFA, review IAM policies, rotate credentials immediately"
+    ],
+    "cli_fixes": {
+      "Suspicious login activity detected": [
+        "# Force password reset for compromised credentials",
+        "aws iam update-login-profile \\",
+        "  --user-name <IAM_USER> \\",
+        "  --password-reset-required",
+        "",
+        "# Enable MFA enforcement policy",
+        "aws iam attach-user-policy \\",
+        "  --user-name <IAM_USER> \\",
+        "  --policy-arn arn:aws:iam::aws:policy/IAMUserChangePassword",
+        "",
+        "# Rotate access keys immediately",
+        "aws iam list-access-keys --user-name <IAM_USER>",
+        "aws iam delete-access-key \\",
+        "  --user-name <IAM_USER> \\",
+        "  --access-key-id <OLD_KEY_ID>",
+        "aws iam create-access-key --user-name <IAM_USER>"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 32,
+      "cost_factor": 0.6,
+      "usage_penalty": 0,
+      "subtotal": 32.6,
+      "exposure_multiplier": 1.0,
+      "final_score": 32.6,
+      "rules_triggered": [
+        {
+          "id": "R8",
+          "category": "security",
+          "risk": 8,
+          "weight": 4,
+          "weighted": 32,
+          "message": "Suspicious login activity detected"
+        }
+      ]
+    },
+    "cost": 3,
+    "usage": 77,
+    "savings_potential": 0.11,
+    "cost_trend_pct": -4.5,
+    "rightsizing": "none",
+    "vuln_count": 0,
+    "cve_count": 0,
+    "compliance_score": 102,
+    "open_ports": [
+      443
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 5,
+    "suspicious_api_calls": 1,
+    "last_activity_days": 2,
+    "cpu_avg": 78.4,
+    "memory_avg": 100.0,
+    "disk_utilization": 92.1,
+    "compliance_violations": [],
+    "compliance_violation_count": 0,
+    "has_tags": true,
+    "tags": {
+      "env": "prod",
+      "team": "devops",
+      "project": "auth-service",
+      "cloud": "azure"
+    }
+  },
+  {
+    "resource_id": "r30",
+    "resource_name": "blob-raw-data-lake",
+    "resource_type": "storage",
+    "region": "westus2",
+    "risk_score": 29.0,
+    "priority": "LOW",
+    "priority_tag": "\u00f0\u0178\u0178\u00a2",
+    "categories": [
+      "security"
+    ],
+    "rule_ids": [
+      "R9"
+    ],
+    "summary": "Storage resource with critical security vulnerabilities",
+    "impact": "Known CVEs can be exploited by attackers to gain unauthorized access",
+    "recommendation": "Apply security patches and review SecurityHub findings for CVE details.",
+    "issues": [
+      "Known vulnerabilities detected"
+    ],
+    "suggestions": [
+      "Apply security patches and updates from SecurityHub findings"
+    ],
+    "cli_fixes": {
+      "Known vulnerabilities detected": [
+        "# Get SecurityHub findings for this resource",
+        "aws securityhub get-findings \\",
+        "  --filters '{\"ResourceId\":[{\"Value\":\"r30\",\"Comparison\":\"EQUALS\"}]}'",
+        "",
+        "# Apply patches via SSM",
+        "aws ssm send-command \\",
+        "  --instance-ids r30 \\",
+        "  --document-name AWS-RunPatchBaseline \\",
+        "  --parameters Operation=Install"
+      ]
+    },
+    "score_breakdown": {
+      "base_score": 28,
+      "cost_factor": 1.0,
+      "usage_penalty": 0,
+      "subtotal": 29.0,
+      "exposure_multiplier": 1.0,
+      "final_score": 29.0,
+      "rules_triggered": [
+        {
+          "id": "R9",
+          "category": "security",
+          "risk": 7,
+          "weight": 4,
+          "weighted": 28,
+          "message": "Known vulnerabilities detected"
+        }
+      ]
+    },
+    "cost": 5,
+    "usage": 14,
+    "savings_potential": 1.09,
+    "cost_trend_pct": 5.3,
+    "rightsizing": "downsize",
+    "vuln_count": 1,
+    "cve_count": 0,
+    "compliance_score": 98,
+    "open_ports": [
+      443
+    ],
+    "ssh_exposed": false,
+    "rdp_exposed": false,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "last_activity_days": 10,
+    "cpu_avg": 13.6,
+    "memory_avg": 30.4,
+    "disk_utilization": 39.0,
+    "compliance_violations": [],
+    "compliance_violation_count": 0,
+    "has_tags": true,
+    "tags": {
+      "env": "staging",
+      "cloud": "azure"
+    }
+  }
+]

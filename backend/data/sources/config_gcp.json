@@ -1,0 +1,362 @@
+{
+  "r1": {
+    "region": "europe-west1",
+    "resource_name": "gcs-user-uploads",
+    "tags": {
+      "env": "staging",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 207,
+    "compliance_violations": [
+      "Data encryption required",
+      "Restrict public access"
+    ]
+  },
+  "r2": {
+    "region": "us-east1",
+    "resource_name": "gce-ml-instance",
+    "tags": {
+      "env": "staging",
+      "team": "platform",
+      "project": "ml-pipeline",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 263,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r3": {
+    "region": "us-west1",
+    "resource_name": "gclb-internal-lb",
+    "tags": {
+      "env": "prod",
+      "team": "ml",
+      "project": "ml-pipeline",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 434,
+    "compliance_violations": [
+      "Data encryption required",
+      "Audit logging required"
+    ]
+  },
+  "r4": {
+    "region": "us-east1",
+    "resource_name": "gclb-internal-lb-02",
+    "tags": {
+      "env": "staging",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 423,
+    "compliance_violations": [
+      "Data encryption required",
+      "Restrict public access",
+      "Audit logging required"
+    ]
+  },
+  "r5": {
+    "region": "us-east1",
+    "resource_name": "gcs-backup-store",
+    "tags": {
+      "cloud": "gcp"
+    },
+    "created_days_ago": 411,
+    "compliance_violations": []
+  },
+  "r6": {
+    "region": "europe-west1",
+    "resource_name": "gcs-raw-data-lake",
+    "tags": {
+      "env": "staging",
+      "team": "platform",
+      "project": "core-api",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 179,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r7": {
+    "region": "asia-southeast1",
+    "resource_name": "gce-ml-instance-02",
+    "tags": {
+      "env": "dev",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 437,
+    "compliance_violations": []
+  },
+  "r8": {
+    "region": "europe-west1",
+    "resource_name": "gce-ml-instance-03",
+    "tags": {
+      "cloud": "gcp"
+    },
+    "created_days_ago": 111,
+    "compliance_violations": []
+  },
+  "r9": {
+    "region": "us-east1",
+    "resource_name": "gce-proxy-server",
+    "tags": {
+      "cloud": "gcp"
+    },
+    "created_days_ago": 445,
+    "compliance_violations": []
+  },
+  "r10": {
+    "region": "us-west1",
+    "resource_name": "gclb-public-lb",
+    "tags": {
+      "env": "staging",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 52,
+    "compliance_violations": [
+      "Data encryption required",
+      "Restrict public access",
+      "Audit logging required"
+    ]
+  },
+  "r11": {
+    "region": "us-east1",
+    "resource_name": "gce-app-server",
+    "tags": {
+      "env": "prod",
+      "team": "infra",
+      "project": "auth-service",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 350,
+    "compliance_violations": [
+      "Data encryption required"
+    ]
+  },
+  "r12": {
+    "region": "europe-west1",
+    "resource_name": "gce-microservice",
+    "tags": {
+      "cloud": "gcp"
+    },
+    "created_days_ago": 31,
+    "compliance_violations": [
+      "Data encryption required",
+      "Unused resource consuming budget"
+    ]
+  },
+  "r13": {
+    "region": "us-west1",
+    "resource_name": "gce-api-server",
+    "tags": {
+      "env": "staging",
+      "team": "data",
+      "project": "ml-pipeline",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 463,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r14": {
+    "region": "us-west1",
+    "resource_name": "cloudsql-reporting-db",
+    "tags": {
+      "env": "prod",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 401,
+    "compliance_violations": []
+  },
+  "r15": {
+    "region": "asia-south1",
+    "resource_name": "cloudsql-dev-db",
+    "tags": {
+      "env": "dev",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 363,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r16": {
+    "region": "us-east1",
+    "resource_name": "cloudsql-analytics-db",
+    "tags": {
+      "env": "staging",
+      "team": "security",
+      "project": "payments",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 373,
+    "compliance_violations": []
+  },
+  "r17": {
+    "region": "asia-south1",
+    "resource_name": "gce-web-server",
+    "tags": {
+      "cloud": "gcp"
+    },
+    "created_days_ago": 509,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r18": {
+    "region": "europe-west1",
+    "resource_name": "gce-web-server-02",
+    "tags": {
+      "env": "staging",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 196,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r19": {
+    "region": "us-east1",
+    "resource_name": "gce-proxy-server-02",
+    "tags": {
+      "cloud": "gcp"
+    },
+    "created_days_ago": 301,
+    "compliance_violations": [
+      "Unused resource consuming budget"
+    ]
+  },
+  "r20": {
+    "region": "europe-west1",
+    "resource_name": "gce-web-server-03",
+    "tags": {
+      "env": "staging",
+      "team": "backend",
+      "project": "infra-base",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 244,
+    "compliance_violations": []
+  },
+  "r21": {
+    "region": "us-east1",
+    "resource_name": "gce-batch-worker",
+    "tags": {
+      "cloud": "gcp"
+    },
+    "created_days_ago": 68,
+    "compliance_violations": [
+      "Data encryption required"
+    ]
+  },
+  "r22": {
+    "region": "us-west1",
+    "resource_name": "gclb-public-lb-02",
+    "tags": {
+      "env": "staging",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 245,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r23": {
+    "region": "us-east1",
+    "resource_name": "gce-microservice-02",
+    "tags": {
+      "cloud": "gcp"
+    },
+    "created_days_ago": 52,
+    "compliance_violations": []
+  },
+  "r24": {
+    "region": "us-east1",
+    "resource_name": "cloudsql-replica-db",
+    "tags": {
+      "env": "prod",
+      "team": "backend",
+      "project": "infra-base",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 422,
+    "compliance_violations": []
+  },
+  "r25": {
+    "region": "asia-south1",
+    "resource_name": "gcs-raw-data-lake-02",
+    "tags": {
+      "cloud": "gcp"
+    },
+    "created_days_ago": 109,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r26": {
+    "region": "us-east1",
+    "resource_name": "gcs-build-artifacts",
+    "tags": {
+      "env": "dev",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 276,
+    "compliance_violations": []
+  },
+  "r27": {
+    "region": "us-east1",
+    "resource_name": "cloudsql-staging-db",
+    "tags": {
+      "env": "staging",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 265,
+    "compliance_violations": [
+      "Data encryption required",
+      "Audit logging required"
+    ]
+  },
+  "r28": {
+    "region": "us-east1",
+    "resource_name": "gcs-backup-store-02",
+    "tags": {
+      "env": "prod",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 272,
+    "compliance_violations": [
+      "Data encryption required",
+      "Restrict public access",
+      "Audit logging required"
+    ]
+  },
+  "r29": {
+    "region": "asia-south1",
+    "resource_name": "cloudsql-metrics-db",
+    "tags": {
+      "env": "prod",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 47,
+    "compliance_violations": [
+      "Audit logging required"
+    ]
+  },
+  "r30": {
+    "region": "us-west1",
+    "resource_name": "gcs-build-artifacts-02",
+    "tags": {
+      "env": "staging",
+      "team": "devops",
+      "project": "auth-service",
+      "cloud": "gcp"
+    },
+    "created_days_ago": 456,
+    "compliance_violations": [
+      "Data encryption required",
+      "Audit logging required"
+    ]
+  }
+}

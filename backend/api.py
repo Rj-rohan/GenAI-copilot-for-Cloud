@@ -26,10 +26,19 @@ copilot = CopilotEngine()
 
 @app.route('/api/findings', methods=['GET'])
 def get_findings():
-    findings_path = os.path.join(BASE_PATH, 'data', 'findings.json')
-    with open(findings_path, 'r', encoding='utf-8') as f:
-        findings = json.load(f)
-    return jsonify(findings)
+    provider = request.args.get('provider', 'aws')
+    findings_path = os.path.join(BASE_PATH, 'data', f'findings_{provider}.json')
+    
+    # Fallback to default findings.json if provider-specific not found
+    if not os.path.exists(findings_path):
+        findings_path = os.path.join(BASE_PATH, 'data', 'findings.json')
+    
+    try:
+        with open(findings_path, 'r', encoding='utf-8') as f:
+            findings = json.load(f)
+        return jsonify(findings)
+    except FileNotFoundError:
+        return jsonify([])
 
 
 @app.route('/api/stats', methods=['GET'])
@@ -62,15 +71,16 @@ def copilot_query():
 def generate_data():
     """
     Trigger a fresh data generation + analysis run.
-    Accepts optional JSON body: { "n_resources": 50 }
+    Accepts optional JSON body: { "n_resources": 50, "provider": "aws" }
     Returns the new summary stats after generation.
     """
     data       = request.json or {}
     n_resources = int(data.get('n_resources', 50))
+    provider    = data.get('provider', 'aws')
 
-    generator_path = os.path.join(BASE_PATH, 'generate_data.py')
+    generator_path = os.path.join(BASE_PATH, 'generate_data_multicloud.py')
     result = subprocess.run(
-        [sys.executable, generator_path, str(n_resources)],
+        [sys.executable, generator_path, '--provider', provider, '--count', str(n_resources)],
         capture_output=True, text=True, cwd=BASE_PATH
     )
 
@@ -93,9 +103,30 @@ def generate_data():
     return jsonify({
         'success':     True,
         'n_resources': n_resources,
+        'provider':    provider,
         'stats':       stats,
-        'message':     f'Generated {n_resources} resources and ran analysis pipeline.'
+        'message':     f'Generated {n_resources} resources for {provider.upper()} and ran analysis pipeline.'
     })
+
+
+@app.route('/api/providers', methods=['GET'])
+def get_providers():
+    """Return list of available cloud providers with data."""
+    providers = []
+    for p in ['aws', 'azure', 'gcp']:
+        findings_path = os.path.join(BASE_PATH, 'data', f'findings_{p}.json')
+        if os.path.exists(findings_path):
+            try:
+                with open(findings_path, 'r', encoding='utf-8') as f:
+                    findings = json.load(f)
+                providers.append({
+                    'id': p,
+                    'name': {'aws': 'AWS', 'azure': 'Azure', 'gcp': 'GCP'}[p],
+                    'count': len(findings)
+                })
+            except:
+                pass
+    return jsonify(providers)
 
 
 # ── Health ────────────────────────────────────────────────────────────────────

@@ -1,0 +1,250 @@
+{
+  "r1": {
+    "last_activity_days": 4,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "southeastasia"
+    ]
+  },
+  "r2": {
+    "last_activity_days": 57,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "eastus"
+    ]
+  },
+  "r3": {
+    "last_activity_days": 4,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "eastus"
+    ]
+  },
+  "r4": {
+    "last_activity_days": 41,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "eastus"
+    ]
+  },
+  "r5": {
+    "last_activity_days": 3,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "eastus"
+    ]
+  },
+  "r6": {
+    "last_activity_days": 2,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "eastus"
+    ]
+  },
+  "r7": {
+    "last_activity_days": 3,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "westus2"
+    ]
+  },
+  "r8": {
+    "last_activity_days": 4,
+    "failed_logins": 5,
+    "suspicious_api_calls": 5,
+    "regions_accessed": [
+      "centralindia",
+      "southeastasia"
+    ]
+  },
+  "r9": {
+    "last_activity_days": 1,
+    "failed_logins": 19,
+    "suspicious_api_calls": 5,
+    "regions_accessed": [
+      "eastus",
+      "southeastasia"
+    ]
+  },
+  "r10": {
+    "last_activity_days": 18,
+    "failed_logins": 21,
+    "suspicious_api_calls": 5,
+    "regions_accessed": [
+      "westeurope",
+      "eastus"
+    ]
+  },
+  "r11": {
+    "last_activity_days": 5,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "southeastasia"
+    ]
+  },
+  "r12": {
+    "last_activity_days": 15,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "southeastasia"
+    ]
+  },
+  "r13": {
+    "last_activity_days": 78,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "eastus"
+    ]
+  },
+  "r14": {
+    "last_activity_days": 17,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "westeurope"
+    ]
+  },
+  "r15": {
+    "last_activity_days": 68,
+    "failed_logins": 21,
+    "suspicious_api_calls": 2,
+    "regions_accessed": [
+      "southeastasia",
+      "centralindia",
+      "eastus"
+    ]
+  },
+  "r16": {
+    "last_activity_days": 71,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "southeastasia"
+    ]
+  },
+  "r17": {
+    "last_activity_days": 4,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "southeastasia"
+    ]
+  },
+  "r18": {
+    "last_activity_days": 19,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "centralindia"
+    ]
+  },
+  "r19": {
+    "last_activity_days": 123,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "centralindia"
+    ]
+  },
+  "r20": {
+    "last_activity_days": 39,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "eastus"
+    ]
+  },
+  "r21": {
+    "last_activity_days": 50,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "eastus"
+    ]
+  },
+  "r22": {
+    "last_activity_days": 65,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "westus2"
+    ]
+  },
+  "r23": {
+    "last_activity_days": 3,
+    "failed_logins": 2,
+    "suspicious_api_calls": 1,
+    "regions_accessed": [
+      "southeastasia",
+      "westus2",
+      "westeurope"
+    ]
+  },
+  "r24": {
+    "last_activity_days": 5,
+    "failed_logins": 6,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "eastus",
+      "southeastasia"
+    ]
+  },
+  "r25": {
+    "last_activity_days": 9,
+    "failed_logins": 2,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "eastus"
+    ]
+  },
+  "r26": {
+    "last_activity_days": 53,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "centralindia"
+    ]
+  },
+  "r27": {
+    "last_activity_days": 10,
+    "failed_logins": 1,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "centralindia"
+    ]
+  },
+  "r28": {
+    "last_activity_days": 1,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "westus2"
+    ]
+  },
+  "r29": {
+    "last_activity_days": 2,
+    "failed_logins": 5,
+    "suspicious_api_calls": 1,
+    "regions_accessed": [
+      "centralindia"
+    ]
+  },
+  "r30": {
+    "last_activity_days": 10,
+    "failed_logins": 0,
+    "suspicious_api_calls": 0,
+    "regions_accessed": [
+      "westeurope"
+    ]
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "r1": {
+    "cpu_avg": 67.1,
+    "memory_avg": 100.0,
+    "network_in_gb": 103.29,
+    "disk_utilization": 44.4
+  },
+  "r2": {
+    "cpu_avg": 27.4,
+    "memory_avg": 53.0,
+    "network_in_gb": 35.59,
+    "disk_utilization": 20.9
+  },
+  "r3": {
+    "cpu_avg": 28.5,
+    "memory_avg": 53.0,
+    "network_in_gb": 9.0,
+    "disk_utilization": 38.9
+  },
+  "r4": {
+    "cpu_avg": 50.0,
+    "memory_avg": 83.1,
+    "network_in_gb": 33.69,
+    "disk_utilization": 46.3
+  },
+  "r5": {
+    "cpu_avg": 4.9,
+    "memory_avg": 12.2,
+    "network_in_gb": 2.03,
+    "disk_utilization": 7.5
+  },
+  "r6": {
+    "cpu_avg": 62.1,
+    "memory_avg": 100.0,
+    "network_in_gb": 80.33,
+    "disk_utilization": 38.5
+  },
+  "r7": {
+    "cpu_avg": 4.3,
+    "memory_avg": 20.6,
+    "network_in_gb": 7.17,
+    "disk_utilization": 9.8
+  },
+  "r8": {
+    "cpu_avg": 1.7,
+    "memory_avg": 12.3,
+    "network_in_gb": 3.0,
+    "disk_utilization": 30.6
+  },
+  "r9": {
+    "cpu_avg": 4.4,
+    "memory_avg": 20.6,
+    "network_in_gb": 5.89,
+    "disk_utilization": 26.7
+  },
+  "r10": {
+    "cpu_avg": 15.2,
+    "memory_avg": 32.4,
+    "network_in_gb": 16.38,
+    "disk_utilization": 22.8
+  },
+  "r11": {
+    "cpu_avg": 73.7,
+    "memory_avg": 100.0,
+    "network_in_gb": 97.71,
+    "disk_utilization": 7.8
+  },
+  "r12": {
+    "cpu_avg": 0.9,
+    "memory_avg": 11.8,
+    "network_in_gb": 0.0,
+    "disk_utilization": 29.7
+  },
+  "r13": {
+    "cpu_avg": 27.0,
+    "memory_avg": 58.1,
+    "network_in_gb": 10.13,
+    "disk_utilization": 44.9
+  },
+  "r14": {
+    "cpu_avg": 11.2,
+    "memory_avg": 33.0,
+    "network_in_gb": 17.44,
+    "disk_utilization": 19.7
+  },
+  "r15": {
+    "cpu_avg": 2.6,
+    "memory_avg": 12.2,
+    "network_in_gb": 4.29,
+    "disk_utilization": 29.3
+  },
+  "r16": {
+    "cpu_avg": 55.7,
+    "memory_avg": 94.0,
+    "network_in_gb": 55.4,
+    "disk_utilization": 61.3
+  },
+  "r17": {
+    "cpu_avg": 4.0,
+    "memory_avg": 9.7,
+    "network_in_gb": 2.38,
+    "disk_utilization": 25.4
+  },
+  "r18": {
+    "cpu_avg": 13.1,
+    "memory_avg": 33.7,
+    "network_in_gb": 6.3,
+    "disk_utilization": 21.0
+  },
+  "r19": {
+    "cpu_avg": 0.0,
+    "memory_avg": 14.2,
+    "network_in_gb": 0.0,
+    "disk_utilization": 27.3
+  },
+  "r20": {
+    "cpu_avg": 93.0,
+    "memory_avg": 100.0,
+    "network_in_gb": 71.59,
+    "disk_utilization": 33.4
+  },
+  "r21": {
+    "cpu_avg": 5.0,
+    "memory_avg": 18.6,
+    "network_in_gb": 2.37,
+    "disk_utilization": 19.4
+  },
+  "r22": {
+    "cpu_avg": 14.8,
+    "memory_avg": 35.6,
+    "network_in_gb": 17.34,
+    "disk_utilization": 34.7
+  },
+  "r23": {
+    "cpu_avg": 3.7,
+    "memory_avg": 9.8,
+    "network_in_gb": 2.52,
+    "disk_utilization": 6.0
+  },
+  "r24": {
+    "cpu_avg": 68.1,
+    "memory_avg": 100.0,
+    "network_in_gb": 101.36,
+    "disk_utilization": 47.2
+  },
+  "r25": {
+    "cpu_avg": 2.5,
+    "memory_avg": 10.6,
+    "network_in_gb": 0.82,
+    "disk_utilization": 26.6
+  },
+  "r26": {
+    "cpu_avg": 1.4,
+    "memory_avg": 10.9,
+    "network_in_gb": 2.69,
+    "disk_utilization": 24.2
+  },
+  "r27": {
+    "cpu_avg": 19.3,
+    "memory_avg": 42.6,
+    "network_in_gb": 18.76,
+    "disk_utilization": 34.9
+  },
+  "r28": {
+    "cpu_avg": 59.3,
+    "memory_avg": 100.0,
+    "network_in_gb": 60.47,
+    "disk_utilization": 84.1
+  },
+  "r29": {
+    "cpu_avg": 9.2,
+    "memory_avg": 21.3,
+    "network_in_gb": 5.15,
+    "disk_utilization": 17.2
+  },
+  "r30": {
+    "cpu_avg": 33.9,
+    "memory_avg": 60.6,
+    "network_in_gb": 37.69,
+    "disk_utilization": 47.9
+  }
+}

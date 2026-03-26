@@ -1,0 +1,182 @@
+{
+  "r1": {
+    "monthly_cost": 16,
+    "cost_trend_pct": -3.8,
+    "savings_potential": 1.63,
+    "rightsizing": "none"
+  },
+  "r2": {
+    "monthly_cost": 14,
+    "cost_trend_pct": 5.9,
+    "savings_potential": 11.02,
+    "rightsizing": "downsize"
+  },
+  "r3": {
+    "monthly_cost": 11,
+    "cost_trend_pct": 4.8,
+    "savings_potential": 3.93,
+    "rightsizing": "downsize"
+  },
+  "r4": {
+    "monthly_cost": 6,
+    "cost_trend_pct": 8.8,
+    "savings_potential": 4.46,
+    "rightsizing": "terminate"
+  },
+  "r5": {
+    "monthly_cost": 4,
+    "cost_trend_pct": -2.6,
+    "savings_potential": 0.23,
+    "rightsizing": "none"
+  },
+  "r6": {
+    "monthly_cost": 6,
+    "cost_trend_pct": -3.2,
+    "savings_potential": 0.46,
+    "rightsizing": "none"
+  },
+  "r7": {
+    "monthly_cost": 13,
+    "cost_trend_pct": -3.2,
+    "savings_potential": 0.49,
+    "rightsizing": "none"
+  },
+  "r8": {
+    "monthly_cost": 5,
+    "cost_trend_pct": -2.4,
+    "savings_potential": 0.41,
+    "rightsizing": "none"
+  },
+  "r9": {
+    "monthly_cost": 7,
+    "cost_trend_pct": -2.8,
+    "savings_potential": 0.7,
+    "rightsizing": "none"
+  },
+  "r10": {
+    "monthly_cost": 13,
+    "cost_trend_pct": 5.3,
+    "savings_potential": 3.6,
+    "rightsizing": "downsize"
+  },
+  "r11": {
+    "monthly_cost": 14,
+    "cost_trend_pct": -3.0,
+    "savings_potential": 0.42,
+    "rightsizing": "none"
+  },
+  "r12": {
+    "monthly_cost": 13,
+    "cost_trend_pct": 7.5,
+    "savings_potential": 3.49,
+    "rightsizing": "downsize"
+  },
+  "r13": {
+    "monthly_cost": 2,
+    "cost_trend_pct": 7.6,
+    "savings_potential": 1.36,
+    "rightsizing": "terminate"
+  },
+  "r14": {
+    "monthly_cost": 5,
+    "cost_trend_pct": 3.6,
+    "savings_potential": 1.56,
+    "rightsizing": "downsize"
+  },
+  "r15": {
+    "monthly_cost": 5,
+    "cost_trend_pct": 8.5,
+    "savings_potential": 3.85,
+    "rightsizing": "downsize"
+  },
+  "r16": {
+    "monthly_cost": 21,
+    "cost_trend_pct": 5.2,
+    "savings_potential": 13.14,
+    "rightsizing": "downsize"
+  },
+  "r17": {
+    "monthly_cost": 6,
+    "cost_trend_pct": -4.3,
+    "savings_potential": 0.6,
+    "rightsizing": "none"
+  },
+  "r18": {
+    "monthly_cost": 9,
+    "cost_trend_pct": 7.9,
+    "savings_potential": 1.99,
+    "rightsizing": "downsize"
+  },
+  "r19": {
+    "monthly_cost": 18,
+    "cost_trend_pct": 10.9,
+    "savings_potential": 18.0,
+    "rightsizing": "terminate"
+  },
+  "r20": {
+    "monthly_cost": 4,
+    "cost_trend_pct": 7.8,
+    "savings_potential": 2.92,
+    "rightsizing": "downsize"
+  },
+  "r21": {
+    "monthly_cost": 28,
+    "cost_trend_pct": 8.4,
+    "savings_potential": 22.32,
+    "rightsizing": "terminate"
+  },
+  "r22": {
+    "monthly_cost": 6,
+    "cost_trend_pct": 9.9,
+    "savings_potential": 4.7,
+    "rightsizing": "terminate"
+  },
+  "r23": {
+    "monthly_cost": 5,
+    "cost_trend_pct": 2.9,
+    "savings_potential": 0.57,
+    "rightsizing": "none"
+  },
+  "r24": {
+    "monthly_cost": 18,
+    "cost_trend_pct": -4.3,
+    "savings_potential": 1.8,
+    "rightsizing": "none"
+  },
+  "r25": {
+    "monthly_cost": 27,
+    "cost_trend_pct": 2.6,
+    "savings_potential": 11.72,
+    "rightsizing": "downsize"
+  },
+  "r26": {
+    "monthly_cost": 4,
+    "cost_trend_pct": 5.6,
+    "savings_potential": 2.9,
+    "rightsizing": "downsize"
+  },
+  "r27": {
+    "monthly_cost": 12,
+    "cost_trend_pct": 7.7,
+    "savings_potential": 3.96,
+    "rightsizing": "downsize"
+  },
+  "r28": {
+    "monthly_cost": 19,
+    "cost_trend_pct": -0.3,
+    "savings_potential": 2.07,
+    "rightsizing": "none"
+  },
+  "r29": {
+    "monthly_cost": 3,
+    "cost_trend_pct": -4.5,
+    "savings_potential": 0.11,
+    "rightsizing": "none"
+  },
+  "r30": {
+    "monthly_cost": 5,
+    "cost_trend_pct": 5.3,
+    "savings_potential": 1.09,
+    "rightsizing": "downsize"
+  }
+}

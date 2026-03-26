@@ -3,13 +3,21 @@ import os
 
 class CostCollector:
     """
-    Simulates fetching billing and cost optimization data from AWS Cost Explorer.
-    In production, this would call: boto3.client('ce').get_cost_and_usage(...)
+    Simulates fetching billing and cost optimization data from cloud providers.
+    AWS: Cost Explorer, Azure: Cost Management, GCP: Cloud Billing
     """
-    SOURCE_NAME = "AWS Cost Explorer"
+    SOURCE_NAMES = {
+        'aws': 'AWS Cost Explorer',
+        'azure': 'Azure Cost Management',
+        'gcp': 'GCP Cloud Billing'
+    }
 
-    def __init__(self, sources_path):
-        path = os.path.join(sources_path, "cost.json")
+    def __init__(self, sources_path, provider='aws'):
+        self.provider = provider
+        self.name = self.SOURCE_NAMES.get(provider, 'Cost Explorer')
+        path = os.path.join(sources_path, f"cost_{provider}.json")
+        if not os.path.exists(path):
+            path = os.path.join(sources_path, "cost.json")
         with open(path, 'r') as f:
             self._data = json.load(f)
 
